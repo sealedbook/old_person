@@ -1,0 +1,124 @@
+/*基本表格样式*/
+fieldset legend {
+	font-size: 12px;
+}
+.tableStyle{
+ 	border-collapse: collapse;
+	border: 1px solid #ccc;
+	width: 100%;
+	background-color: White;
+	font-size: 12px;
+}
+.tableStyle .right {
+	text-align:right;
+	background-color:#edf8fe;
+}
+.tableStyle .left {
+	text-align:left;
+	background-color:#edf8fe;
+}
+.noBottomLine{
+	border-bottom:0!important;
+}
+.th{
+	border-left: 1.0pt solid windowtext;
+	border-right: 1.0pt solid windowtext;
+	border-bottom: 1.0pt solid windowtext;
+	word-wrap: normal;
+	word-break: keep-all;
+	overflow:hidden;
+	border-color: #ccc;
+	height:32px; 
+	padding: 0 2px 0 4px;
+	color:#000000;
+	background-image: url(table/th_bg.jpg);
+	background-repeat: repeat-x;
+	font-weight: normal;
+	line-height:32px; 
+}
+.th_m{
+	border-left: 1.0pt solid windowtext;
+	border-right: 1.0pt solid windowtext;
+	border-bottom: 1.0pt solid windowtext;
+	word-wrap: normal;
+	word-break: keep-all;
+	overflow:hidden;
+	border-color: #ccc;
+	height:30px; 
+	padding: 0 2px 0 4px;
+	color:#000000;
+	background-image: url(table/th_bg.jpg);
+	background-color:#d8e9f9;
+	background-repeat: repeat-x;
+	font-weight: normal;
+	line-height:30px; 
+}
+.th_m2{
+	border-left: 1.0pt solid windowtext;
+	border-right: 1.0pt solid windowtext;
+	border-bottom: 1.0pt solid windowtext;
+	word-wrap: normal;
+	word-break: keep-all;
+	overflow:hidden;
+	border-color: #ccc;
+	padding: 0 2px 0 4px;
+	color:#000000;
+	background-image: url(table/th_bg_m2.jpg);
+	background-color:#d8e9f9;
+	background-repeat: repeat-x;
+	font-weight: normal;
+	line-height:60px; 
+	height:60px; 
+}
+.th_m3{
+	border-left: 1.0pt solid windowtext;
+	border-right: 1.0pt solid windowtext;
+	border-bottom: 1.0pt solid windowtext;
+	word-wrap: normal;
+	word-break: keep-all;
+	overflow:hidden;
+	border-color: #ccc;
+	padding: 0 2px 0 4px;
+	color:#000000;
+	background-image: url(table/th_bg_m3.jpg);
+	background-color:#d8e9f9;
+	background-repeat: repeat-x;
+	font-weight: normal;
+	line-height:90px; 
+	height:90px; 
+}
+.th_over{
+	border-left: 1.0pt solid windowtext;
+	border-right: 1.0pt solid windowtext;
+	word-wrap: normal;
+	word-break: keep-all;
+	overflow:hidden;
+	border-color: #cccccc;
+	height:28px; 
+	padding: 0 2px 0 4px;
+	color:#000000;
+	background-image: url(table/th_bg_over.jpg);
+	background-repeat: repeat-x;
+	font-weight: normal;
+	line-height:28px; 
+}
+.tableStyle td{
+	border-left: 1.0pt solid windowtext;
+	border-right: 1.0pt solid windowtext;
+	border-bottom: 1.0pt solid windowtext;
+	border-color: #ccc;
+	height:30px; 
+	padding: 1px 2px 1px 4px;
+}
+.tableStyleWordWrap td{
+	word-wrap: normal;
+	word-break: keep-all;
+}
+.tableStyle tr{
+	color:#333333;
+}
+.tableStyle .viewModeEven{
+	text-align:right;
+	background-color:#edf8fe;
+}
+/*基本表格样式*/

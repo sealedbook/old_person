@@ -1,0 +1,13 @@
+/target
+*/target
+/.settings
+/.project
+.classpath
+/logs/
+.idea/
+*.iml
+.DS_Store
+.myeclipse
+.svn/
+out/*
+.mymetadata

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence" version="2.0">
+
+	<persistence-unit name="myJPA" transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<properties>
+			<!--配置Hibernate方言 -->
+			<property name="hibernate.dialect" value="com.esite.framework.core.dao.jpa.dialect.CustomMySQL5Dialect" />
+			<!--配置数据库驱动 -->
+			<!-- <property name="hibernate.connection.driver_class" value="oracle.jdbc.OracleDriver" /> -->
+			<!--配置数据库用户名 -->
+			<!-- <property name="hibernate.connection.username" value="SASMART_POLICE" /> -->
+			<!--配置数据库密码 -->
+			<!-- <property name="hibernate.connection.password" value="SASMART_POLICE" /> -->
+			<!--配置数据库url -->
+			<!-- <property name="hibernate.connection.url" value="jdbc:oracle:thin:@10.12.62.146:1521:orcl" /> -->
+			<!--设置外连接抓取树的最大深度 -->
+			<property name="hibernate.max_fetch_depth" value="3" />
+			<!--自动输出schema创建DDL语句 -->
+			<!-- <property name="hibernate.hbm2ddl.auto" value="update" /> -->
+			<property name="hibernate.autoReconnect" value="true" />
+			<property name="hibernate.show_sql" value="true" />
+			<property name="hibernate.format_sql" value="true" />
+			<property name="javax.persistence.validation.mode" value="none" />
+			
+			<!-- 
+			<property name="hibernate.cache.provider_class" value="org.hibernate.cache.SingletonEhCacheProvider"></property>
+			<property name="hibernate.cache.provider_configuration" value="classpath:ehcache.xml"></property>
+			<property name="hibernate.cache.use_second_level_cache" value="true"></property>
+			<property name="hibernate.cache.use_query_cache" value="true"></property>
+			 -->
+		</properties>
+	</persistence-unit>
+
+</persistence>
