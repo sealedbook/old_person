@@ -5,6 +5,7 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.Table;
@@ -16,8 +17,9 @@ import org.hibernate.annotations.GenericGenerator;
 public class OldPersonImportLogEntity {
 
 	@Id
-	@GeneratedValue(generator="system-uuid")
-	@GenericGenerator(name="system-uuid",strategy="uuid")
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	//@GeneratedValue(generator="system-uuid")
+	//@GenericGenerator(name="system-uuid",strategy="uuid")
 	@Column(name="ID",updatable=false)
 	private String id;
 	

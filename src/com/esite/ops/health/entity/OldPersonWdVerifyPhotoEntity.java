@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -18,8 +19,9 @@ import com.esite.ops.oldperson.entity.OldPersonEntity;
 public class OldPersonWdVerifyPhotoEntity {
 
 	@Id
-	@GeneratedValue(generator="system-uuid")
-	@GenericGenerator(name="system-uuid",strategy="uuid")
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	//@GeneratedValue(generator="system-uuid")
+	//@GenericGenerator(name="system-uuid",strategy="uuid")
 	private String id;
 	
 	@ManyToOne(fetch=FetchType.EAGER)

@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
@@ -22,8 +23,9 @@ import org.springframework.format.annotation.DateTimeFormat.ISO;
 public class CycleEntity {
 
 	@Id
-	@GeneratedValue(generator="system-uuid")
-	@GenericGenerator(name="system-uuid",strategy="uuid")
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	//@GeneratedValue(generator="system-uuid")
+	//@GenericGenerator(name="system-uuid",strategy="uuid")
 	private String id;
 	
 	@Column(name="CYCLE_BEGIN")

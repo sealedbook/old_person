@@ -3,6 +3,7 @@ package com.esite.ops.operator.entity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -13,8 +14,9 @@ import org.hibernate.annotations.GenericGenerator;
 public class AreaConfigEntity {
 
 	@Id
-	@GeneratedValue(generator="system-uuid")
-	@GenericGenerator(name="system-uuid",strategy="uuid")
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	//@GeneratedValue(generator="system-uuid")
+	//@GenericGenerator(name="system-uuid",strategy="uuid")
 	private String id;
 	
 	@Column(name="OPERATOR_ID")

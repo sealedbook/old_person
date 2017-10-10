@@ -11,3 +11,4 @@
 .svn/
 out/*
 .mymetadata
+/doc/*
