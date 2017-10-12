@@ -8,7 +8,7 @@
 *.iml
 .DS_Store
 .myeclipse
-.svn/
+
 out/*
 .mymetadata
 /doc/*
