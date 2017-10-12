@@ -89,7 +89,7 @@
 		<property name="jdbcUrl" value="${jdbc.url}"></property>
 		<property name="acquireRetryAttempts" value="1" />
 	</bean>
-	
+
 	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
 		<property name="basenames" value="language/system_messages,language/information,language/system_config" />
 	</bean>
@@ -97,6 +97,4 @@
 		<property name="defaultLocale" value="zh"/>
 	</bean>
 
-	<bean id="systemExceptionHandler" class="com.esite.framework.system.exception.SystemExceptionHandler">
-	</bean>
 </beans>
