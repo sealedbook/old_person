@@ -124,6 +124,9 @@ public class HealthInfoEntity {
 	@NotFound(action=NotFoundAction.IGNORE)
 	private HealthResultEntity healthResult;
 
+	@Column(name = "miss_cause")
+	private String missCause;
+
 	public String getId() {
 		return id;
 	}
@@ -278,5 +281,34 @@ public class HealthInfoEntity {
 			return 0;
 		}
 		return this.healthResult.getDiastolicPressure();
+	}
+
+	public String getMissCause() {
+		return missCause;
+	}
+
+	public void setMissCause(String missCause) {
+		this.missCause = missCause;
+	}
+
+	@Override
+	public String toString() {
+		final StringBuilder sb = new StringBuilder("HealthInfoEntity{");
+		sb.append("id='").append(id).append('\'');
+		sb.append(", reportCode='").append(reportCode).append('\'');
+		sb.append(", beginDateTime=").append(beginDateTime);
+		sb.append(", endDateTime=").append(endDateTime);
+		sb.append(", oldPerson=").append(oldPerson);
+		sb.append(", operator=").append(operator);
+		sb.append(", fingerVerifyState='").append(fingerVerifyState).append('\'');
+		sb.append(", batchId='").append(batchId).append('\'');
+		sb.append(", logId='").append(logId).append('\'');
+		sb.append(", verifyState='").append(verifyState).append('\'');
+		sb.append(", cycle=").append(cycle);
+		sb.append(", insertDateTime=").append(insertDateTime);
+		sb.append(", healthResult=").append(healthResult);
+		sb.append(", missCause='").append(missCause).append('\'');
+		sb.append('}');
+		return sb.toString();
 	}
 }

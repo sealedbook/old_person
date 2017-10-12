@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.io.IOUtils;
@@ -29,7 +30,7 @@ import com.esite.ops.oldperson.entity.FingerprintCollectEntity;
 import com.esite.ops.oldperson.entity.OldPersonEntity;
 import com.esite.ops.oldperson.entity.OldPersonQueryEntity;
 import com.esite.ops.oldperson.service.IFingerprintCollectService;
-import com.esite.ops.oldperson.service.IOldPersonService;
+import com.esite.ops.oldperson.service.impl.OldPersonService;
 
 @Controller
 @RequestMapping("/oldperson")
@@ -37,8 +38,8 @@ public class OldPersonController {
 
 	@Autowired
 	private IFingerprintCollectService fingerprintCollectService;
-	@Autowired
-	private IOldPersonService oldPersonService;
+	@Resource
+	private OldPersonService oldPersonService;
 	
 	@RequestMapping("/list")
 	public @ResponseBody PagerResponse<OldPersonEntity> list(OldPersonQueryEntity oldPersonQueryEntity,PagerRequest pageRequest) {

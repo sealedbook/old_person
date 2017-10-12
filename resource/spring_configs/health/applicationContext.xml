@@ -17,7 +17,7 @@
             http://www.springframework.org/schema/util
             http://www.springframework.org/schema/util/spring-util.xsd">
             
-	<bean id="healthInfoService" class="com.esite.ops.health.service.impl.HealthInfoServiceImpl"></bean>
+	<bean id="healthInfoService" class="com.esite.ops.health.service.impl.HealthInfoService"></bean>
 	<bean id="healthResultService" class="com.esite.ops.health.service.impl.HealthResultServiceImpl"></bean>
 	<bean id="fingerprintInfoService" class="com.esite.ops.health.service.impl.FingerprintInfoServiceImpl"></bean>
 	<bean id="healthPhotoService" class="com.esite.ops.health.service.impl.HealthPhotoServiceImpl"></bean>

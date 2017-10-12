@@ -1,5 +1,6 @@
 package com.esite.ops.oldperson.entity;
 
+import java.util.Arrays;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -149,7 +150,16 @@ public class OldPersonEntity {
 	
 	@Column(name="STATUS")
 	private String status = "";
-	
+
+	@Column(name="died_time")
+	private Date diedTime;
+
+	@Column(name="died_location")
+	private String diedLocation;
+
+	@Column(name="died_cause")
+	private String diedCause;
+
 	@Lob
 	@Column(name="PHOTO")
 	private byte[] photo;
@@ -381,5 +391,64 @@ public class OldPersonEntity {
 		}
 		return false;
 	}
-	
+
+	public Date getDiedTime() {
+		return diedTime;
+	}
+
+	public void setDiedTime(Date diedTime) {
+		this.diedTime = diedTime;
+	}
+
+	public String getDiedLocation() {
+		return diedLocation;
+	}
+
+	public void setDiedLocation(String diedLocation) {
+		this.diedLocation = diedLocation;
+	}
+
+	public String getDiedCause() {
+		return diedCause;
+	}
+
+	public void setDiedCause(String diedCause) {
+		this.diedCause = diedCause;
+	}
+
+	@Override
+	public String toString() {
+		final StringBuilder sb = new StringBuilder("OldPersonEntity{");
+		sb.append("id='").append(id).append('\'');
+		sb.append(", name='").append(name).append('\'');
+		sb.append(", nameSpell='").append(nameSpell).append('\'');
+		sb.append(", idCard='").append(idCard).append('\'');
+		sb.append(", sex=").append(sex);
+		sb.append(", birthday=").append(birthday);
+		sb.append(", nationality='").append(nationality).append('\'');
+		sb.append(", modelingStatus='").append(modelingStatus).append('\'');
+		sb.append(", ffStatus='").append(ffStatus).append('\'');
+		sb.append(", type=").append(type);
+		sb.append(", phoneNumber='").append(phoneNumber).append('\'');
+		sb.append(", homeAddress='").append(homeAddress).append('\'');
+		sb.append(", batchId='").append(batchId).append('\'');
+		sb.append(", rootAreaId='").append(rootAreaId).append('\'');
+		sb.append(", area=").append(area);
+		sb.append(", socialStatus='").append(socialStatus).append('\'');
+		sb.append(", socialStopSendCause='").append(socialStopSendCause).append('\'');
+		sb.append(", socialNumber='").append(socialNumber).append('\'');
+		sb.append(", jnsbrq=").append(jnsbrq);
+		sb.append(", txrq=").append(txrq);
+		sb.append(", lqsbrq=").append(lqsbrq);
+		sb.append(", sflx='").append(sflx).append('\'');
+		sb.append(", workUnit='").append(workUnit).append('\'');
+		sb.append(", sysInsertDatetime=").append(sysInsertDatetime);
+		sb.append(", status='").append(status).append('\'');
+		sb.append(", diedTime=").append(diedTime);
+		sb.append(", diedLocation='").append(diedLocation).append('\'');
+		sb.append(", diedCause='").append(diedCause).append('\'');
+		sb.append(", photo=").append(Arrays.toString(photo));
+		sb.append('}');
+		return sb.toString();
+	}
 }

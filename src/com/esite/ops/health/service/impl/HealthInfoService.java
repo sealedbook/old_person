@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Expression;
@@ -19,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
@@ -41,7 +43,7 @@ import com.esite.ops.mission.entity.CycleEntity;
 import com.esite.ops.mission.service.ICycleService;
 import com.esite.ops.oldperson.dao.OldPersonDao;
 import com.esite.ops.oldperson.entity.OldPersonEntity;
-import com.esite.ops.oldperson.service.IOldPersonService;
+import com.esite.ops.oldperson.service.impl.OldPersonService;
 import com.esite.ops.operator.entity.OperatorEntity;
 import com.esite.ops.operator.service.IOperatorService;
 import com.esite.ops.ws.entity.UpLoadDataVO;
@@ -49,7 +51,8 @@ import com.esite.ops.ws.entity.UpLoadOldPersonFingerprint;
 import com.esite.ops.ws.entity.UpLoadOldPersonHealthVO;
 import com.esite.ops.ws.entity.UpLoadOldPersonPhotoVO;
 
-public class HealthInfoServiceImpl implements IHealthInfoService {
+@Service("healthInfoService")
+public class HealthInfoService implements IHealthInfoService {
 
 	@Autowired
 	private HealthInfoDao healthInfoDao;
@@ -69,8 +72,8 @@ public class HealthInfoServiceImpl implements IHealthInfoService {
 	@Autowired
 	private IOperatorService operatorService;
 	
-	@Autowired
-	private IOldPersonService oldPersonService;
+	@Resource
+	private OldPersonService oldPersonService;
 	
 	@Autowired
 	private IFingerprintInfoService fingerprintInfoService;
@@ -238,7 +241,7 @@ public class HealthInfoServiceImpl implements IHealthInfoService {
 	}
 
 	public static void main(String[] args) {
-		new HealthInfoServiceImpl().writeByteFile("abc", ".ecg", new byte[]{1,2,3,4,56});
+		new HealthInfoService().writeByteFile("abc", ".ecg", new byte[]{1,2,3,4,56});
 	}
 	private void writeByteFile(String fileName, String postfix, byte[] byteFile) {
 		fileName += postfix;
@@ -390,6 +393,11 @@ public class HealthInfoServiceImpl implements IHealthInfoService {
 		return list.get(0);
 	}
 
+	public HealthInfoEntity getHealthByOldPersonIdAnd(String cycleId, String oldPersonId) {
+		HealthInfoEntity healthInfoEntity = this.healthInfoDao.queryByCycleIdAndOldPersonId(cycleId, oldPersonId);
+		return healthInfoEntity;
+	}
+
 	@Override
 	public int getHealthNumberByOldPerson(String healthId, String oldPersonId) {
 		return this.healthInfoDao.queryHealthNumber(oldPersonId,healthId);
@@ -418,4 +426,7 @@ public class HealthInfoServiceImpl implements IHealthInfoService {
 		return this.healthInfoDao.queryByCycleId(cycleId);
 	}
 
+	public void updateHealthInfo(HealthInfoEntity health) {
+		this.healthInfoDao.save(health);
+	}
 }

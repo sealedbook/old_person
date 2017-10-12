@@ -30,7 +30,7 @@ import com.esite.ops.health.service.IHealthResultService;
 import com.esite.ops.health.vo.HealthInfoQueryVO;
 import com.esite.ops.oldperson.entity.OldPersonEntity;
 import com.esite.ops.oldperson.service.IFingerprintCollectService;
-import com.esite.ops.oldperson.service.IOldPersonService;
+import com.esite.ops.oldperson.service.impl.OldPersonService;
 
 @Controller
 @RequestMapping("/health")
@@ -38,9 +38,6 @@ public class HealthController {
 	
 	@Autowired
 	private IHealthInfoService healthInfoService;
-	
-	@Resource
-	private IFingerprintCollectService fingerprintCollectService;
 	
 	@Autowired
 	private IFingerprintInfoService fingerprintInfoService;
@@ -130,9 +127,6 @@ public class HealthController {
 		//model.addAttribute("fingerprintCollectEntity", fingerprintCollectEntity);
 		return "/health/view";
 	}
-	
-	@Autowired
-	private IOldPersonService oldPersonService;
 	
 	@RequestMapping(value="/verify/next/{healthId}")
 	public String next(String healthFingerprintId,String updateVerifyState, String verifyState, String oldPersonId, String operatorId,

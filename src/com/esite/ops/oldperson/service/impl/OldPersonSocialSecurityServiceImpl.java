@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Expression;
@@ -26,17 +27,13 @@ import org.springframework.web.multipart.MultipartFile;
 import com.esite.framework.core.exception.ServiceException;
 import com.esite.framework.dictionary.entity.DictionaryEntity;
 import com.esite.framework.dictionary.service.DictionaryService;
-import com.esite.framework.organize.entity.OrganizeViewEntity;
 import com.esite.framework.security.entity.Customer;
 import com.esite.framework.util.IdentityCardHelper;
-import com.esite.framework.util.JpaLikeQueryHelper;
 import com.esite.framework.util.ReadExcel;
-import com.esite.framework.util.StringHelper;
 import com.esite.ops.oldperson.dao.OldPersonSocialSecurityDao;
 import com.esite.ops.oldperson.entity.OldPersonEntity;
 import com.esite.ops.oldperson.entity.OldPersonSocialSecurityEntity;
 import com.esite.ops.oldperson.entity.OldPersonSocialSecurityQueryVO;
-import com.esite.ops.oldperson.service.IOldPersonService;
 import com.esite.ops.oldperson.service.IOldPersonSocialSecurityImportLogService;
 import com.esite.ops.oldperson.service.IOldPersonSocialSecurityService;
 
@@ -50,8 +47,8 @@ public class OldPersonSocialSecurityServiceImpl implements IOldPersonSocialSecur
 	@Autowired
 	private DictionaryService dictionaryService;
 	
-	@Autowired
-	private IOldPersonService oldPersonService;
+	@Resource
+	private OldPersonService oldPersonService;
 	
 	@Override
 	@Transactional

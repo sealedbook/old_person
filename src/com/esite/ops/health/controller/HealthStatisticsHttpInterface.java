@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.esite.framework.security.entity.Customer;
 import com.esite.ops.health.service.IHealthInfoService;
-import com.esite.ops.oldperson.service.IOldPersonService;
+import com.esite.ops.oldperson.service.impl.OldPersonService;
 
 @Controller
 @RequestMapping("/http/health")
@@ -21,8 +22,8 @@ public class HealthStatisticsHttpInterface {
 	
 	@Autowired
 	private IHealthInfoService healthInfoService;
-	@Autowired
-	private IOldPersonService oldPersonService;
+	@Resource
+	private OldPersonService oldPersonService;
 	
 	@RequestMapping("/oldperson/statistics")
 	public @ResponseBody Map<String,Object> statisticsOldPerson(HttpServletRequest request) {

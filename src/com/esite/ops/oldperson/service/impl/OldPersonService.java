@@ -22,6 +22,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.orm.jpa.JpaSystemException;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -38,27 +39,22 @@ import com.esite.framework.util.IdentityCardHelper;
 import com.esite.framework.util.JpaLikeQueryHelper;
 import com.esite.framework.util.ReadExcel;
 import com.esite.framework.util.StringHelper;
-import com.esite.ops.health.dao.HealthInfoDao;
-import com.esite.ops.health.entity.HealthInfoEntity;
 import com.esite.ops.mission.entity.CycleEntity;
 import com.esite.ops.mission.service.ICycleService;
 import com.esite.ops.oldperson.dao.OldPersonDao;
 import com.esite.ops.oldperson.entity.OldPersonEntity;
 import com.esite.ops.oldperson.entity.OldPersonQueryEntity;
-import com.esite.ops.oldperson.service.IOldPersonImportLogService;
 import com.esite.ops.oldperson.service.IOldPersonOperationLogService;
 import com.esite.ops.oldperson.service.IOldPersonSecurityService;
-import com.esite.ops.oldperson.service.IOldPersonService;
 import com.esite.ops.operator.entity.OperatorEntity;
 import com.esite.ops.operator.service.IAreaConfigService;
 import com.esite.ops.operator.service.IOperatorService;
 
-public class OldPersonServiceImpl implements IOldPersonService {
+@Service("oldPersonService")
+public class OldPersonService {
 
 	@Autowired
 	private OldPersonDao oldPersonDao;
-	@Autowired
-	private HealthInfoDao healthInfoDao;
 	@Autowired
 	private DictionaryService dictionaryService;
 	@Autowired
@@ -72,11 +68,14 @@ public class OldPersonServiceImpl implements IOldPersonService {
 	@Autowired
 	private IOldPersonOperationLogService oldPersonOperationLogService;
 	@Autowired
-	private IOldPersonImportLogService oldPersonImportLogService;
-	@Autowired
 	private IOldPersonSecurityService oldPersonSecurityService;
-	
-	@Override
+
+	/**
+	 * 多条件查询老年人
+	 * @param oldPersonQueryEntity 查询条件
+	 * @param instance 分页对象
+	 * @return
+	 */
 	public Page<OldPersonEntity> find(final OldPersonQueryEntity oldPersonQueryEntity, Pageable instance) {
 		return oldPersonDao.findAll(new Specification<OldPersonEntity>() {
 			@Override
@@ -174,7 +173,12 @@ public class OldPersonServiceImpl implements IOldPersonService {
 		return oldPerson;
 	}
 
-	@Override
+	/**
+	 * 添加一个新的老年人
+	 * @param oldPerson 老年人实体对象
+	 * @param customer 系统操作人员
+	 * @return
+	 */
 	public OldPersonEntity addNew(OldPersonEntity oldPerson,Customer customer) {
 		checkOldPerson(oldPerson);
 		String idCard = oldPerson.getIdCard();
@@ -209,13 +213,23 @@ public class OldPersonServiceImpl implements IOldPersonService {
 		return getRootArea(area.getParent());
 	}
 
-	@Override
+	/**
+	 * 更新老年人信息ForHttpRequest
+	 * @param oldPerson
+	 * @param customer
+	 * @return
+	 */
 	public OldPersonEntity updateForHttpRequest(OldPersonEntity oldPerson,Customer customer) {
 		this.oldPersonDao.save(oldPerson);
 		return oldPerson;
 	}
-	
-	@Override
+
+	/**
+	 * 更新老年人信息
+	 * @param oldPerson
+	 * @param customer
+	 * @return
+	 */
 	public OldPersonEntity update(OldPersonEntity oldPerson, Customer customer) {
 		if(StringHelper.isEmpty(oldPerson.getId())) {
 			throw new IllegalArgumentException("系统无法根据空的编号查询老年人信息");
@@ -255,15 +269,24 @@ public class OldPersonServiceImpl implements IOldPersonService {
 		}
 	}
 
-	@Override
+	/**
+	 * 根据老年人ID 获得老年人实体对象
+	 * @param oldPersonId
+	 * @return
+	 */
 	public OldPersonEntity getOldPerson(String oldPersonId) {
 		if(StringHelper.isEmpty(oldPersonId)) {
 			throw new IllegalArgumentException("老年人id不能为空.");
 		}
 		return this.oldPersonDao.findOne(oldPersonId);
 	}
-	
-	@Override
+
+	/**
+	 * 以Excel的方式导入老年人信息
+	 * @param file
+	 * @param customer
+	 * @return
+	 */
 	public List<String> importOldPersonExcelFile(MultipartFile file,Customer customer) {
 		List<String> errorMessage = new ArrayList<String>();
 		if(null == file || file.getSize() <= 0) {
@@ -423,7 +446,11 @@ public class OldPersonServiceImpl implements IOldPersonService {
 		return errorMessage;
 	}
 
-	@Override
+	/**
+	 * 根据地区获得老年人数量，当参数为空时，获得全系统老年人数量
+	 * @param areaId
+	 * @return
+	 */
 	public long count(String areaId) {
 		if(StringHelper.isEmpty(areaId)) {
 			return this.oldPersonDao.count();
@@ -431,33 +458,53 @@ public class OldPersonServiceImpl implements IOldPersonService {
 		return this.oldPersonDao.countByAreaId(areaId);
 	}
 
-	@Override
+	/**
+	 * 获得指定区域下的正常状态的老年人数量(除死亡、删除外的老年人)
+	 * @param areaIdCollection
+	 * @return
+	 */
 	public long count(List<String> areaIdCollection) {
 		if(null == areaIdCollection || areaIdCollection.size() <= 0) {
 			return 0;
 		}
 		return this.oldPersonDao.countByAreaId(areaIdCollection);
 	}
-	
-	@Override
+
+	/**
+	 * 获得某个地区的所有老年人
+	 * @param operatorEntity
+	 * @return
+	 */
 	public List<OldPersonEntity> getOldPersonWithArea(List<String> areaCollection) {
 		return this.oldPersonDao.queryByAreaCollection(areaCollection);
 	}
-	
 
-	@Override
+	/**
+	 * 获得某个地区的本地老年人
+	 * @param operatorEntity
+	 * @return
+	 */
 	public List<OldPersonEntity> getLocalOldPersonWithArea(List<String> areaCollection) {
 		return this.oldPersonDao.queryLocalOldPersonByAreaCollection(areaCollection);
 	}
-	
-	@Override
+
+	/**
+	 * 获得某个地区的本地老年人
+	 * @param areaCollection
+	 * @param instance
+	 * @return
+	 */
 	public Page<OldPersonEntity> getLocalOldPersonWithArea(
 			List<String> areaCollection, Pageable instance) {
 		// TODO Auto-generated method stub
 		return this.oldPersonDao.queryLocalOldPersonByAreaCollection(areaCollection, instance);
 	}
 
-	@Override
+	/**
+	 * 删除某个老年人
+	 * @param oldPersonId
+	 * @param customer
+	 */
 	@Transactional
 	public void delete(String oldPersonId, Customer customer) {
 		OldPersonEntity oldPerson = this.getOldPerson(oldPersonId);
@@ -471,7 +518,11 @@ public class OldPersonServiceImpl implements IOldPersonService {
 		oldPersonSecurityService.deleteSystemUser(oldPerson);
 	}
 
-	@Override
+	/**
+	 * 标记某位老年人已经死亡
+	 * @param oldPersonId
+	 * @param customer
+	 */
 	@Transactional
 	public void died(String oldPersonId, Customer customer) {
 		OldPersonEntity oldPerson = this.getOldPerson(oldPersonId);
@@ -484,9 +535,28 @@ public class OldPersonServiceImpl implements IOldPersonService {
 		//删除日志
 		oldPersonOperationLogService.diedLog(oldPerson,customer);
 	}
-	
 
-	@Override
+	@Transactional
+	public void died(String id, Date diedTime, String diedLocation, String diedCause, Customer customer) {
+		OldPersonEntity oldPerson = this.getOldPerson(id);
+		oldPerson.setStatus("died");
+		oldPerson.setFfStatus("ffStatus04");
+		oldPerson.setDiedTime(diedTime);
+		oldPerson.setDiedLocation(diedLocation);
+		oldPerson.setDiedCause(diedCause);
+		this.oldPersonDao.save(oldPerson);
+
+		//将系统中的老年人从用户表中删除.撤销登陆功能
+		oldPersonSecurityService.deleteSystemUser(oldPerson);
+		//删除日志
+		oldPersonOperationLogService.diedLog(oldPerson,customer);
+	}
+
+	/**
+	 * 撤销老年人的死亡状态、删除状态
+	 * @param oldPersonId
+	 * @param customer
+	 */
 	public void undo(String oldPersonId, Customer customer) {
 		OldPersonEntity oldPerson = this.getOldPerson(oldPersonId);
 		oldPerson.setStatus("");
@@ -497,7 +567,11 @@ public class OldPersonServiceImpl implements IOldPersonService {
 		oldPersonOperationLogService.undoLog(oldPerson,customer);
 	}
 
-	@Override
+	/**
+	 * 更新老年人照片
+	 * @param id
+	 * @param photo
+	 */
 	public void updatePhoto(String oldPersonId, byte[] photo,Customer customer) {
 		OldPersonEntity oldPerson = this.getOldPerson(oldPersonId);
 		if(null == oldPerson) {
@@ -507,24 +581,13 @@ public class OldPersonServiceImpl implements IOldPersonService {
 		this.oldPersonDao.save(oldPerson);
 	}
 
-//	@Override
-//	public List<Map<String, Object>> getLocalOldPersonWithOperatorIdCard(String idCard) {
-//		if(StringHelper.isEmpty(idCard)) {
-//			throw new IllegalArgumentException("提供的操作员身份证号是空的.");
-//		}
-//		OperatorEntity operator = this.operatorService.getOperatorByIdentityCard(idCard);
-//		if(null == operator) {
-//			throw new IllegalArgumentException("系统中没有对应的操作员.");
-//		}
-//		CycleEntity cycle = cycleService.getCycle(new Date());
-//		if(null == cycle) {
-//			throw new IllegalArgumentException("给定的日期不在某个周期设定内.");
-//		}
-//		List<String> areaCollection = this.areaConfigService.getAreaIdCollectionWithOperatorId(operator.getId());
-//		return this.oldPersonDao.queryLocalOldPersonByAreaListAndCycle(areaCollection,cycle.getId());
-//	}
-
-	@Override
+	/**
+	 * 根据操作员的身份证号，获得对应操作员的所有本地老年人状态信息
+	 * <br/>
+	 * 该接口仅提供给终端应用
+	 * @param idCard
+	 * @return
+	 */
 	public List<Map<String, Object>> getLocalOldPersonWithOperatorIdCard(String idCard) {
 		if(StringHelper.isEmpty(idCard)) {
 			throw new IllegalArgumentException("提供的操作员身份证号是空的.");
@@ -599,8 +662,14 @@ AND op.area_id IN ('ff80808150ec3df70150f5c572601dd5', 'ff80808150ec3df70150f5c7
 		 * **/
 		return this.oldPersonDao.queryLocalOldPersonByAreaListAndCycle(areaCollection,cycle.getId());
 	}
-	
-	@Override
+
+	/**
+	 * 根据操作员的身份证号，获得对应操作员的已完成认证的老年人信息
+	 * <br/>
+	 * 该接口仅提供给终端应用
+	 * @param idCard
+	 * @return
+	 */
 	public List<Map<String, Object>> getFinishAuthOldPersonWithOperatorIdCard(String idCard) {
 		if(StringHelper.isEmpty(idCard)) {
 			throw new IllegalArgumentException("提供的操作员身份证号是空的.");

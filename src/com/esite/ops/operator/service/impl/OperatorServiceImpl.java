@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Expression;
@@ -19,12 +20,11 @@ import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.esite.framework.organize.service.OrganizeCacheUtil;
 import com.esite.framework.security.entity.Customer;
 import com.esite.framework.util.IdentityCardHelper;
 import com.esite.framework.util.JpaLikeQueryHelper;
 import com.esite.framework.util.StringHelper;
-import com.esite.ops.oldperson.service.IOldPersonService;
+import com.esite.ops.oldperson.service.impl.OldPersonService;
 import com.esite.ops.operator.dao.OperatorDao;
 import com.esite.ops.operator.entity.OperatorEntity;
 import com.esite.ops.operator.entity.OperatorQueryEntity;
@@ -44,9 +44,9 @@ public class OperatorServiceImpl implements IOperatorService {
 	@Autowired
 	private IOperatorSecurityService operatorSecurityService;
 	
-	@Autowired
-	private IOldPersonService oldPersonService;
-	
+	@Resource
+	private OldPersonService oldPersonService;
+
 	@Autowired
 	private IOperatorOperationLogService operatorOperationLogService;
 	

@@ -1,8 +1,8 @@
 package com.esite.ops.oldperson.controller;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.esite.framework.security.entity.Customer;
 import com.esite.framework.security.service.impl.Security;
 import com.esite.ops.oldperson.entity.OldPersonEntity;
-import com.esite.ops.oldperson.service.IOldPersonService;
+import com.esite.ops.oldperson.service.impl.OldPersonService;
 
 @Controller
 @RequestMapping("/oldperson")
 public class OldPersonRequestPageController {
 	
-	@Autowired
-	private IOldPersonService oldPersonService;
+	@Resource
+	private OldPersonService oldPersonService;
 	
 	@RequestMapping("/manager")
 	public String managerPage() {

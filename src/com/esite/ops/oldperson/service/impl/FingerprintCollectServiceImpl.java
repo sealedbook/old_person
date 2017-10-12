@@ -2,6 +2,8 @@ package com.esite.ops.oldperson.service.impl;
 
 import java.io.IOException;
 
+import javax.annotation.Resource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -12,15 +14,14 @@ import com.esite.ops.oldperson.entity.FingerprintCollectEntity;
 import com.esite.ops.oldperson.entity.OldPersonEntity;
 import com.esite.ops.oldperson.service.IFingerprintCollectLogService;
 import com.esite.ops.oldperson.service.IFingerprintCollectService;
-import com.esite.ops.oldperson.service.IOldPersonService;
 
 public class FingerprintCollectServiceImpl implements IFingerprintCollectService {
 	@Autowired
 	private FingerprintCollectDao fingerprintCollectDao;
 	@Autowired
 	private IFingerprintCollectLogService fingerprintCollectLogService;
-	@Autowired
-	private IOldPersonService oldPersonService;
+	@Resource
+	private OldPersonService oldPersonService;
 
 	@Override
 	public void collect(MultipartFile fingerprintTemplate,MultipartFile[] fingerprintPhoto, MultipartFile[] fingerprintChar,FingerprintCollectEntity fingerprintCollectEntity, Customer customer) throws IOException {

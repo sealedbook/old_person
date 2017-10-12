@@ -33,7 +33,7 @@ import com.esite.ops.mission.service.ICycleService;
 import com.esite.ops.oldperson.entity.FingerprintCollectEntity;
 import com.esite.ops.oldperson.entity.OldPersonEntity;
 import com.esite.ops.oldperson.service.IFingerprintCollectService;
-import com.esite.ops.oldperson.service.IOldPersonService;
+import com.esite.ops.oldperson.service.impl.OldPersonService;
 import com.esite.ops.operator.entity.OperatorEntity;
 import com.esite.ops.operator.service.IAreaConfigService;
 import com.esite.ops.operator.service.IOperatorSecurityService;
@@ -147,7 +147,7 @@ public class HealthWebService {
 			return "您没有权限访问.";
 		}
 		IOperatorService operatorService = (IOperatorService)WebApplicationContextUtil.getBean("operatorService");
-		IOldPersonService oldPersonService = (IOldPersonService)WebApplicationContextUtil.getBean("oldPersonService");
+		OldPersonService oldPersonService = (OldPersonService)WebApplicationContextUtil.getBean("oldPersonService");
 		IAreaConfigService areaConfigService = (IAreaConfigService)WebApplicationContextUtil.getBean("areaManageService");
 		IFingerprintCollectService fingerprintCollectService = (IFingerprintCollectService)WebApplicationContextUtil.getBean("fingerprintCollectService");
 		ICycleService cycleService = (ICycleService)WebApplicationContextUtil.getBean("cycleService");
@@ -212,7 +212,7 @@ public class HealthWebService {
 			logger.info("=======Web Service 您没有权限访问.");
 			return "您没有权限访问.";
 		}
-		IOldPersonService oldPersonService = (IOldPersonService)WebApplicationContextUtil.getBean("oldPersonService");
+		OldPersonService oldPersonService = (OldPersonService)WebApplicationContextUtil.getBean("oldPersonService");
 		IFingerprintCollectService fingerprintCollectService = (IFingerprintCollectService)WebApplicationContextUtil.getBean("fingerprintCollectService");
 		ICycleService cycleService = (ICycleService)WebApplicationContextUtil.getBean("cycleService");
 		IHealthInfoService healthInfoService = (IHealthInfoService)WebApplicationContextUtil.getBean("healthInfoService");

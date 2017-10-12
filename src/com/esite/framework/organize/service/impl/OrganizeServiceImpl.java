@@ -3,6 +3,8 @@ package com.esite.framework.organize.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,9 +17,7 @@ import com.esite.framework.organize.entity.OrganizeViewEntity;
 import com.esite.framework.organize.service.OrganizeCacheUtil;
 import com.esite.framework.organize.service.OrganizeService;
 import com.esite.framework.util.StringHelper;
-import com.esite.ops.oldperson.entity.OldPersonEntity;
-import com.esite.ops.oldperson.service.IOldPersonService;
-import com.esite.ops.operator.entity.OperatorEntity;
+import com.esite.ops.oldperson.service.impl.OldPersonService;
 import com.esite.ops.operator.service.IOperatorService;
 
 public class OrganizeServiceImpl implements OrganizeService {
@@ -27,8 +27,8 @@ public class OrganizeServiceImpl implements OrganizeService {
 	@Autowired
 	private OrganizeDao organizeDao;
 	
-	@Autowired
-	private IOldPersonService oldPersonService;
+	@Resource
+	private OldPersonService oldPersonService;
 	
 	@Autowired
 	private IOperatorService operatorService;

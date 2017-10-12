@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Expression;
@@ -22,7 +23,6 @@ import com.esite.framework.util.JpaLikeQueryHelper;
 import com.esite.framework.util.StringHelper;
 import com.esite.ops.health.dao.OldPersonWdVerifyInfoDao;
 import com.esite.ops.health.dao.OldPersonWdVerifyPhotoDao;
-import com.esite.ops.health.entity.HealthInfoEntity;
 import com.esite.ops.health.entity.OldPersonWdVerifyInfoEntity;
 import com.esite.ops.health.entity.OldPersonWdVerifyInfoQueryVO;
 import com.esite.ops.health.entity.OldPersonWdVerifyPhotoEntity;
@@ -31,15 +31,15 @@ import com.esite.ops.health.service.IOldPersonWdVerifyService;
 import com.esite.ops.mission.entity.CycleEntity;
 import com.esite.ops.mission.service.ICycleService;
 import com.esite.ops.oldperson.entity.OldPersonEntity;
-import com.esite.ops.oldperson.service.IOldPersonService;
+import com.esite.ops.oldperson.service.impl.OldPersonService;
 
 public class OldPersonWdVerifyImpl implements IOldPersonWdVerifyService {
 	@Autowired
 	private OldPersonWdVerifyInfoDao oldPersonWdVerifyInfoDao;
 	@Autowired
 	private OldPersonWdVerifyPhotoDao oldPersonWdVerifyPhotoDao;
-	@Autowired
-	private IOldPersonService oldPersonService;
+	@Resource
+	private OldPersonService oldPersonService;
 	@Autowired
 	private IOldPersonWdVerifyLogService oldPersonWdVerifyLogService;
 	@Autowired
