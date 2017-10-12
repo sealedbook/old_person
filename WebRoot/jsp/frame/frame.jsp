@@ -52,7 +52,7 @@
 			</div>
 		</div>
 		<!-- 
-		<div id="west" data-options="region:'west',split:false" title="<spring:message code="system.config.frame.left.title" />" style="width:210px;overflow-y:hidden">
+		<div id="west" data-options="region:'west',split:false" title="left title" style="width:210px;overflow-y:hidden">
 			<script>
 				var leftIframe = $("<iframe frameborder='0'></iframe>").appendTo($('#west'));
 				$(leftIframe).attr("id", "leftFrame");
