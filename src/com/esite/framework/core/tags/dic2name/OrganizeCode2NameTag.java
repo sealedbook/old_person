@@ -8,7 +8,7 @@ import javax.servlet.jsp.tagext.TagSupport;
 
 import com.esite.framework.core.factory.WebApplicationContextUtil;
 import com.esite.framework.organize.entity.OrganizeViewEntity;
-import com.esite.framework.organize.service.OrganizeService;
+import com.esite.framework.organize.service.impl.OrganizeService;
 
 public class OrganizeCode2NameTag extends TagSupport {
 	

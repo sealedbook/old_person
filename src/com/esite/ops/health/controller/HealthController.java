@@ -23,30 +23,28 @@ import com.esite.ops.health.entity.HealthFingerprintEntity;
 import com.esite.ops.health.entity.HealthInfoEntity;
 import com.esite.ops.health.entity.HealthPhotoEntity;
 import com.esite.ops.health.entity.HealthResultEntity;
-import com.esite.ops.health.service.IFingerprintInfoService;
-import com.esite.ops.health.service.IHealthInfoService;
-import com.esite.ops.health.service.IHealthPhotoService;
-import com.esite.ops.health.service.IHealthResultService;
+import com.esite.ops.health.service.impl.FingerprintInfoService;
+import com.esite.ops.health.service.impl.HealthInfoService;
+import com.esite.ops.health.service.impl.HealthPhotoService;
+import com.esite.ops.health.service.impl.HealthResultService;
 import com.esite.ops.health.vo.HealthInfoQueryVO;
 import com.esite.ops.oldperson.entity.OldPersonEntity;
-import com.esite.ops.oldperson.service.IFingerprintCollectService;
-import com.esite.ops.oldperson.service.impl.OldPersonService;
 
 @Controller
 @RequestMapping("/health")
 public class HealthController {
 	
-	@Autowired
-	private IHealthInfoService healthInfoService;
+	@Resource
+	private HealthInfoService healthInfoService;
 	
-	@Autowired
-	private IFingerprintInfoService fingerprintInfoService;
+	@Resource
+	private FingerprintInfoService fingerprintInfoService;
 	
-	@Autowired
-	private IHealthPhotoService healthPhotoService;
+	@Resource
+	private HealthPhotoService healthPhotoService;
 	
-	@Autowired
-	private IHealthResultService healthResultService;
+	@Resource
+	private HealthResultService healthResultService;
 	
 	@RequestMapping(value="/verify/manager")
 	public String manager() {

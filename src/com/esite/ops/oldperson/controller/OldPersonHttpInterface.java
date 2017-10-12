@@ -25,10 +25,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.esite.framework.security.entity.Customer;
 import com.esite.framework.util.StringHelper;
-import com.esite.ops.health.service.IOldPersonWdVerifyService;
+import com.esite.ops.health.service.impl.OldPersonWdVerifyService;
 import com.esite.ops.oldperson.entity.FingerprintCollectEntity;
 import com.esite.ops.oldperson.entity.OldPersonEntity;
-import com.esite.ops.oldperson.service.IFingerprintCollectService;
+import com.esite.ops.oldperson.service.impl.FingerprintCollectService;
 import com.esite.ops.oldperson.service.impl.OldPersonService;
 
 @Controller
@@ -37,10 +37,10 @@ public class OldPersonHttpInterface {
 
     @Resource
     private OldPersonService oldPersonService;
-    @Autowired
-    private IOldPersonWdVerifyService oldPersonWdVerifyService;
-    @Autowired
-    private IFingerprintCollectService fingerprintCollectService;
+    @Resource
+    private OldPersonWdVerifyService oldPersonWdVerifyService;
+    @Resource
+    private FingerprintCollectService fingerprintCollectService;
 
     @RequestMapping("/{oldPersonId}/photo")
     public @ResponseBody

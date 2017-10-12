@@ -25,19 +25,19 @@ import com.esite.framework.util.JsonConverter;
 import com.esite.framework.util.PagerRequest;
 import com.esite.framework.util.SerializerHelper;
 import com.esite.framework.util.StringHelper;
-import com.esite.ops.health.service.IHealthInfoImportErrorLogService;
-import com.esite.ops.health.service.IHealthInfoImportLogService;
-import com.esite.ops.health.service.IHealthInfoService;
+import com.esite.ops.health.service.impl.HealthInfoImportErrorLogService;
+import com.esite.ops.health.service.impl.HealthInfoImportLogService;
+import com.esite.ops.health.service.impl.HealthInfoService;
 import com.esite.ops.mission.entity.CycleEntity;
-import com.esite.ops.mission.service.ICycleService;
+import com.esite.ops.mission.service.impl.CycleService;
 import com.esite.ops.oldperson.entity.FingerprintCollectEntity;
 import com.esite.ops.oldperson.entity.OldPersonEntity;
-import com.esite.ops.oldperson.service.IFingerprintCollectService;
+import com.esite.ops.oldperson.service.impl.FingerprintCollectService;
 import com.esite.ops.oldperson.service.impl.OldPersonService;
 import com.esite.ops.operator.entity.OperatorEntity;
-import com.esite.ops.operator.service.IAreaConfigService;
-import com.esite.ops.operator.service.IOperatorSecurityService;
-import com.esite.ops.operator.service.IOperatorService;
+import com.esite.ops.operator.service.impl.AreaConfigService;
+import com.esite.ops.operator.service.impl.OperatorSecurityService;
+import com.esite.ops.operator.service.impl.OperatorService;
 import com.esite.ops.ws.entity.DownloadDataInfoVO;
 import com.esite.ops.ws.entity.DownloadOldPersonFingerprintVO;
 import com.esite.ops.ws.entity.DownloadOldPersonInfoVO;
@@ -70,9 +70,9 @@ public class HealthWebService {
 			webServiceResult.put("message", "您没有权限访问.");
 			return JsonConverter.convert(webServiceResult);
 		}
-		IHealthInfoImportLogService healthInfoImportLogService = (IHealthInfoImportLogService)WebApplicationContextUtil.getBean("healthInfoImportLogService");
-		IHealthInfoService healthInfoService = (IHealthInfoService)WebApplicationContextUtil.getBean("healthInfoService");
-		IHealthInfoImportErrorLogService healthInfoImportErrorLogService = (IHealthInfoImportErrorLogService)WebApplicationContextUtil.getBean("healthInfoImportErrorLogService");
+		HealthInfoImportLogService healthInfoImportLogService = (HealthInfoImportLogService)WebApplicationContextUtil.getBean("healthInfoImportLogService");
+		HealthInfoService healthInfoService = (HealthInfoService)WebApplicationContextUtil.getBean("healthInfoService");
+		HealthInfoImportErrorLogService healthInfoImportErrorLogService = (HealthInfoImportErrorLogService)WebApplicationContextUtil.getBean("healthInfoImportErrorLogService");
 		
 		//logger.info("=======Web Service 获得的服务类：" + healthInfoService);
 		logger.info("=======Web Service 接收到参数,token:" + token);
@@ -146,12 +146,12 @@ public class HealthWebService {
 			logger.info("=======Web Service 您没有权限访问.");
 			return "您没有权限访问.";
 		}
-		IOperatorService operatorService = (IOperatorService)WebApplicationContextUtil.getBean("operatorService");
+		OperatorService operatorService = (OperatorService)WebApplicationContextUtil.getBean("operatorService");
 		OldPersonService oldPersonService = (OldPersonService)WebApplicationContextUtil.getBean("oldPersonService");
-		IAreaConfigService areaConfigService = (IAreaConfigService)WebApplicationContextUtil.getBean("areaManageService");
-		IFingerprintCollectService fingerprintCollectService = (IFingerprintCollectService)WebApplicationContextUtil.getBean("fingerprintCollectService");
-		ICycleService cycleService = (ICycleService)WebApplicationContextUtil.getBean("cycleService");
-		IHealthInfoService healthInfoService = (IHealthInfoService)WebApplicationContextUtil.getBean("healthInfoService");
+		AreaConfigService areaConfigService = (AreaConfigService)WebApplicationContextUtil.getBean("areaManageService");
+		FingerprintCollectService fingerprintCollectService = (FingerprintCollectService)WebApplicationContextUtil.getBean("fingerprintCollectService");
+		CycleService cycleService = (CycleService)WebApplicationContextUtil.getBean("cycleService");
+		HealthInfoService healthInfoService = (HealthInfoService)WebApplicationContextUtil.getBean("healthInfoService");
 		
 		String operatorIdCard = user.getAccount();
 		logger.info("=======Web Service 操作员身份证号:" + operatorIdCard);
@@ -213,9 +213,9 @@ public class HealthWebService {
 			return "您没有权限访问.";
 		}
 		OldPersonService oldPersonService = (OldPersonService)WebApplicationContextUtil.getBean("oldPersonService");
-		IFingerprintCollectService fingerprintCollectService = (IFingerprintCollectService)WebApplicationContextUtil.getBean("fingerprintCollectService");
-		ICycleService cycleService = (ICycleService)WebApplicationContextUtil.getBean("cycleService");
-		IHealthInfoService healthInfoService = (IHealthInfoService)WebApplicationContextUtil.getBean("healthInfoService");
+		FingerprintCollectService fingerprintCollectService = (FingerprintCollectService)WebApplicationContextUtil.getBean("fingerprintCollectService");
+		CycleService cycleService = (CycleService)WebApplicationContextUtil.getBean("cycleService");
+		HealthInfoService healthInfoService = (HealthInfoService)WebApplicationContextUtil.getBean("healthInfoService");
 		
 		OldPersonEntity oldPersonEntity = oldPersonService.getOldPerson(oldPersonId);
 		
@@ -276,7 +276,8 @@ public class HealthWebService {
 		MessageContext mc = wsContext.getMessageContext();
 		HttpServletRequest request = (HttpServletRequest)(mc.get(MessageContext.SERVLET_REQUEST));
 		logger.info("web service 客户端访问地址：" + request.getRemoteAddr());
-		Object userObject = request.getServletContext().getAttribute(IOperatorSecurityService.SERVLET_OPERATOR_TOKEN_KEY_PREFIX + token);
+		Object userObject = request.getServletContext().getAttribute(
+			OperatorSecurityService.SERVLET_OPERATOR_TOKEN_KEY_PREFIX + token);
 		if(userObject instanceof User) {
 			return (User)userObject;
 		}

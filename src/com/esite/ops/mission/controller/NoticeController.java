@@ -2,9 +2,9 @@ package com.esite.ops.mission.controller;
 
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +20,7 @@ import com.esite.framework.util.PagerRequest;
 import com.esite.framework.util.PagerResponse;
 import com.esite.ops.mission.entity.NoticeEntity;
 import com.esite.ops.mission.entity.NoticeQueryVO;
-import com.esite.ops.mission.service.INoticeService;
+import com.esite.ops.mission.service.impl.NoticeService;
 
 /**
  * 通知通告
@@ -31,8 +31,8 @@ import com.esite.ops.mission.service.INoticeService;
 @RequestMapping("/notice")
 public class NoticeController {
 	
-	@Autowired
-	private INoticeService noticeService;
+	@Resource
+	private NoticeService noticeService;
 	
 	@RequestMapping("/manager")
 	public String managerPage() {

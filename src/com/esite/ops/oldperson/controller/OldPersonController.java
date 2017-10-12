@@ -10,7 +10,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.io.IOUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,15 +28,15 @@ import com.esite.framework.util.PagerResponse;
 import com.esite.ops.oldperson.entity.FingerprintCollectEntity;
 import com.esite.ops.oldperson.entity.OldPersonEntity;
 import com.esite.ops.oldperson.entity.OldPersonQueryEntity;
-import com.esite.ops.oldperson.service.IFingerprintCollectService;
+import com.esite.ops.oldperson.service.impl.FingerprintCollectService;
 import com.esite.ops.oldperson.service.impl.OldPersonService;
 
 @Controller
 @RequestMapping("/oldperson")
 public class OldPersonController {
 
-	@Autowired
-	private IFingerprintCollectService fingerprintCollectService;
+	@Resource
+	private FingerprintCollectService fingerprintCollectService;
 	@Resource
 	private OldPersonService oldPersonService;
 	

@@ -17,5 +17,5 @@
             http://www.springframework.org/schema/util
             http://www.springframework.org/schema/util/spring-util.xsd">
             
-	<bean id="statisticsService" class="com.esite.ops.statistics.service.impl.StatisticsServiceImpl"></bean>
+	<bean id="statisticsService" class="com.esite.ops.statistics.service.impl.StatisticsService"></bean>
 </beans>

@@ -17,11 +17,11 @@
             http://www.springframework.org/schema/util
             http://www.springframework.org/schema/util/spring-util.xsd">
             
-	<bean id="operatorService" class="com.esite.ops.operator.service.impl.OperatorServiceImpl"></bean>
+	<bean id="operatorService" class="com.esite.ops.operator.service.impl.OperatorService"></bean>
 	
-	<bean id="areaManageService" class="com.esite.ops.operator.service.impl.AreaConfigServiceImpl"></bean>
+	<bean id="areaManageService" class="com.esite.ops.operator.service.impl.AreaConfigService"></bean>
 
-	<bean id="operatorSecurityService" class="com.esite.ops.operator.service.impl.OperatorSecurityServiceImpl"></bean>
+	<bean id="operatorSecurityService" class="com.esite.ops.operator.service.impl.OperatorSecurityService"></bean>
 	
-	<bean id="operatorOperationLogService" class="com.esite.ops.operator.service.impl.OperatorOperationLogServiceImpl"></bean>
+	<bean id="operatorOperationLogService" class="com.esite.ops.operator.service.impl.OperatorOperationLogService"></bean>
 </beans>

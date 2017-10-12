@@ -2,6 +2,7 @@ package com.esite.ops.health.controller;
 
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,22 +18,18 @@ import com.esite.framework.security.entity.Customer;
 import com.esite.framework.util.PagerRequest;
 import com.esite.framework.util.PagerResponse;
 import com.esite.framework.util.StringHelper;
-import com.esite.ops.health.entity.HealthFingerprintEntity;
-import com.esite.ops.health.entity.HealthInfoEntity;
-import com.esite.ops.health.entity.HealthPhotoEntity;
 import com.esite.ops.health.entity.OldPersonWdVerifyInfoEntity;
 import com.esite.ops.health.entity.OldPersonWdVerifyInfoQueryVO;
 import com.esite.ops.health.entity.OldPersonWdVerifyPhotoEntity;
-import com.esite.ops.health.service.IOldPersonWdVerifyService;
-import com.esite.ops.health.vo.HealthInfoQueryVO;
+import com.esite.ops.health.service.impl.OldPersonWdVerifyService;
 import com.esite.ops.oldperson.entity.OldPersonEntity;
 
 @Controller
 @RequestMapping("/health/wd")
 public class HealthWdController {
 	
-	@Autowired
-	private IOldPersonWdVerifyService oldPersonWdVerifyService;
+	@Resource
+	private OldPersonWdVerifyService oldPersonWdVerifyService;
 	
 	@RequestMapping(value="/verify/manager")
 	public String manager() {

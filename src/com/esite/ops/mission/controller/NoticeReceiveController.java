@@ -1,6 +1,7 @@
 package com.esite.ops.mission.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.annotation.Resource;
+
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,14 +11,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.esite.framework.util.PagerRequest;
 import com.esite.framework.util.PagerResponse;
 import com.esite.ops.mission.entity.NoticeReceiveEntity;
-import com.esite.ops.mission.service.INoticeReceiveService;
+import com.esite.ops.mission.service.impl.NoticeReceiveService;
 
 @Controller
 @RequestMapping("/notice/{noticeId}/receive")
 public class NoticeReceiveController {
 	
-	@Autowired
-	private INoticeReceiveService noticeReceiveService;
+	@Resource
+	private NoticeReceiveService noticeReceiveService;
 	
 	@RequestMapping("/list")
 	public @ResponseBody PagerResponse<NoticeReceiveEntity> list(PagerRequest pagerRequest,@PathVariable String noticeId) {

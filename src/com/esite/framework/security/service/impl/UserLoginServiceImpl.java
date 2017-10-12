@@ -2,6 +2,8 @@ package com.esite.framework.security.service.impl;
 
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -12,14 +14,14 @@ import com.esite.framework.security.entity.Role;
 import com.esite.framework.security.service.RoleService;
 import com.esite.framework.security.service.UserLoginService;
 import com.esite.framework.user.entity.User;
-import com.esite.framework.user.service.UserService;
+import com.esite.framework.user.service.impl.UserService;
 import com.esite.framework.util.StringHelper;
 
 public class UserLoginServiceImpl implements UserLoginService {
 	
 	private static Logger logger = Logger.getLogger(UserLoginServiceImpl.class);
 	
-	@Autowired
+	@Resource
 	private UserService userService;
 	
 	@Autowired

@@ -7,16 +7,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import jxl.Workbook;
-import jxl.format.Alignment;
-import jxl.format.VerticalAlignment;
 import jxl.read.biff.BiffException;
 import jxl.write.Label;
-import jxl.write.WritableCellFormat;
-import jxl.write.WritableFont;
 import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 import jxl.write.WriteException;
@@ -33,26 +30,23 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.esite.framework.dictionary.entity.DictionaryEntity;
 import com.esite.framework.dictionary.service.DictionaryService;
 import com.esite.framework.organize.entity.OrganizeViewEntity;
-import com.esite.framework.organize.service.OrganizeService;
-import com.esite.framework.security.entity.Customer;
+import com.esite.framework.organize.service.impl.OrganizeService;
 import com.esite.framework.util.StringHelper;
-import com.esite.ops.health.entity.HealthInfoEntity;
 import com.esite.ops.mission.entity.CycleEntity;
-import com.esite.ops.mission.service.ICycleService;
-import com.esite.ops.oldperson.entity.OldPersonEntity;
-import com.esite.ops.operator.service.IOperatorService;
+import com.esite.ops.mission.service.impl.CycleService;
+import com.esite.ops.operator.service.impl.OperatorService;
 
 @Controller
 @RequestMapping("/operator/work")
 public class OperatorWorkController {
 
-	@Autowired
-	private ICycleService cycleService;
+	@Resource
+	private CycleService cycleService;
 	
-	@Autowired
-	private IOperatorService operatorService;
+	@Resource
+	private OperatorService operatorService;
 	
-	@Autowired
+	@Resource
 	private OrganizeService organizeService;
 	
 	@Autowired

@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ import com.esite.framework.security.entity.Customer;
 import com.esite.framework.security.entity.Role;
 import com.esite.framework.security.service.RoleService;
 import com.esite.framework.user.entity.User;
-import com.esite.framework.user.service.UserService;
+import com.esite.framework.user.service.impl.UserService;
 import com.esite.framework.util.PagerRequest;
 import com.esite.framework.util.PagerResponse;
 import com.esite.framework.util.StringHelper;
@@ -32,7 +33,7 @@ public class UserController {
 	
 	private static final String MANAGER_ROLE_ID = "E89E35331C234CAB86439C06AF0F32F9";
 	
-	@Autowired
+	@Resource
 	private UserService userService;
 	
 	@Autowired

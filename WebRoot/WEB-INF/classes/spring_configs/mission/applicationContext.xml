@@ -17,8 +17,8 @@
             http://www.springframework.org/schema/util
             http://www.springframework.org/schema/util/spring-util.xsd">
             
-	<bean id="noticeService" class="com.esite.ops.mission.service.impl.NoticeServiceImpl"></bean>
-	<bean id="noticeReceiveService" class="com.esite.ops.mission.service.impl.NoticeReceiveServiceImpl"></bean>
+	<bean id="noticeService" class="com.esite.ops.mission.service.impl.NoticeService"></bean>
+	<bean id="noticeReceiveService" class="com.esite.ops.mission.service.impl.NoticeReceiveService"></bean>
 	
-	<bean id="cycleService" class="com.esite.ops.mission.service.impl.CycleServiceImpl"></bean>
+	<bean id="cycleService" class="com.esite.ops.mission.service.impl.CycleService"></bean>
 </beans>

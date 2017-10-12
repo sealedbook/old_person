@@ -2,6 +2,7 @@ package com.esite.ops.oldperson.controller;
 
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +18,9 @@ import org.springframework.web.multipart.MultipartFile;
 import com.esite.framework.security.entity.Customer;
 import com.esite.framework.util.PagerRequest;
 import com.esite.framework.util.PagerResponse;
-import com.esite.ops.oldperson.entity.OldPersonEntity;
-import com.esite.ops.oldperson.entity.OldPersonQueryEntity;
 import com.esite.ops.oldperson.entity.OldPersonSocialSecurityEntity;
 import com.esite.ops.oldperson.entity.OldPersonSocialSecurityQueryVO;
-import com.esite.ops.oldperson.service.IOldPersonSocialSecurityImportLogService;
-import com.esite.ops.oldperson.service.IOldPersonSocialSecurityService;
+import com.esite.ops.oldperson.service.impl.OldPersonSocialSecurityService;
 
 /**
  * 老年人社保
@@ -33,8 +31,8 @@ import com.esite.ops.oldperson.service.IOldPersonSocialSecurityService;
 @RequestMapping("/oldperson/social/security")
 public class OldPersonSocialSecurityController {
 
-	@Autowired
-	private IOldPersonSocialSecurityService oldPersonSocialSecurityService;
+	@Resource
+	private OldPersonSocialSecurityService oldPersonSocialSecurityService;
 	
 	@RequestMapping("/manager")
 	public String manager() {

@@ -13,7 +13,7 @@ import com.esite.framework.security.service.impl.Security;
 import com.esite.framework.user.entity.User;
 import com.esite.framework.util.StringHelper;
 import com.esite.framework.util.WebRequestHelper;
-import com.esite.ops.operator.service.IOperatorSecurityService;
+import com.esite.ops.operator.service.impl.OperatorSecurityService;
 
 public class TerminalTokenInterceptor extends HandlerInterceptorAdapter {
 
@@ -23,7 +23,7 @@ public class TerminalTokenInterceptor extends HandlerInterceptorAdapter {
 	public boolean preHandle(HttpServletRequest request,HttpServletResponse response, Object handler) throws Exception {
 		if(!WebRequestHelper.isWebClient(request)) {
 			response.setCharacterEncoding("UTF-8");
-			String token = request.getParameter(IOperatorSecurityService.TERMINAL_REQUEST_PARAM_OPERATOR_TOKEN);
+			String token = request.getParameter(OperatorSecurityService.TERMINAL_REQUEST_PARAM_OPERATOR_TOKEN);
 			if(StringHelper.isEmpty(token)) {
 				response.setStatus(CustomHttpStatus.SESSION_TIME_OUT.getCode());
 				PrintWriter out = response.getWriter();
@@ -31,7 +31,7 @@ public class TerminalTokenInterceptor extends HandlerInterceptorAdapter {
 				logger.info("终端登录超时.终端请求" + WebRequestHelper.getRequestURI(request));
 				return false;
 			}
-			Object userObject = request.getServletContext().getAttribute(IOperatorSecurityService.SERVLET_OPERATOR_TOKEN_KEY_PREFIX + token);
+			Object userObject = request.getServletContext().getAttribute(OperatorSecurityService.SERVLET_OPERATOR_TOKEN_KEY_PREFIX + token);
 			if(userObject instanceof User) {
 				User user = (User)userObject;
 				request.getSession().setAttribute(Security.SESSION_USER_KEY, user);

@@ -17,5 +17,5 @@
             http://www.springframework.org/schema/util
             http://www.springframework.org/schema/util/spring-util.xsd">
             
-	<bean id="organizeService" class="com.esite.framework.organize.service.impl.OrganizeServiceImpl"></bean>
+	<bean id="organizeService" class="com.esite.framework.organize.service.impl.OrganizeService"></bean>
 </beans>

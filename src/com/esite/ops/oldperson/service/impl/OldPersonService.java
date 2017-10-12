@@ -33,7 +33,7 @@ import com.esite.framework.dictionary.entity.DictionaryEntity;
 import com.esite.framework.dictionary.service.DictionaryService;
 import com.esite.framework.organize.entity.OrganizeEntity;
 import com.esite.framework.organize.entity.OrganizeViewEntity;
-import com.esite.framework.organize.service.OrganizeService;
+import com.esite.framework.organize.service.impl.OrganizeService;
 import com.esite.framework.security.entity.Customer;
 import com.esite.framework.util.ChineseHelper;
 import com.esite.framework.util.IdentityCardHelper;
@@ -41,14 +41,13 @@ import com.esite.framework.util.JpaLikeQueryHelper;
 import com.esite.framework.util.ReadExcel;
 import com.esite.framework.util.StringHelper;
 import com.esite.ops.mission.entity.CycleEntity;
-import com.esite.ops.mission.service.ICycleService;
+import com.esite.ops.mission.service.impl.CycleService;
 import com.esite.ops.oldperson.dao.OldPersonDao;
 import com.esite.ops.oldperson.entity.OldPersonEntity;
 import com.esite.ops.oldperson.entity.OldPersonQueryEntity;
-import com.esite.ops.oldperson.service.IOldPersonSecurityService;
 import com.esite.ops.operator.entity.OperatorEntity;
-import com.esite.ops.operator.service.IAreaConfigService;
-import com.esite.ops.operator.service.IOperatorService;
+import com.esite.ops.operator.service.impl.AreaConfigService;
+import com.esite.ops.operator.service.impl.OperatorService;
 
 @Service("oldPersonService")
 public class OldPersonService {
@@ -57,18 +56,18 @@ public class OldPersonService {
 	private OldPersonDao oldPersonDao;
 	@Autowired
 	private DictionaryService dictionaryService;
-	@Autowired
+	@Resource
 	private OrganizeService organizeService;
-	@Autowired
-	private ICycleService cycleService;
-	@Autowired
-	private IOperatorService operatorService;
-	@Autowired
-	private IAreaConfigService areaConfigService;
+	@Resource
+	private CycleService cycleService;
+	@Resource
+	private OperatorService operatorService;
+	@Resource
+	private AreaConfigService areaManageService;
 	@Resource
 	private OldPersonOperationLogService oldPersonOperationLogService;
-	@Autowired
-	private IOldPersonSecurityService oldPersonSecurityService;
+	@Resource
+	private OldPersonSecurityService oldPersonSecurityService;
 
 	/**
 	 * 多条件查询老年人
@@ -600,7 +599,7 @@ public class OldPersonService {
 		if(null == cycle) {
 			throw new IllegalArgumentException("给定的日期不在某个周期设定内.");
 		}
-		List<String> areaCollection = this.areaConfigService.getAreaIdCollectionWithOperatorId(operator.getId());
+		List<String> areaCollection = this.areaManageService.getAreaIdCollectionWithOperatorId(operator.getId());
 		/** 
 		 * 
 		 * 

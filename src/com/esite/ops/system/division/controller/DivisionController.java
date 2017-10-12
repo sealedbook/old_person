@@ -2,16 +2,15 @@ package com.esite.ops.system.division.controller;
 
 import javax.annotation.Resource;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.esite.framework.organize.service.OrganizeService;
+import com.esite.framework.organize.service.impl.OrganizeService;
 import com.esite.framework.util.StringHelper;
 import com.esite.ops.oldperson.service.impl.OldPersonService;
-import com.esite.ops.operator.service.IOperatorService;
+import com.esite.ops.operator.service.impl.OperatorService;
 
 @Controller
 @RequestMapping("/division")
@@ -20,10 +19,10 @@ public class DivisionController {
 	@Resource
 	private OldPersonService oldPersonService;
 	
-	@Autowired
-	private IOperatorService operatorService;
+	@Resource
+	private OperatorService operatorService;
 	
-	@Autowired
+	@Resource
 	private OrganizeService organizeService;
 	
 	@RequestMapping("/manager")

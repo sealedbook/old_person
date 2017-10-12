@@ -8,7 +8,7 @@ import javax.servlet.jsp.tagext.TagSupport;
 
 import com.esite.framework.core.factory.WebApplicationContextUtil;
 import com.esite.framework.user.entity.User;
-import com.esite.framework.user.service.UserService;
+import com.esite.framework.user.service.impl.UserService;
 
 public class UserCode2NameTag extends TagSupport {
 	

@@ -7,21 +7,20 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.esite.framework.security.entity.Customer;
-import com.esite.ops.health.service.IHealthInfoService;
+import com.esite.ops.health.service.impl.HealthInfoService;
 import com.esite.ops.oldperson.service.impl.OldPersonService;
 
 @Controller
 @RequestMapping("/http/health")
 public class HealthStatisticsHttpInterface {
 	
-	@Autowired
-	private IHealthInfoService healthInfoService;
+	@Resource
+	private HealthInfoService healthInfoService;
 	@Resource
 	private OldPersonService oldPersonService;
 	

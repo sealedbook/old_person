@@ -19,14 +19,14 @@
             
 	<bean id="oldPersonService" class="com.esite.ops.oldperson.service.impl.OldPersonService"></bean>
 	<bean id="oldPersonOperationLogService" class="com.esite.ops.oldperson.service.impl.OldPersonOperationLogService"></bean>
-	<bean id="oldPersonSocialSecurityService" class="com.esite.ops.oldperson.service.impl.OldPersonSocialSecurityServiceImpl"></bean>
-	<bean id="oldPersonSocialSecurityImportLogService" class="com.esite.ops.oldperson.service.impl.OldPersonSocialSecurityImportLogServiceImpl"></bean>
-	<bean id="oldPersonImportLogService" class="com.esite.ops.oldperson.service.impl.OldPersonImportLogServiceImpl"></bean>
+	<bean id="oldPersonSocialSecurityService" class="com.esite.ops.oldperson.service.impl.OldPersonSocialSecurityService"></bean>
+	<bean id="oldPersonSocialSecurityImportLogService" class="com.esite.ops.oldperson.service.impl.OldPersonSocialSecurityImportLogService"></bean>
+	<bean id="oldPersonImportLogService" class="com.esite.ops.oldperson.service.impl.OldPersonImportLogService"></bean>
 	
-	<bean id="oldPersonSecurityService" class="com.esite.ops.oldperson.service.impl.OldPersonSecurityServiceImpl"></bean>
+	<bean id="oldPersonSecurityService" class="com.esite.ops.oldperson.service.impl.OldPersonSecurityService"></bean>
 	
-	<bean id="fingerprintCollectService" class="com.esite.ops.oldperson.service.impl.FingerprintCollectServiceImpl"></bean>
+	<bean id="fingerprintCollectService" class="com.esite.ops.oldperson.service.impl.FingerprintCollectService"></bean>
 
-	<bean id="fingerprintCollectLogService" class="com.esite.ops.oldperson.service.impl.FingerprintCollectLogServiceImpl"></bean>
+	<bean id="fingerprintCollectLogService" class="com.esite.ops.oldperson.service.impl.FingerprintCollectLogService"></bean>
 
 </beans>

@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -46,22 +47,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.esite.framework.dictionary.entity.DictionaryEntity;
 import com.esite.framework.dictionary.service.DictionaryService;
 import com.esite.framework.organize.entity.OrganizeViewEntity;
-import com.esite.framework.organize.service.OrganizeService;
+import com.esite.framework.organize.service.impl.OrganizeService;
 import com.esite.framework.security.entity.Customer;
 import com.esite.framework.util.StringHelper;
-import com.esite.ops.health.entity.HealthFingerprintEntity;
 import com.esite.ops.health.entity.HealthInfoEntity;
 import com.esite.ops.health.entity.HealthResultEntity;
-import com.esite.ops.health.service.IHealthPhotoService;
-import com.esite.ops.health.service.IHealthResultService;
-import com.esite.ops.health.service.IHealthInfoService;
+import com.esite.ops.health.service.impl.HealthInfoService;
+import com.esite.ops.health.service.impl.HealthResultService;
 import com.esite.ops.health.util.HealthResult;
 import com.esite.ops.health.util.HealthResultHelper;
 import com.esite.ops.mission.entity.CycleEntity;
-import com.esite.ops.mission.service.ICycleService;
+import com.esite.ops.mission.service.impl.CycleService;
 import com.esite.ops.oldperson.entity.OldPersonEntity;
 import com.esite.ops.operator.entity.OperatorEntity;
-import com.esite.ops.operator.service.IOperatorService;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -71,26 +69,20 @@ import freemarker.template.TemplateException;
 @RequestMapping("/health/report")
 public class HealthReportController {
 	
-	@Autowired
-	private IHealthInfoService healthInfoService;
+	@Resource
+	private HealthInfoService healthInfoService;
 	
-	@Autowired
+	@Resource
 	private OrganizeService organizeService;
 	
-	@Autowired
-	private ICycleService cycleService;
+	@Resource
+	private CycleService cycleService;
 	
-	@Autowired
-	private IHealthResultService healthResultService;
-	
-	@Autowired
-	private IOperatorService operatorService;
+	@Resource
+	private HealthResultService healthResultService;
 	
 	@Autowired
 	private DictionaryService dictionaryService;
-	
-	@Autowired
-	private IHealthPhotoService healthPhotoService;
 	
 	@RequestMapping(value="/manager")
 	public String manager() {

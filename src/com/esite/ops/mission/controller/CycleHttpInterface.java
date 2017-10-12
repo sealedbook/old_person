@@ -4,20 +4,21 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.annotation.Resource;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.esite.ops.mission.entity.CycleEntity;
-import com.esite.ops.mission.service.ICycleService;
+import com.esite.ops.mission.service.impl.CycleService;
 
 @Controller
 @RequestMapping("/http/cycle")
 public class CycleHttpInterface {
 
-	@Autowired
-	private ICycleService cycleService;
+	@Resource
+	private CycleService cycleService;
 	
 	@RequestMapping("/current")
 	public @ResponseBody Map<String,Object> currentCycle() {

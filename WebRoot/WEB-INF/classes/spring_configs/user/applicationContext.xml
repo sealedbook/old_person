@@ -17,5 +17,5 @@
             http://www.springframework.org/schema/util
             http://www.springframework.org/schema/util/spring-util.xsd">
             
-	<bean id="userService" class="com.esite.framework.user.service.impl.UserServiceImpl"></bean>
+	<bean id="userService" class="com.esite.framework.user.service.impl.UserService"></bean>
 </beans>

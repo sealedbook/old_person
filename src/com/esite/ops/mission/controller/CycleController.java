@@ -2,6 +2,7 @@ package com.esite.ops.mission.controller;
 
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ import com.esite.framework.util.PagerRequest;
 import com.esite.framework.util.PagerResponse;
 import com.esite.ops.mission.entity.CycleEntity;
 import com.esite.ops.mission.entity.NoticeEntity;
-import com.esite.ops.mission.service.ICycleService;
+import com.esite.ops.mission.service.impl.CycleService;
 
 /**
  * 周期管理
@@ -32,8 +33,8 @@ import com.esite.ops.mission.service.ICycleService;
 @RequestMapping("/cycle")
 public class CycleController {
 
-	@Autowired
-	private ICycleService cycleService;
+	@Resource
+	private CycleService cycleService;
 	
 	@RequestMapping("/manager")
 	public String managerPage() {

@@ -4,32 +4,28 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.esite.framework.security.entity.Customer;
 import com.esite.ops.mission.entity.NoticeEntity;
-import com.esite.ops.mission.service.INoticeReceiveService;
-import com.esite.ops.mission.service.INoticeService;
-import com.esite.ops.operator.service.IOperatorSecurityService;
-import com.esite.ops.operator.service.IOperatorService;
+import com.esite.ops.mission.service.impl.NoticeReceiveService;
+import com.esite.ops.mission.service.impl.NoticeService;
+import com.esite.ops.operator.service.impl.OperatorSecurityService;
 
 @Controller
 @RequestMapping("/http/notice")
 public class NoticeHttpInterface {
 
-	@Autowired
-	private INoticeService noticeService;
+	@Resource
+	private NoticeService noticeService;
 	
-	@Autowired
-	private INoticeReceiveService noticeReceiveService;
-	
-	@Autowired
-	private IOperatorService operatorService;
+	@Resource
+	private NoticeReceiveService noticeReceiveService;
 	
 	/**
 	 * 获得未签收的通知通告
@@ -79,7 +75,7 @@ public class NoticeHttpInterface {
 	public @ResponseBody Map<String,Object> receive(String noticeId,HttpServletRequest request) {
 		Map<String,Object> resultMap = new HashMap<String, Object>();
 		try {
-			String imei = request.getParameter(IOperatorSecurityService.TERMINAL_IMEI);
+			String imei = request.getParameter(OperatorSecurityService.TERMINAL_IMEI);
 			noticeReceiveService.receive(noticeId,imei,new Customer(request));
 			resultMap.put("responseStatus", "OK");
 		} catch(IllegalArgumentException e) {

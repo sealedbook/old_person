@@ -18,12 +18,12 @@
             http://www.springframework.org/schema/util/spring-util.xsd">
             
 	<bean id="healthInfoService" class="com.esite.ops.health.service.impl.HealthInfoService"></bean>
-	<bean id="healthResultService" class="com.esite.ops.health.service.impl.HealthResultServiceImpl"></bean>
-	<bean id="fingerprintInfoService" class="com.esite.ops.health.service.impl.FingerprintInfoServiceImpl"></bean>
-	<bean id="healthPhotoService" class="com.esite.ops.health.service.impl.HealthPhotoServiceImpl"></bean>
-	<bean id="healthInfoImportLogService" class="com.esite.ops.health.service.impl.HealthInfoImportLogServiceImpl"></bean>
-	<bean id="healthInfoImportErrorLogService" class="com.esite.ops.health.service.impl.HealthInfoImportErrorLogServiceImpl"></bean>
-	<bean id="oldPersonWdVerifyService" class="com.esite.ops.health.service.impl.OldPersonWdVerifyImpl"></bean>
+	<bean id="healthResultService" class="com.esite.ops.health.service.impl.HealthResultService"></bean>
+	<bean id="fingerprintInfoService" class="com.esite.ops.health.service.impl.FingerprintInfoService"></bean>
+	<bean id="healthPhotoService" class="com.esite.ops.health.service.impl.HealthPhotoService"></bean>
+	<bean id="healthInfoImportLogService" class="com.esite.ops.health.service.impl.HealthInfoImportLogService"></bean>
+	<bean id="healthInfoImportErrorLogService" class="com.esite.ops.health.service.impl.HealthInfoImportErrorLogService"></bean>
+	<bean id="oldPersonWdVerifyService" class="com.esite.ops.health.service.impl.OldPersonWdVerifyService"></bean>
 	
-	<bean id="oldPersonWdVerifyLogService" class="com.esite.ops.health.service.impl.OldPersonWdVerifyLogServiceImpl"></bean>
+	<bean id="oldPersonWdVerifyLogService" class="com.esite.ops.health.service.impl.OldPersonWdVerifyLogService"></bean>
 </beans>

@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -19,33 +20,28 @@ import jxl.write.WritableWorkbook;
 import jxl.write.WriteException;
 import jxl.write.biff.RowsExceededException;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.esite.framework.dictionary.service.DictionaryService;
 import com.esite.framework.organize.entity.OrganizeViewEntity;
-import com.esite.framework.organize.service.OrganizeService;
+import com.esite.framework.organize.service.impl.OrganizeService;
 import com.esite.framework.util.StringHelper;
 import com.esite.ops.mission.entity.CycleEntity;
-import com.esite.ops.mission.service.ICycleService;
-import com.esite.ops.statistics.service.IStatisticsService;
+import com.esite.ops.mission.service.impl.CycleService;
+import com.esite.ops.statistics.service.impl.StatisticsService;
 
 @Controller
 @RequestMapping("/statistics")
 public class StatisticsController {
 	
-	@Autowired
-	private ICycleService cycleService;
-	@Autowired
-	private IStatisticsService statisticsService;
-	@Autowired
+	@Resource
+	private CycleService cycleService;
+	@Resource
+	private StatisticsService statisticsService;
+	@Resource
 	private OrganizeService organizeService;
 	
-	@Autowired
-	private DictionaryService dictionaryService;
-
 	@RequestMapping("/rzbfb")
 	public String rzbfb(String cycleId,String areaId,Model model) {
 		CycleEntity cycle = null;

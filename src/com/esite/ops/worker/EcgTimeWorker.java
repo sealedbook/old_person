@@ -4,8 +4,6 @@ import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 
 import javax.annotation.Resource;
@@ -14,7 +12,7 @@ import org.apache.log4j.Logger;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import com.esite.ops.health.service.IHealthResultService;
+import com.esite.ops.health.service.impl.HealthResultService;
 
 
 @Component
@@ -23,7 +21,7 @@ public class EcgTimeWorker {
 	private final Logger logger = Logger.getLogger(EcgTimeWorker.class);
 	
 	@Resource
-	private IHealthResultService healthResultService;
+	private HealthResultService healthResultService;
 	
 	private static final String OUTPUT_PATH = "/data/ECG/output";
 	

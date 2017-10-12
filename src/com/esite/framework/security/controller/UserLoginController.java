@@ -18,7 +18,7 @@ import com.esite.framework.security.service.impl.Security;
 import com.esite.framework.user.entity.User;
 import com.esite.framework.util.JsonConverter;
 import com.esite.framework.util.WebRequestHelper;
-import com.esite.ops.operator.service.IOperatorSecurityService;
+import com.esite.ops.operator.service.impl.OperatorSecurityService;
 
 @Controller
 @RequestMapping("/security")
@@ -44,7 +44,7 @@ public class UserLoginController {
 				return new ResponseEntity<String>("SUCCESS",HttpStatus.OK);
 			}
 			String token = user.getId();
-			request.getServletContext().setAttribute(IOperatorSecurityService.SERVLET_OPERATOR_TOKEN_KEY_PREFIX + token,user);
+			request.getServletContext().setAttribute(OperatorSecurityService.SERVLET_OPERATOR_TOKEN_KEY_PREFIX + token,user);
 			Map<String,Object> m = new HashMap<String,Object>();
 			m.put("token", token);
 			m.put("user", user);

@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.io.IOUtils;
@@ -26,15 +27,15 @@ import com.esite.framework.util.PagerRequest;
 import com.esite.framework.util.PagerResponse;
 import com.esite.ops.operator.entity.OperatorEntity;
 import com.esite.ops.operator.entity.OperatorQueryEntity;
-import com.esite.ops.operator.service.IOperatorService;
+import com.esite.ops.operator.service.impl.OperatorService;
 
 @Controller
 @RequestMapping("/operator")
 public class OperatorController {
 
-	@Autowired
-	private IOperatorService operatorService;
-	
+	@Resource
+	private OperatorService operatorService;
+
 	@RequestMapping("/list")
 	public @ResponseBody PagerResponse<OperatorEntity> list(OperatorQueryEntity operatorQueryEntity,PagerRequest pageRequest) {
 		Page<OperatorEntity> p = this.operatorService.find(operatorQueryEntity, pageRequest.getInstance());

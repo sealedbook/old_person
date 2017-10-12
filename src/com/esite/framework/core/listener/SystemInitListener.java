@@ -10,10 +10,9 @@ import org.apache.log4j.Logger;
 import com.esite.framework.core.factory.WebApplicationContextUtil;
 import com.esite.framework.organize.entity.OrganizeEntity;
 import com.esite.framework.organize.service.OrganizeCacheUtil;
-import com.esite.framework.organize.service.OrganizeService;
+import com.esite.framework.organize.service.impl.OrganizeService;
 import com.esite.framework.security.service.SystemMenuService;
 import com.esite.framework.security.service.ResourceService;
-import com.esite.framework.security.service.impl.SystemMenuServiceImpl;
 
 public class SystemInitListener implements ServletContextListener {
 	private Logger logger = Logger.getLogger(SystemInitListener.class);

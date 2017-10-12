@@ -36,23 +36,21 @@ import com.esite.ops.health.entity.HealthInfoEntity;
 import com.esite.ops.health.entity.HealthResultEntity;
 import com.esite.ops.health.entity.HealthFingerprintEntity;
 import com.esite.ops.health.entity.HealthPhotoEntity;
-import com.esite.ops.health.service.IFingerprintInfoService;
-import com.esite.ops.health.service.IHealthInfoService;
 import com.esite.ops.health.vo.HealthInfoQueryVO;
 import com.esite.ops.mission.entity.CycleEntity;
-import com.esite.ops.mission.service.ICycleService;
+import com.esite.ops.mission.service.impl.CycleService;
 import com.esite.ops.oldperson.dao.OldPersonDao;
 import com.esite.ops.oldperson.entity.OldPersonEntity;
 import com.esite.ops.oldperson.service.impl.OldPersonService;
 import com.esite.ops.operator.entity.OperatorEntity;
-import com.esite.ops.operator.service.IOperatorService;
+import com.esite.ops.operator.service.impl.OperatorService;
 import com.esite.ops.ws.entity.UpLoadDataVO;
 import com.esite.ops.ws.entity.UpLoadOldPersonFingerprint;
 import com.esite.ops.ws.entity.UpLoadOldPersonHealthVO;
 import com.esite.ops.ws.entity.UpLoadOldPersonPhotoVO;
 
 @Service("healthInfoService")
-public class HealthInfoService implements IHealthInfoService {
+public class HealthInfoService {
 
 	@Autowired
 	private HealthInfoDao healthInfoDao;
@@ -69,24 +67,23 @@ public class HealthInfoService implements IHealthInfoService {
 	@Autowired
 	private HealthFingerprintDao healthFingerprintDao;
 	
-	@Autowired
-	private IOperatorService operatorService;
+	@Resource
+	private OperatorService operatorService;
 	
 	@Resource
 	private OldPersonService oldPersonService;
 	
-	@Autowired
-	private IFingerprintInfoService fingerprintInfoService;
+	@Resource
+	private FingerprintInfoService fingerprintInfoService;
 	
-	@Autowired
-	private ICycleService cycleService;
+	@Resource
+	private CycleService cycleService;
 	
 	/**
 	 * 心电图输入目录
 	 */
 	private static final String path = "/data/ECG/input";
 	
-	@Override
 	@Transactional
 	public void addNew(User operatorUser,String ipAddress,UpLoadDataVO upLoadDataVO,String importBatchId,String logId) {
 		if(null == upLoadDataVO) {
@@ -143,22 +140,22 @@ public class HealthInfoService implements IHealthInfoService {
 		//更新体检信息的终端指纹验证状态FingerVerifyState
 		healthInfoEntity.setFingerVerifyState(fingerprint.getFingerVerifyState().getCode());
 		this.healthInfoDao.save(healthInfoEntity);
-		
+
 //		if(null != fingerprint.getFingerVerifyState()) {
 //			switch(fingerprint.getFingerVerifyState()) {
-//				case SUCCESS : 
+//				case SUCCESS :
 //					oldPerson.setModelingStatus("created");
 //					break;
-//				case FAIL : 
+//				case FAIL :
 //					oldPerson.setModelingStatus("contcreated");
 //					break;
-//				case UNKNOW : 
+//				case UNKNOW :
 //					oldPerson.setModelingStatus("contcreated");
 //					break;
 //			}
 //			this.oldPersonService.update(oldPerson, null);
 //		}
-		
+
 		//增加指纹检测日志,第一次为默认设备检测，状态根据上传的指纹信息
 		fingerprintInfoService.verifyLog(operatorUser, ipAddress, fingerprintEntity.getHealthId(),fingerprintEntity.getId(),fingerprintEntity.getFingerVerifyState());
 		
@@ -280,7 +277,6 @@ public class HealthInfoService implements IHealthInfoService {
         }  
 	}
 
-	@Override
 	public Page<HealthInfoEntity> getVerifyHealth(final HealthInfoQueryVO healthInfoQueryVO,Pageable instance) {
 		return healthInfoDao.findAll(new Specification<HealthInfoEntity>() {
 			@Override
@@ -315,12 +311,10 @@ public class HealthInfoService implements IHealthInfoService {
 		}, instance);
 	}
 
-	@Override
 	public HealthInfoEntity getHealth(String healthId) {
 		return this.healthInfoDao.findOne(healthId);
 	}
 
-	@Override
 	public Map<String, Object> statisticsHealthInfoByOperatorIdCard(String idCard) {
 		if(StringHelper.isEmpty(idCard)) {
 			throw new IllegalArgumentException("提供的操作员身份证号是空的.");
@@ -336,7 +330,6 @@ public class HealthInfoService implements IHealthInfoService {
 		return this.healthInfoDao.statisticsHealthInfoByOperatorAndCycleDate(operator.getId(),cycle.getCycleBegin(),cycle.getCycleEnd());
 	}
 
-	@Override
 	public void updateVerifyState(String healthId,String healthFingerprintId, String verifyState,Customer customer) {
 		HealthInfoEntity health = this.getHealth(healthId);
 		health.setVerifyState(verifyState);
@@ -353,17 +346,20 @@ public class HealthInfoService implements IHealthInfoService {
 		this.oldPersonDao.save(oldPerson);
 	}
 
-	@Override
+	/**
+	 * 获得指定老年人的体检记录
+	 * @param oldPersonId
+	 * @param instance
+	 * @return
+	 */
 	public Page<HealthInfoEntity> getHealthByOldPersonId(String oldPersonId,Pageable instance) {
 		return this.healthInfoDao.queryByOldPersonId(oldPersonId,instance);
 	}
 
-	@Override
 	public String getNextHealthId(String healthId) {
 		return getNextHealthId(healthId, "-1", null, null);
 	}
 	
-	@Override
 	public String getNextHealthId(String healthId, String verifyState, String oldPersonId, String operatorId) {
 		Map<String,Object> obj = null;
 		if(!StringUtils.hasText(operatorId) && !StringUtils.hasText(oldPersonId)) {
@@ -384,7 +380,6 @@ public class HealthInfoService implements IHealthInfoService {
 		return obj.get("ID").toString();
 	}
 
-	@Override
 	public HealthInfoEntity getLastHealthByOldPersonId(String oldPersonId) {
 		List<HealthInfoEntity> list = this.healthInfoDao.queryLastByOldPersonId(oldPersonId);
 		if(null == list || list.size() <= 0) {
@@ -398,12 +393,10 @@ public class HealthInfoService implements IHealthInfoService {
 		return healthInfoEntity;
 	}
 
-	@Override
 	public int getHealthNumberByOldPerson(String healthId, String oldPersonId) {
 		return this.healthInfoDao.queryHealthNumber(oldPersonId,healthId);
 	}
 
-	@Override
 	public boolean hasHealthInCycleByOldPersonId(String oldPersonId, CycleEntity cycle) {
 		HealthInfoEntity health = this.healthInfoDao.queryByCycleIdAndOldPersonId(cycle.getId(), oldPersonId);
 		if(null != health) {
@@ -412,7 +405,6 @@ public class HealthInfoService implements IHealthInfoService {
 		return false;
 	}
 
-	@Override
 	public HealthInfoEntity getFirstHealthByOldPersonId(String oldPersonId) {
 		List<HealthInfoEntity> oldPersonHealthInfoList = this.healthInfoDao.queryByOldPersonId(oldPersonId);
 		if(null == oldPersonHealthInfoList || oldPersonHealthInfoList.size() <= 0) {
@@ -421,7 +413,6 @@ public class HealthInfoService implements IHealthInfoService {
 		return oldPersonHealthInfoList.get(0);
 	}
 
-	@Override
 	public List<HealthInfoEntity> getAllHealthInfoByCycleId(String cycleId) {
 		return this.healthInfoDao.queryByCycleId(cycleId);
 	}
