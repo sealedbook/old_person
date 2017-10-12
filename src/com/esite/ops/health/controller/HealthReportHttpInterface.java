@@ -46,8 +46,8 @@ public class HealthReportHttpInterface {
     }
 
     @RequestMapping("/miss")
-    public ResponseEntity<String> healthMiss(String cycleId, String oldPersonId, String missCause, Model model) {
-        HealthInfoEntity health = healthInfoService.getHealthByOldPersonIdAnd(cycleId, oldPersonId);
+    public ResponseEntity<String> healthMiss(String oldPersonId, String missCause, Model model) {
+        HealthInfoEntity health = healthInfoService.getLastHealthByOldPersonId(oldPersonId);
         if (null == health) {
             return new ResponseEntity<String>("体检信息不存在", HttpStatus.BAD_REQUEST);
         }

@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Expression;
@@ -44,7 +45,6 @@ import com.esite.ops.mission.service.ICycleService;
 import com.esite.ops.oldperson.dao.OldPersonDao;
 import com.esite.ops.oldperson.entity.OldPersonEntity;
 import com.esite.ops.oldperson.entity.OldPersonQueryEntity;
-import com.esite.ops.oldperson.service.IOldPersonOperationLogService;
 import com.esite.ops.oldperson.service.IOldPersonSecurityService;
 import com.esite.ops.operator.entity.OperatorEntity;
 import com.esite.ops.operator.service.IAreaConfigService;
@@ -65,8 +65,8 @@ public class OldPersonService {
 	private IOperatorService operatorService;
 	@Autowired
 	private IAreaConfigService areaConfigService;
-	@Autowired
-	private IOldPersonOperationLogService oldPersonOperationLogService;
+	@Resource
+	private OldPersonOperationLogService oldPersonOperationLogService;
 	@Autowired
 	private IOldPersonSecurityService oldPersonSecurityService;
 

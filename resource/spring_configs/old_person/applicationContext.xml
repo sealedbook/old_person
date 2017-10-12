@@ -17,7 +17,6 @@
             http://www.springframework.org/schema/util
             http://www.springframework.org/schema/util/spring-util.xsd">
             
-	<bean id="oldPersonOperationLogService" class="com.esite.ops.oldperson.service.impl.OldPersonOperationLogServiceImpl"></bean>
 	<bean id="oldPersonSocialSecurityService" class="com.esite.ops.oldperson.service.impl.OldPersonSocialSecurityServiceImpl"></bean>
 	<bean id="oldPersonSocialSecurityImportLogService" class="com.esite.ops.oldperson.service.impl.OldPersonSocialSecurityImportLogServiceImpl"></bean>
 	<bean id="oldPersonImportLogService" class="com.esite.ops.oldperson.service.impl.OldPersonImportLogServiceImpl"></bean>
