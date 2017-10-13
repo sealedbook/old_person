@@ -3,7 +3,7 @@
 <configuration status="off">
     <appenders>
         <!-- 定义控制台输出 -->
-        <Console name="STDOUT">
+        <Console name="console">
             <PatternLayout
                 pattern="%d{MMM dd HH:mm:ss,SSS} [%p] [%M(%F:%L)]  bid:[%X{AD_TRACKING_LOG_TRACK_KEY}] :%m%n"/>
         </Console>
@@ -36,15 +36,15 @@
     <loggers>
         <root level="ERROR">
             <appender-ref ref="error"/>
-            <AppenderRef ref="STDOUT"/>
+            <AppenderRef ref="console"/>
         </root>
-        <AsyncLogger name="com.esite" level="INFO" additivity="false" includeLocation="true">
+        <AsyncLogger name="com.esite" level="${log.level}" additivity="false" includeLocation="true">
             <AppenderRef ref="stdout"/>
-            <AppenderRef ref="STDOUT"/>
+            <AppenderRef ref="console"/>
         </AsyncLogger>
         <AsyncLogger name="org" level="INFO" additivity="false" includeLocation="true">
             <AppenderRef ref="stdout"/>
-            <AppenderRef ref="STDOUT"/>
+            <AppenderRef ref="console"/>
         </AsyncLogger>
     </loggers>
 </configuration>
