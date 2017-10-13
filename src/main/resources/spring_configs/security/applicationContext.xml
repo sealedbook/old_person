@@ -19,15 +19,13 @@
             
 
 	<!--
-	<bean id="userLoginServiceTarget" class="com.esite.framework.security.service.impl.UserLoginServiceImpl"></bean>
+	<bean id="userLoginServiceTarget" class="com.esite.framework.security.service.impl.UserLoginServicebean>
 	<bean id="userLoginService"  parent="dataPersistentProxyTemplate" >
 		<property name="target">
 			<ref local="userLoginServiceTarget" />
 		</property>
 	</bean> 
 	 -->
-	<bean id="userLoginService" class="com.esite.framework.security.service.impl.UserLoginServiceImpl"></bean>
-	
  	<bean id="roleCache" class="org.springframework.cache.ehcache.EhCacheFactoryBean">
  		<property name="cacheManager" ref="localCacheManager"/>
  		<property name="cacheName" value="roleCache"/>

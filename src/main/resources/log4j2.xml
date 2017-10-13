@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- status=debug 可以查看log4j的装配过程 -->
+<configuration status="off">
+    <appenders>
+        <!-- 定义控制台输出 -->
+        <Console name="STDOUT">
+            <PatternLayout
+                pattern="%d{MMM dd HH:mm:ss,SSS} [%p] [%M(%F:%L)]  bid:[%X{AD_TRACKING_LOG_TRACK_KEY}] :%m%n"/>
+        </Console>
+        <!-- 程序员调试日志 -->
+        <RollingRandomAccessFile name="stdout" fileName="logs/stdout.log"
+            filePattern="logs/stdout_%d{yyyy-MM-dd}_%i.log" immediateFlush="false">
+            <PatternLayout>
+                <Pattern>%d{MMM dd HH:mm:ss,SSS} [%-5p] [%M(%F:%L)] bid:[%X{AD_TRACKING_LOG_TRACK_KEY}]:%m%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy modulate="true"/>
+                <SizeBasedTriggeringPolicy size="2000MB"/>
+                <OnStartupTriggeringPolicy/>
+            </Policies>
+            <DefaultRolloverStrategy max="100"/>
+        </RollingRandomAccessFile>
+        <RollingFile name="error" fileName="logs/error.log" filePattern="logs/error_%d{yyyy-MM-dd}_%i.log"
+            immediateFlush="false">
+            <PatternLayout>
+                <Pattern>%d [%-5p] [%t] [%c] bid:[%X{AD_TRACKING_LOG_TRACK_KEY}]:%m%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy modulate="true"/>
+                <SizeBasedTriggeringPolicy size="500MB"/>
+                <OnStartupTriggeringPolicy/>
+            </Policies>
+            <DefaultRolloverStrategy max="20"/>
+        </RollingFile>
+    </appenders>
+    <loggers>
+        <root level="ERROR">
+            <appender-ref ref="error"/>
+            <AppenderRef ref="STDOUT"/>
+        </root>
+        <AsyncLogger name="com.esite" level="INFO" additivity="false" includeLocation="true">
+            <AppenderRef ref="stdout"/>
+            <AppenderRef ref="STDOUT"/>
+        </AsyncLogger>
+        <AsyncLogger name="org" level="INFO" additivity="false" includeLocation="true">
+            <AppenderRef ref="stdout"/>
+            <AppenderRef ref="STDOUT"/>
+        </AsyncLogger>
+    </loggers>
+</configuration>
