@@ -256,15 +256,13 @@
             <properties>
                 <env>PRODUCT</env>
                 <package.target>op-product</package.target>
-                <config.artifact>campaign-config-test</config.artifact>
             </properties>
         </profile>
         <profile>
             <id>SHANGHAI-TEST</id>
             <properties>
-                <env>PRODUCT</env>
+                <env>SHANGHAI-TEST</env>
                 <package.target>op-product</package.target>
-                <config.artifact>campaign-config-test</config.artifact>
             </properties>
         </profile>
         <profile>
@@ -275,7 +273,6 @@
             <properties>
                 <env>TEST</env>
                 <package.target>test-product</package.target>
-                <config.artifact>campaign-config-test</config.artifact>
             </properties>
         </profile>
     </profiles>
