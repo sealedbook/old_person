@@ -10,10 +10,14 @@
 		<welcome-file>/jsp/login.jsp</welcome-file>
 	</welcome-file-list>
 
+	<listener>
+		<description>spring监听器</description>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
-			/WEB-INF/classes/spring_configs/**/applicationContext.xml
+			classpath*:/spring_configs/**/applicationContext.xml
 		</param-value>
 	</context-param>
 
@@ -58,9 +62,6 @@
 	
 	<listener>
 		<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
-	</listener>
-	<listener>
-		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 	<listener>
 		<listener-class>com.esite.framework.core.listener.BeanFactoryListener</listener-class>

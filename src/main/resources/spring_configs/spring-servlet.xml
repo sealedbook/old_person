@@ -26,6 +26,7 @@
 			<mvc:mapping path="/**/**.do" />
 			<mvc:exclude-mapping path="/security/login.do" />
 			<mvc:exclude-mapping path="/oldperson/**/photo.do" />
+			<mvc:exclude-mapping path="/ruok.do" />
 			<beans:bean class="com.esite.framework.system.interceptor.TerminalTokenInterceptor"/>
 		</mvc:interceptor>
 		
@@ -36,6 +37,7 @@
 			<mvc:exclude-mapping path="/security/login.do" />
 			<mvc:exclude-mapping path="/security/logout.do" />
 			<mvc:exclude-mapping path="/security/login/page.do" />
+			<mvc:exclude-mapping path="/ruok.do" />
 			<beans:bean class="com.esite.framework.system.interceptor.SessionTimeoutInterceptor"/>
 		</mvc:interceptor>
 		
@@ -64,6 +66,7 @@
 			<mvc:exclude-mapping path="/user/up/manager.do" />
 			<mvc:exclude-mapping path="/user/down/manager.do" />
 			<mvc:exclude-mapping path="/health/report/ecg.do" />
+			<mvc:exclude-mapping path="/ruok.do" />
 			
 			<mvc:exclude-mapping path="/organize/simple/async/load.do" />
 			<beans:bean class="com.esite.framework.security.interceptor.SecurityInterceptor"/>
@@ -95,7 +98,7 @@
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<beans:property name="prefix" value="/jsp/" />
+		<beans:property name="prefix" value="/jsp" />
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
