@@ -23,9 +23,8 @@ import com.esite.ops.oldperson.entity.OldPersonEntity;
 public class OldPersonWdVerifyInfoEntity {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	//@GeneratedValue(generator="system-uuid")
-	//@GenericGenerator(name="system-uuid",strategy="uuid")
+	@GeneratedValue(generator="system-uuid")
+	@GenericGenerator(name="system-uuid",strategy="uuid")
 	private String id;
 	
 	@ManyToOne(fetch=FetchType.EAGER)

@@ -19,9 +19,8 @@ import org.hibernate.annotations.GenericGenerator;
 public class OldPersonSocialSecurityEntity {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	//@GeneratedValue(generator="system-uuid")
-	//@GenericGenerator(name="system-uuid",strategy="uuid")
+	@GeneratedValue(generator="system-uuid")
+	@GenericGenerator(name="system-uuid",strategy="uuid")
 	@Column(name="ID",updatable=false)
 	private String id;
 	

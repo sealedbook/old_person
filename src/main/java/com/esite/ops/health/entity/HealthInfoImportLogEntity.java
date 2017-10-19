@@ -17,9 +17,8 @@ import org.hibernate.annotations.GenericGenerator;
 public class HealthInfoImportLogEntity {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	//@GeneratedValue(generator="system-uuid")
-	//@GenericGenerator(name="system-uuid",strategy="uuid")
+	@GeneratedValue(generator="system-uuid")
+	@GenericGenerator(name="system-uuid",strategy="uuid")
 	private String id;
 	
 	@Column(name="INSERT_DATE_TIME")

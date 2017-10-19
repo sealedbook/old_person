@@ -26,9 +26,8 @@ import com.esite.ops.operator.entity.OperatorEntity;
 public class HealthInfoEntity {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	//@GeneratedValue(generator="system-uuid")
-	//@GenericGenerator(name="system-uuid",strategy="uuid")
+	@GeneratedValue(generator="system-uuid")
+	@GenericGenerator(name="system-uuid",strategy="uuid")
 	private String id;
 	
 	@Column(name="REPORT_CODE",updatable=false)

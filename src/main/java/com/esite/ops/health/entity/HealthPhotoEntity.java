@@ -20,9 +20,8 @@ import com.esite.ops.ws.enums.PhotoPositionEnum;
 public class HealthPhotoEntity {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	//@GeneratedValue(generator="system-uuid")
-	//@GenericGenerator(name="system-uuid",strategy="uuid")
+	@GeneratedValue(generator="system-uuid")
+	@GenericGenerator(name="system-uuid",strategy="uuid")
 	private String id;
 	
 	@Column(name="OLD_PERSON_ID")

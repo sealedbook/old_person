@@ -22,9 +22,8 @@ import com.esite.framework.util.StringHelper;
 public class OperatorEntity {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	//@GeneratedValue(generator="system-uuid")
-	//@GenericGenerator(name="system-uuid",strategy="uuid")
+	@GeneratedValue(generator="system-uuid")
+	@GenericGenerator(name="system-uuid",strategy="uuid")
 	private String id;
 	
 	@Column(name="NAME")

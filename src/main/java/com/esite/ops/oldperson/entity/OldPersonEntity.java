@@ -29,8 +29,8 @@ import com.esite.framework.util.IdentityCardHelper;
 public class OldPersonEntity {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	//@GenericGenerator(name="system-uuid",strategy="uuid")
+	@GeneratedValue(generator="system-uuid")
+	@GenericGenerator(name="system-uuid",strategy="uuid")
 	@Column(name="ID",updatable=false)
 	private String id;
 	
@@ -150,15 +150,6 @@ public class OldPersonEntity {
 	
 	@Column(name="STATUS")
 	private String status = "";
-
-	@Column(name="died_time")
-	private Date diedTime;
-
-	@Column(name="died_location")
-	private String diedLocation;
-
-	@Column(name="died_cause")
-	private String diedCause;
 
 	@Lob
 	@Column(name="PHOTO")
@@ -392,30 +383,6 @@ public class OldPersonEntity {
 		return false;
 	}
 
-	public Date getDiedTime() {
-		return diedTime;
-	}
-
-	public void setDiedTime(Date diedTime) {
-		this.diedTime = diedTime;
-	}
-
-	public String getDiedLocation() {
-		return diedLocation;
-	}
-
-	public void setDiedLocation(String diedLocation) {
-		this.diedLocation = diedLocation;
-	}
-
-	public String getDiedCause() {
-		return diedCause;
-	}
-
-	public void setDiedCause(String diedCause) {
-		this.diedCause = diedCause;
-	}
-
 	@Override
 	public String toString() {
 		final StringBuilder sb = new StringBuilder("OldPersonEntity{");
@@ -444,9 +411,6 @@ public class OldPersonEntity {
 		sb.append(", workUnit='").append(workUnit).append('\'');
 		sb.append(", sysInsertDatetime=").append(sysInsertDatetime);
 		sb.append(", status='").append(status).append('\'');
-		sb.append(", diedTime=").append(diedTime);
-		sb.append(", diedLocation='").append(diedLocation).append('\'');
-		sb.append(", diedCause='").append(diedCause).append('\'');
 		sb.append(", photo=").append(Arrays.toString(photo));
 		sb.append('}');
 		return sb.toString();

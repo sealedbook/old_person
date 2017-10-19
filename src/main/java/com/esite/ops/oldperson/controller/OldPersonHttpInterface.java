@@ -144,18 +144,6 @@ public class OldPersonHttpInterface {
         }
     }
 
-    @RequestMapping(value = "/sign_died")
-    public ResponseEntity<String> died(OldPersonEntity oldPerson, HttpServletRequest request) {
-        try {
-            oldPersonService
-                .died(oldPerson.getId(), oldPerson.getDiedTime(), oldPerson.getDiedLocation(), oldPerson.getDiedCause(),
-                    new Customer(request));
-            return new ResponseEntity<String>(HttpStatus.OK);
-        } catch (IllegalArgumentException e) {
-            return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
-    }
-
     @RequestMapping(value = "/list")
     public @ResponseBody
     Map<String, Object> oldPerson(HttpServletRequest request) {

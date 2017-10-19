@@ -23,9 +23,8 @@ import org.springframework.format.annotation.DateTimeFormat.ISO;
 public class CycleEntity {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	//@GeneratedValue(generator="system-uuid")
-	//@GenericGenerator(name="system-uuid",strategy="uuid")
+	@GeneratedValue(generator="system-uuid")
+	@GenericGenerator(name="system-uuid",strategy="uuid")
 	private String id;
 	
 	@Column(name="CYCLE_BEGIN")

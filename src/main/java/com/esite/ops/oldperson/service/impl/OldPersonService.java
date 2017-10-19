@@ -540,9 +540,6 @@ public class OldPersonService {
 		OldPersonEntity oldPerson = this.getOldPerson(id);
 		oldPerson.setStatus("died");
 		oldPerson.setFfStatus("ffStatus04");
-		oldPerson.setDiedTime(diedTime);
-		oldPerson.setDiedLocation(diedLocation);
-		oldPerson.setDiedCause(diedCause);
 		this.oldPersonDao.save(oldPerson);
 
 		//将系统中的老年人从用户表中删除.撤销登陆功能
