@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.esite.framework.file.entity.SysFileInfo;
+import com.esite.framework.file.service.impl.FileService;
 import com.esite.framework.security.entity.Customer;
 import com.esite.framework.util.PagerRequest;
 import com.esite.framework.util.PagerResponse;
@@ -35,6 +37,8 @@ public class OperatorController {
 
 	@Resource
 	private OperatorService operatorService;
+	@Resource
+	private FileService fileService;
 
 	@RequestMapping("/list")
 	public @ResponseBody PagerResponse<OperatorEntity> list(OperatorQueryEntity operatorQueryEntity,PagerRequest pageRequest) {
@@ -90,7 +94,8 @@ public class OperatorController {
 	@RequestMapping("/{operatorId}/photo")
 	public @ResponseBody byte[] showImg(@PathVariable String operatorId){
 		OperatorEntity operator = this.operatorService.getOperator(operatorId);
-		byte[] photoByte = operator.getPhoto();
+		SysFileInfo sysFileInfo = fileService.findByFileKey(operator.getPhotoKey());
+		byte[] photoByte = sysFileInfo.getContent();
 		if(null == photoByte) {
 			String filePath = this.getClass().getResource("").getPath() + "nobody.jpg";
 			try {

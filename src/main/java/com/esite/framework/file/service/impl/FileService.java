@@ -22,6 +22,7 @@ public class FileService {
 
     private static final Logger LOG = LoggerFactory.getLogger(FileService.class);
 
+    /** 默认老年人头像 */
     private static byte[] DEFAULT_PHOTO = null;
     static {
         String filePath = FileService.class.getClassLoader().getResource("nobody.jpg").getPath();
@@ -40,16 +41,8 @@ public class FileService {
 
         if (null == sysFileInfo) {
             sysFileInfo = new SysFileInfo();
-            String filePath = this.getClass().getClassLoader().getResource("nobody.jpg").getPath();
-            try {
-                byte[] defaultPhotoByte = IOUtils.toByteArray(new FileInputStream(new File(filePath)));
-                sysFileInfo.setFileKey("-1");
-                sysFileInfo.setContent(DEFAULT_PHOTO);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            sysFileInfo.setFileKey("-1");
+            sysFileInfo.setContent(DEFAULT_PHOTO);
         }
         return sysFileInfo;
     }

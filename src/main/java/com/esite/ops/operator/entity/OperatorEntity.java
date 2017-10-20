@@ -57,16 +57,15 @@ public class OperatorEntity {
 	@Column(name="STATUS")
 	private String status = "";
 	
-	@Lob
-	@Column(name="PHOTO")
-	private byte[] photo;
-	
-	public byte[] getPhoto() {
-		return photo;
+	@Column(name="PHOTO_KEY")
+	private String photoKey;
+
+	public String getPhotoKey() {
+		return photoKey;
 	}
 
-	public void setPhoto(byte[] photo) {
-		this.photo = photo;
+	public void setPhotoKey(String photoKey) {
+		this.photoKey = photoKey;
 	}
 
 	public String getManageArea() {

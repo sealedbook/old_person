@@ -21,6 +21,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.esite.framework.file.entity.SysFileInfo;
+import com.esite.framework.file.service.impl.FileService;
 import com.esite.framework.security.entity.Customer;
 import com.esite.framework.util.IdentityCardHelper;
 import com.esite.framework.util.JpaLikeQueryHelper;
@@ -47,6 +49,8 @@ public class OperatorService {
 
 	@Resource
 	private OperatorOperationLogService operatorOperationLogService;
+	@Resource
+	private FileService fileService;
 	
 	private void checkOperator(OperatorEntity operator) {
 		String idCard = operator.getIdCard();
@@ -55,12 +59,13 @@ public class OperatorService {
 			return;
 		}
 		String status = dbOperator.getStatus();
-		if(StringHelper.isEmpty(status) && !operator.getId().equals(dbOperator.getId())) {
+		if(StringHelper.isEmpty(status)) {
 			throw new IllegalArgumentException("身份证号【" + dbOperator.getIdCard() + "】的操作员已经存在.");
 		} else if("delete".equals(status)) {
 			throw new IllegalArgumentException("身份证号【" + dbOperator.getIdCard() + "】的操作员已经存在,但目前被标记为删除状态.");
 		}
 	}
+
 	@Transactional
 	public OperatorEntity addNew(OperatorEntity operatorEntity,String[] manageAreaArray,Customer customer) {
 		checkOperator(operatorEntity);
@@ -197,18 +202,21 @@ public class OperatorService {
 		if(null == operator) {
 			throw new IllegalArgumentException("系统中没有找到对应的操作员,本次查询操作员身份证号【" + operatorIdCard + "】");
 		}
-		operator.setPhoto(photo.getBytes());
+		SysFileInfo sysFileInfo = fileService.save(photo.getBytes());
+		operator.setPhotoKey(sysFileInfo.getFileKey());
 		this.operatorDao.save(operator);
 	}
 	
 	public void uploadPhoto(MultipartFile photo, OperatorEntity operator) throws IOException {
-		operator.setPhoto(photo.getBytes());
+		SysFileInfo sysFileInfo = fileService.save(photo.getBytes());
+		operator.setPhotoKey(sysFileInfo.getFileKey());
 		this.operatorDao.save(operator);
 	}
 
 	public byte[] downloadPhoto(String idCard) {
 		OperatorEntity operator = this.getOperatorByIdentityCard(idCard);
-		return operator.getPhoto();
+		SysFileInfo sysFileInfo = fileService.findByFileKey(operator.getPhotoKey());
+		return sysFileInfo.getContent();
 	}
 
 }
