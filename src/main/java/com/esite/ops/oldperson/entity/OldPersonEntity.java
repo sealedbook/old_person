@@ -160,9 +160,17 @@ public class OldPersonEntity {
 	@Column(name="died_cause")
 	private String diedCause;
 
+	/** 身高 */
+	@Column(name="height")
+	private int height;
+
+	/** 体重 */
+	@Column(name="weight")
+	private int weight;
+
 	@Lob
-	@Column(name="PHOTO")
-	private byte[] photo;
+	@Column(name="photo_key")
+	private String photoKey;
 	
 	public String getStatus() {
 		return status;
@@ -265,14 +273,14 @@ public class OldPersonEntity {
 		this.nameSpell = nameSpell;
 	}
 
-	public byte[] getPhoto() {
-		return photo;
+	public String getPhotoKey() {
+		return photoKey;
 	}
 
-	public void setPhoto(byte[] photo) {
-		this.photo = photo;
+	public void setPhotoKey(String photoKey) {
+		this.photoKey = photoKey;
 	}
-	
+
 	public String getBatchId() {
 		return batchId;
 	}
@@ -416,6 +424,22 @@ public class OldPersonEntity {
 		this.diedCause = diedCause;
 	}
 
+	public int getHeight() {
+		return height;
+	}
+
+	public void setHeight(int height) {
+		this.height = height;
+	}
+
+	public int getWeight() {
+		return weight;
+	}
+
+	public void setWeight(int weight) {
+		this.weight = weight;
+	}
+
 	@Override
 	public String toString() {
 		final StringBuilder sb = new StringBuilder("OldPersonEntity{");
@@ -447,7 +471,9 @@ public class OldPersonEntity {
 		sb.append(", diedTime=").append(diedTime);
 		sb.append(", diedLocation='").append(diedLocation).append('\'');
 		sb.append(", diedCause='").append(diedCause).append('\'');
-		sb.append(", photo=").append(Arrays.toString(photo));
+		sb.append(", height=").append(height);
+		sb.append(", weight=").append(weight);
+		sb.append(", photoKey='").append(photoKey).append('\'');
 		sb.append('}');
 		return sb.toString();
 	}

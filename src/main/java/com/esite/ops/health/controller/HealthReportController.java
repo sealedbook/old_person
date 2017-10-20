@@ -46,6 +46,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.esite.framework.dictionary.entity.DictionaryEntity;
 import com.esite.framework.dictionary.service.DictionaryService;
+import com.esite.framework.file.entity.SysFileInfo;
+import com.esite.framework.file.service.impl.FileService;
 import com.esite.framework.organize.entity.OrganizeViewEntity;
 import com.esite.framework.organize.service.impl.OrganizeService;
 import com.esite.framework.security.entity.Customer;
@@ -71,19 +73,17 @@ public class HealthReportController {
 	
 	@Resource
 	private HealthInfoService healthInfoService;
-	
 	@Resource
 	private OrganizeService organizeService;
-	
 	@Resource
 	private CycleService cycleService;
-	
 	@Resource
 	private HealthResultService healthResultService;
-	
+	@Resource
+	private FileService fileService;
 	@Autowired
 	private DictionaryService dictionaryService;
-	
+
 	@RequestMapping(value="/manager")
 	public String manager() {
 		return "/health/report/manager";
@@ -349,9 +349,10 @@ public class HealthReportController {
 	        Map<String,Object> dataMap=new HashMap<String,Object>();
 	        dataMap.put("healthNumber", healthNumber);
 
-	        byte[] photo = oldPerson.getPhoto();
+			SysFileInfo sysFileInfo = fileService.findByFileKey(oldPerson.getPhotoKey());
+	        byte[] photo = sysFileInfo.getContent();
 	        if(null != photo) {
-	        	String photoBase64Str = Base64.encodeBase64String(oldPerson.getPhoto());
+	        	String photoBase64Str = Base64.encodeBase64String(photo);
 	        	dataMap.put("oldPersonPhoto", photoBase64Str);
 	        } else {
 	        	dataMap.put("oldPersonPhoto", "");
@@ -547,9 +548,10 @@ public class HealthReportController {
         Map<String,Object> dataMap=new HashMap<String,Object>();
         dataMap.put("healthNumber", healthNumber);
 
-        byte[] photo = oldPerson.getPhoto();
+		SysFileInfo sysFileInfo = fileService.findByFileKey(oldPerson.getPhotoKey());
+        byte[] photo = sysFileInfo.getContent();
         if(null != photo) {
-        	String photoBase64Str = Base64.encodeBase64String(oldPerson.getPhoto());
+        	String photoBase64Str = Base64.encodeBase64String(photo);
         	dataMap.put("oldPersonPhoto", photoBase64Str);
         } else {
         	dataMap.put("oldPersonPhoto", "");

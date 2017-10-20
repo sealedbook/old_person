@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.esite.framework.file.entity.SysFileInfo;
+import com.esite.framework.file.service.impl.FileService;
 import com.esite.framework.security.entity.Customer;
 import com.esite.framework.util.PagerRequest;
 import com.esite.framework.util.PagerResponse;
@@ -39,6 +41,8 @@ public class OldPersonController {
 	private FingerprintCollectService fingerprintCollectService;
 	@Resource
 	private OldPersonService oldPersonService;
+	@Resource
+	private FileService fileService;
 	
 	@RequestMapping("/list")
 	public @ResponseBody PagerResponse<OldPersonEntity> list(OldPersonQueryEntity oldPersonQueryEntity,PagerRequest pageRequest) {
@@ -154,17 +158,8 @@ public class OldPersonController {
 	@RequestMapping("/{oldPersonId}/photo")
 	public @ResponseBody byte[] showImg(@PathVariable String oldPersonId){
 		OldPersonEntity oldPerson = this.oldPersonService.getOldPerson(oldPersonId);
-		byte[] photoByte = oldPerson.getPhoto();
-		if(null == photoByte) {
-			String filePath = this.getClass().getResource("").getPath() + "nobody.jpg";
-			try {
-				photoByte = IOUtils.toByteArray(new FileInputStream(new File(filePath)));
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+		SysFileInfo sysFileInfo = fileService.findByFileKey(oldPerson.getPhotoKey());
+		byte[] photoByte = sysFileInfo.getContent();
 		return photoByte;
 	}
 	

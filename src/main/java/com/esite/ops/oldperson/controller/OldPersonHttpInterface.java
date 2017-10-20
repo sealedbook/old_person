@@ -23,6 +23,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.esite.framework.file.entity.SysFileInfo;
+import com.esite.framework.file.service.impl.FileService;
 import com.esite.framework.security.entity.Customer;
 import com.esite.framework.util.StringHelper;
 import com.esite.ops.health.service.impl.OldPersonWdVerifyService;
@@ -41,6 +43,8 @@ public class OldPersonHttpInterface {
     private OldPersonWdVerifyService oldPersonWdVerifyService;
     @Resource
     private FingerprintCollectService fingerprintCollectService;
+    @Resource
+    private FileService fileService;
 
     @RequestMapping("/{oldPersonId}/photo")
     public @ResponseBody
@@ -56,7 +60,8 @@ public class OldPersonHttpInterface {
                 e.printStackTrace();
             }
         }
-        byte[] photoByte = oldPerson.getPhoto();
+        SysFileInfo sysFileInfo = fileService.findByFileKey(oldPerson.getPhotoKey());
+        byte[] photoByte = sysFileInfo.getContent();
         if (null == photoByte) {
             try {
                 photoByte = IOUtils.toByteArray(new FileInputStream(new File(filePath)));
