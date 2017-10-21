@@ -18,7 +18,7 @@ import com.esite.framework.util.StringHelper;
 
 @Entity
 @Table(name="OPERATOR_INFO")
-@JsonIgnoreProperties(value={"terminalLoginPassword","photo"})
+@JsonIgnoreProperties(value={"terminalLoginPassword"})
 public class OperatorEntity {
 	
 	@Id
