@@ -131,7 +131,7 @@ public class OldPersonSocialSecurityService {
 					if(null == row.get(4) || row.get(4).length() <= 0) {
 						simpleErrorMessage.append("Excel文件中第").append(i+1).append("行,社保【发放状态】为空.");
 					}
-					DictionaryEntity oldPersonSocialStatus = this.dictionaryService.getDictionaryByparentIdAndName("sendStatus", row.get(4));
+					DictionaryEntity oldPersonSocialStatus = this.dictionaryService.getDictionaryByParentIdAndName("sendStatus", row.get(4));
 					if(null == oldPersonSocialStatus) {
 						simpleErrorMessage.append("Excel文件中第").append(i+1).append("行,社保【发放状态】输入错误,系统中找不到对应的发放状态.");
 					} else {
@@ -142,7 +142,7 @@ public class OldPersonSocialSecurityService {
 						if(null == row.get(5) || row.get(5).length() <= 0) {
 							simpleErrorMessage.append("Excel文件中第").append(i+1).append("行,社保【停发或暂停原因】为空.");
 						} else {
-							DictionaryEntity socialStopSendCause = this.dictionaryService.getDictionaryByparentIdAndName("socialStopSendCause", row.get(5));
+							DictionaryEntity socialStopSendCause = this.dictionaryService.getDictionaryByParentIdAndName("socialStopSendCause", row.get(5));
 							if(null == socialStopSendCause) {
 								simpleErrorMessage.append("Excel文件中第").append(i+1).append("行,社保【停发或暂停原因】输入错误,系统中找不到对应的停发或暂停原因.");
 							} else {

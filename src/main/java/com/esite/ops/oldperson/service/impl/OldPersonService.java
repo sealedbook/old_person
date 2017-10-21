@@ -2,6 +2,7 @@ package com.esite.ops.oldperson.service.impl;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -18,6 +19,8 @@ import javax.persistence.criteria.Root;
 
 import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -50,6 +53,7 @@ import com.esite.ops.oldperson.entity.OldPersonQueryEntity;
 import com.esite.ops.operator.entity.OperatorEntity;
 import com.esite.ops.operator.service.impl.AreaConfigService;
 import com.esite.ops.operator.service.impl.OperatorService;
+import com.mchange.v2.log.LogUtils;
 
 @Service("oldPersonService")
 public class OldPersonService {
@@ -72,6 +76,7 @@ public class OldPersonService {
     private OldPersonSecurityService oldPersonSecurityService;
     @Resource
     private FileService fileService;
+    private static final Logger LOG = LoggerFactory.getLogger(OldPersonService.class);
 
     /**
      * 多条件查询老年人
@@ -262,6 +267,7 @@ public class OldPersonService {
 
             return oldPerson;
         } catch (JpaSystemException e) {
+            LOG.error("update old person error", e);
             throw new IllegalArgumentException("身份证号【" + oldPerson.getIdCard() + "】的老年人已经存在");
         } catch (BadHanyuPinyinOutputFormatCombination e) {
             e.printStackTrace();
@@ -314,38 +320,85 @@ public class OldPersonService {
                     List<String> row = (List<String>) rawRows.get(i);
                     OldPersonEntity oldPersonEntity = new OldPersonEntity();
                     StringBuffer simpleErrorMessage = new StringBuffer();
-                    if (null == row.get(0) || row.get(0).length() <= 0) {
-                        simpleErrorMessage.append("Excel文件中第").append(i + 1).append("行,老人【社保编号】为空.");
-                    }
-                    oldPersonEntity.setSocialNumber(row.get(0));
 
-                    if (null == row.get(1) || row.get(1).length() <= 0) {
+                    /** 基线队列编号处理 */
+                    int columnIndex = 0;
+                    if (null == row.get(columnIndex) || row.get(columnIndex).length() <= 0) {
+                        simpleErrorMessage.append("Excel文件中第").append(i + 1).append("行,老人【基线队列编号】为空.");
+                    }
+                    oldPersonEntity.setBaseQueueCode(row.get(columnIndex));
+
+                    /** 姓名处理 */
+                    columnIndex = 1;
+                    if (null == row.get(columnIndex) || row.get(columnIndex).length() <= 0) {
                         simpleErrorMessage.append("Excel文件中第").append(i + 1).append("行,老人【姓名】为空.");
                     }
-                    oldPersonEntity.setName(row.get(1));
+                    oldPersonEntity.setName(row.get(columnIndex));
 
-                    if (null == row.get(2) || row.get(2).length() <= 0) {
+                    /** 性别处理 */
+//                    if (null == row.get(2) || row.get(2).length() <= 0) {
+//                        simpleErrorMessage.append("Excel文件中第").append(i + 1).append("行,老人【性别】为空.");
+//                    }
+//                    DictionaryEntity oldPersonType = this.dictionaryService
+//                        .getDictionaryByParentIdAndName("xb", row.get(2));
+//                    if (null == oldPersonType) {
+//                        simpleErrorMessage.append("Excel文件中第").append(i + 1)
+//                            .append("行,老人【性别】输入错误,系统中找不到对应类型.");
+//                    } else {
+//                        oldPersonEntity.setSex(Integer.parseInt(oldPersonType.getDicCode()));
+//                    }
+
+                    /** 民族处理 */
+                    columnIndex = 2;
+                    if (null == row.get(columnIndex) || row.get(columnIndex).length() <= 0) {
+                        simpleErrorMessage.append("Excel文件中第").append(i + 1).append("行,老人【民族】为空.");
+                    }
+                    DictionaryEntity oldPersonNation = this.dictionaryService
+                        .getDictionaryByParentIdAndName("nationality", row.get(columnIndex));
+                    if (null == oldPersonNation) {
+                        simpleErrorMessage.append("Excel文件中第").append(i + 1)
+                            .append("行,老人【民族】输入错误,系统中找不到对应类型.");
+                    } else {
+                        oldPersonEntity.setNationality(oldPersonNation.getDicCode());
+                    }
+
+                    /** 身份证处理 */
+                    columnIndex = 3;
+                    if (null == row.get(columnIndex) || row.get(columnIndex).length() <= 0) {
                         simpleErrorMessage.append("Excel文件中第").append(i + 1).append("行,老人【身份证号】为空.");
                     }
-                    if (!IdentityCardHelper.isIdCard(row.get(2))) {
+                    if (!IdentityCardHelper.isIdCard(row.get(columnIndex))) {
                         simpleErrorMessage.append("Excel文件中第").append(i + 1).append("行,老人【身份证号】格式错误.");
                     }
-                    oldPersonEntity.setIdCard(row.get(2));
+                    oldPersonEntity.setIdCard(row.get(columnIndex));
 
-                    if (null == row.get(3) || row.get(3).length() <= 0) {
-                        simpleErrorMessage.append("Excel文件中第").append(i + 1).append("行,老人【人员状态(本地/外地)】为空.");
-                    }
-                    DictionaryEntity oldPersonType = this.dictionaryService
-                        .getDictionaryByparentIdAndName("lnrlb", row.get(3));
-                    if (null == oldPersonType) {
-                        simpleErrorMessage.append("Excel文件中第").append(i + 1)
-                            .append("行,老人【人员状态(本地/外地)】输入错误,系统中找不到对应类型.");
+                    /** 基线队列调查时间 */
+                    columnIndex = 4;
+                    if (null == row.get(columnIndex) || row.get(columnIndex).length() <= 0) {
+                        simpleErrorMessage.append("Excel文件中第").append(i + 1).append("行,老人【基线队列调查时间】为空.");
+                    } else {
+                        try {
+                            Date baseQueueDate = new SimpleDateFormat("yyyy-M-d").parse(row.get(columnIndex));
+                            oldPersonEntity.setBaseQueueTime(baseQueueDate);
+                        } catch (ParseException e) {
+                            simpleErrorMessage.append("Excel文件中第").append(i + 1).append("行,老人【基线队列调查时间】格式错误.");
+                        }
                     }
 
-                    if (null == row.get(4) || row.get(4).length() <= 0) {
+                    /** 基线队列调查时住址处理 */
+                    columnIndex = 5;
+                    if (null == row.get(columnIndex) || row.get(columnIndex).length() <= 0) {
+                        simpleErrorMessage.append("Excel文件中第").append(i + 1).append("行,老人【基线队列调查时住址】为空.");
+                    } else {
+                        oldPersonEntity.setBaseQueueAddress(row.get(columnIndex));
+                    }
+
+                    /** 老年人所属地区 */
+                    columnIndex = 6;
+                    if (null == row.get(columnIndex) || row.get(columnIndex).length() <= 0) {
                         simpleErrorMessage.append("Excel文件中第").append(i + 1).append("行,老人【所属地区】为空.");
                     }
-                    String areaName = row.get(4);
+                    String areaName = row.get(columnIndex);
                     OrganizeViewEntity org = this.organizeService.getOrganizeByName(areaName);
                     if (null == org) {
                         simpleErrorMessage.append("Excel文件中第").append(i + 1).append("行,老人【所属地区】输入错误,系统中找不到对应的地区.");
@@ -360,58 +413,21 @@ public class OldPersonService {
                         oldPersonEntity.setRootAreaId(rootOrganize.getId());
                     }
 
-                    if (null != row.get(5) && StringUtils.hasText(row.get(5))) {
-                        String lqsbsj = row.get(5);
-                        //lqsbrq
-                        try {
-                            Date lqsbDate = new SimpleDateFormat("yyyy-MM-dd").parse(lqsbsj);
-                            oldPersonEntity.setLqsbrq(lqsbDate);
-                        } catch (Throwable e) {
-                            simpleErrorMessage.append("Excel文件中第").append(i + 1)
-                                .append("行,老人【社保生效日期】输入错误,请输入一个日期2015/10/23.");
-                        }
-                    } else {
-                        simpleErrorMessage.append("Excel文件中第").append(i + 1).append("行,老人【社保生效日期】为空.");
-                    }
-
-                    if (null != row.get(6) && StringUtils.hasText(row.get(6))) {
-                        String sflxStr = row.get(6);
-                        DictionaryEntity sflxDic = this.dictionaryService
-                            .getDictionaryByparentIdAndName("sflx", sflxStr);
-                        if (null != sflxDic) {
-                            oldPersonEntity.setSflx(sflxDic.getDicCode());
-                        }
-                    } else {
-                        simpleErrorMessage.append("Excel文件中第").append(i + 1).append("行,老人【身份类型】为空.");
-                    }
-//					if(null == row.get(5) || row.get(5).length() <= 0) {
-//						simpleErrorMessage.append("Excel文件中第").append(i+1).append("行,社保信息【发放状态】为空.");
-//					}
-//					DictionaryEntity oldPersonSocialStatus = this.dictionaryService.getDictionaryByparentIdAndName("sbffzt", row.get(5));
-//					if(null == oldPersonSocialStatus) {
-//						simpleErrorMessage.append("Excel文件中第").append(i+1).append("行,社保信息【发放状态】输入错误,系统中找不到对应类型.");
-//					} else {
-//						oldPersonEntity.setSocialStatus(oldPersonSocialStatus.getDicCode());
-//					}
-//					
-//					if(null != oldPersonSocialStatus && !"sbffzt01".equals(oldPersonSocialStatus.getDicCode())) {
-//						if(null == row.get(6) || row.get(6).length() <= 0) {
-//							simpleErrorMessage.append("Excel文件中第").append(i+1).append("行,社保信息【停发或暂停原因】为空.");
-//						} else {
-//							oldPersonEntity.setSocialStopSendCause(row.get(6));
-//						}
-//					}
-
                     if (simpleErrorMessage.length() > 0) {
                         errorMessage.add(simpleErrorMessage.toString());
                         oldPersonEntity = null;
                         continue;
                     }
-                    oldPersonEntity.setType(Integer.parseInt(oldPersonType.getDicCode()));
+                    /** 根据身份证号获得性别 */
                     oldPersonEntity.setSex(IdentityCardHelper.getSex(oldPersonEntity.getIdCard()));
                     oldPersonEntity.setBirthday(IdentityCardHelper.getBirthday(oldPersonEntity.getIdCard()));
                     oldPersonEntity.setBatchId(batchId);
                     oldPersonEntity.setNameSpell(ChineseHelper.convertSpell(oldPersonEntity.getName()));
+
+                    String convertBaseCode = oldPersonEntity.getBaseQueueCode();
+                    convertBaseCode = convertBaseCode.substring(2);
+                    convertBaseCode = convertBaseCode.substring(0, convertBaseCode.indexOf("WJ"));
+                    oldPersonEntity.setConvertBaseCode(convertBaseCode);
 
                     this.oldPersonDao.save(oldPersonEntity);
                     //向系统中添加老年人用户信息,提供登陆功能

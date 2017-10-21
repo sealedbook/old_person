@@ -12,6 +12,8 @@ import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -51,6 +53,8 @@ public class OperatorService {
 	private OperatorOperationLogService operatorOperationLogService;
 	@Resource
 	private FileService fileService;
+
+	private static final Logger LOG = LoggerFactory.getLogger(OperatorService.class);
 	
 	private void checkOperator(OperatorEntity operator) {
 		String idCard = operator.getIdCard();
@@ -59,9 +63,7 @@ public class OperatorService {
 			return;
 		}
 		String status = dbOperator.getStatus();
-		if(StringHelper.isEmpty(status)) {
-			throw new IllegalArgumentException("身份证号【" + dbOperator.getIdCard() + "】的操作员已经存在.");
-		} else if("delete".equals(status)) {
+		if("delete".equals(status)) {
 			throw new IllegalArgumentException("身份证号【" + dbOperator.getIdCard() + "】的操作员已经存在,但目前被标记为删除状态.");
 		}
 	}
@@ -81,10 +83,13 @@ public class OperatorService {
 			operatorOperationLogService.addLog(operatorEntity, customer);
 			return operatorEntity;
 		} catch(JpaSystemException e) {
+			LOG.error("add operator error", e);
 			throw new IllegalArgumentException("身份证号【" + operatorEntity.getIdCard() + "】的操作员已经存在");
 		} catch(IllegalArgumentException e) {
+			LOG.error("add operator error", e);
 			throw e;
 		} catch(Exception e) {
+			LOG.error("add operator error", e);
 			throw new RuntimeException(e.getMessage());
 		}
 	}
@@ -100,10 +105,13 @@ public class OperatorService {
 			this.operatorDao.save(operatorEntity);
 			areaManageService.saveOrUpdateOperatorInAreaConfig(operatorEntity.getId(), manageAreaArray);
 		} catch(JpaSystemException e) {
+			LOG.error("update operator error", e);
 			throw new IllegalArgumentException("身份证号【" + operatorEntity.getIdCard() + "】的操作员已经存在");
 		} catch(IllegalArgumentException e) {
+			LOG.error("update operator error", e);
 			throw e;
 		} catch(Exception e) {
+			LOG.error("update operator error", e);
 			throw new RuntimeException(e.getMessage());
 		}
 	}

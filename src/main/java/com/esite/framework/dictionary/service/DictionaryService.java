@@ -7,12 +7,12 @@ import com.esite.framework.dictionary.entity.DictionaryEntity;
 
 public interface DictionaryService {
 
-	public List<DictionaryEntity> getSubDictionaryByParentCode(String parentCode);
+	List<DictionaryEntity> getSubDictionaryByParentCode(String parentCode);
 
-	public DictionaryEntity getDictionaryByParentIdAndCode(String parentId,String code);
+	DictionaryEntity getDictionaryByParentIdAndCode(String parentId,String code);
 	
-	public void flashDictionary();
+	void flashDictionary();
 	
-	public DictionaryEntity getDictionaryByparentIdAndName(String parentId,String name);
+	DictionaryEntity getDictionaryByParentIdAndName(String parentId,String name);
 
 }
