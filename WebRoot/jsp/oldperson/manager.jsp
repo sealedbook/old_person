@@ -54,13 +54,13 @@
 				<!-- <th field="sex" align="center" width="5%" formatter="esite.convertCode2Name" parentId="xb">性别</th> -->
 				<th field="sex" align="center" width="5%" formatter="esite.convertSex">性别</th>
 				<th field="idCard" align="center" width="15%">身份证号</th>
-				<th field="socialNumber" align="center" width="15%">社保编号</th>
+				<th field="baseQueueCode" align="center" width="15%">基线编号</th>
 				<th field="birthday" align="center" width="12%" formatter="esite.formatDate" pattern="yyyy-MM-dd" >出生日期</th>
 				<th field="age" align="center" width="5%" >年龄</th>
 				<th field="area" formatter="formaterArea" align="center" width="20%" >老年人所属地区</th>
 				<th field="sflx" align="center" width="8%" formatter="esite.convertSflx" parentId="sflx">身份类型</th>
 				<th field="modelingStatus" align="center" width="8%" formatter="esite.convertJmzt" parentId="sflx">建模状态</th>
-				<th field="type" align="center" width="8%" formatter="esite.convertLnrlb" parentId="lnrlb" >人员状态</th>
+				<!-- <th field="type" align="center" width="8%" formatter="esite.convertLnrlb" parentId="lnrlb" >人员状态</th> -->
 			</tr>
 		</thead>
 	</table>
@@ -79,6 +79,7 @@
 					textField:'dicName',
 					url:'<c:url value="/dictionary/xb/sub.do"/>'
 				">
+				<!--
 				<input prompt='人员状态' class="easyui-combobox" name="type" id="type"
 					data-options="
 					editable:false,
@@ -86,6 +87,7 @@
 					textField:'dicName',
 					url:'<c:url value="/dictionary/lnrlb/sub.do"/>'
 				">
+				-->
 				<input prompt='老年人状态' class="easyui-combobox" name="status" id="status"
 					data-options="
 					editable:false,
@@ -149,7 +151,7 @@
 				<a href="#" title="还原为正常状态" class="easyui-linkbutton" iconCls="icon-undo" plain="true" onclick="undo();">还原</a>
 			</view:security>
 			|
-			<a href="<c:url value="/jsp/oldperson/mb.rar"/>" title="社保模板下载" class="easyui-linkbutton" iconCls="icon-rar" plain="true">模板下载</a>
+			<a href="<c:url value="/jsp/oldperson/mb.zip"/>" title="社保模板下载" class="easyui-linkbutton" iconCls="icon-rar" plain="true">模板下载</a>
 			<a href="#" title="社保导入" class="easyui-linkbutton" iconCls="icon-xls" plain="true" onclick="importOldPerson()">导入(社保来源)</a>
 			|
 			<a href="#" title="已建模转换为未建模" class="easyui-linkbutton" iconCls="icon-wrench" plain="true" onclick="createdToNone()">已建模->未建模</a>

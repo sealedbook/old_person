@@ -103,10 +103,19 @@ public class HealthInfoService {
 		if(null == operator) {
 			throw new IllegalArgumentException("操作员不存在.操作员身份证号：【" + operatorUser.getIdCard() + "】");
 		}
+		if (upLoadDataVO.getHealthCount() <= 0) {
+			throw new IllegalArgumentException("请提供体检次数");
+		}
+		if (upLoadDataVO.getLastHealthYear() <= 0) {
+			throw new IllegalArgumentException("请提供最后体检年份");
+		}
 		OldPersonEntity oldPerson = oldPersonService.getOldPerson(upLoadDataVO.getOldPersonId().toString());
 		if(null == oldPerson) {
 			throw new IllegalArgumentException("老年人不存在.老年人ID：【" + upLoadDataVO.getOldPersonId().toString() + "】");
 		}
+		oldPerson.setLastHealthYear(upLoadDataVO.getLastHealthYear());
+		oldPerson.setHealthCount(upLoadDataVO.getHealthCount());
+		oldPersonDao.save(oldPerson);
 		
 		HealthInfoEntity healthInfoEntity = new HealthInfoEntity();
 		healthInfoEntity.setOperator(operator);

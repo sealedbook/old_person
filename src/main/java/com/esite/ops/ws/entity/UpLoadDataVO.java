@@ -22,7 +22,17 @@ public class UpLoadDataVO implements java.io.Serializable {
 	 * 老年人唯一编号
 	 */
 	private java.io.Serializable oldPersonId;
-	
+
+	/**
+	 * 最后一次体检年份
+	 */
+	private int lastHealthYear;
+
+	/**
+	 * 体检次数综合
+	 */
+	private int healthCount;
+
 	/**
 	 * 体检开始时间
 	 */
@@ -97,5 +107,19 @@ public class UpLoadDataVO implements java.io.Serializable {
 		this.photoCollection = photoCollection;
 	}
 
-	
+	public int getLastHealthYear() {
+		return lastHealthYear;
+	}
+
+	public void setLastHealthYear(int lastHealthYear) {
+		this.lastHealthYear = lastHealthYear;
+	}
+
+	public int getHealthCount() {
+		return healthCount;
+	}
+
+	public void setHealthCount(int healthCount) {
+		this.healthCount = healthCount;
+	}
 }

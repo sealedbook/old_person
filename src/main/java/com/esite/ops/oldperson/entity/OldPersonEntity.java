@@ -154,18 +154,6 @@ public class OldPersonEntity {
     @Column(name = "died_cause")
     private String diedCause;
 
-    /**
-     * 身高
-     */
-    @Column(name = "height")
-    private int height;
-
-    /**
-     * 体重
-     */
-    @Column(name = "weight")
-    private int weight;
-
     @Column(name = "photo_key")
     private String photoKey;
 
@@ -192,6 +180,18 @@ public class OldPersonEntity {
      */
     @Column(name = "convert_base_code")
     private String convertBaseCode;
+
+    /**
+     * 检测次数
+     */
+    @Column(name = "health_count")
+    private int healthCount;
+
+    /**
+     * 最后一次检测年份
+     */
+    @Column(name = "last_health_year")
+    private int lastHealthYear;
 
     public String getStatus() {
         return status;
@@ -446,22 +446,6 @@ public class OldPersonEntity {
         this.diedCause = diedCause;
     }
 
-    public int getHeight() {
-        return height;
-    }
-
-    public void setHeight(int height) {
-        this.height = height;
-    }
-
-    public int getWeight() {
-        return weight;
-    }
-
-    public void setWeight(int weight) {
-        this.weight = weight;
-    }
-
     public String getBaseQueueCode() {
         return baseQueueCode;
     }
@@ -492,6 +476,22 @@ public class OldPersonEntity {
 
     public void setConvertBaseCode(String convertBaseCode) {
         this.convertBaseCode = convertBaseCode;
+    }
+
+    public int getHealthCount() {
+        return healthCount;
+    }
+
+    public void setHealthCount(int healthCount) {
+        this.healthCount = healthCount;
+    }
+
+    public int getLastHealthYear() {
+        return lastHealthYear;
+    }
+
+    public void setLastHealthYear(int lastHealthYear) {
+        this.lastHealthYear = lastHealthYear;
     }
 
     @Override
@@ -525,13 +525,13 @@ public class OldPersonEntity {
         sb.append(", diedTime=").append(diedTime);
         sb.append(", diedLocation='").append(diedLocation).append('\'');
         sb.append(", diedCause='").append(diedCause).append('\'');
-        sb.append(", height=").append(height);
-        sb.append(", weight=").append(weight);
         sb.append(", photoKey='").append(photoKey).append('\'');
         sb.append(", baseQueueCode='").append(baseQueueCode).append('\'');
         sb.append(", baseQueueTime=").append(baseQueueTime);
         sb.append(", baseQueueAddress='").append(baseQueueAddress).append('\'');
         sb.append(", convertBaseCode='").append(convertBaseCode).append('\'');
+        sb.append(", healthCount=").append(healthCount);
+        sb.append(", lastHealthYear=").append(lastHealthYear);
         sb.append('}');
         return sb.toString();
     }

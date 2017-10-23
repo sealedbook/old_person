@@ -73,7 +73,6 @@ public class HealthWebService {
         HealthInfoService healthInfoService = (HealthInfoService) WebApplicationContextUtil
             .getBean("healthInfoService");
 
-        //logger.info("=======Web Service 获得的服务类：" + healthInfoService);
         logger.info("=======Web Service 接收到参数,token:" + token);
         Object obj = SerializerHelper.deserialize(healthInfo);
         int uploadOldPersonTotal = 0;
