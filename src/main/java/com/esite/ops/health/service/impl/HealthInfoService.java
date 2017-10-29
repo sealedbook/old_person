@@ -16,6 +16,8 @@ import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -51,6 +53,7 @@ import com.esite.ops.ws.entity.UpLoadOldPersonPhotoVO;
 
 @Service("healthInfoService")
 public class HealthInfoService {
+	private static final Logger LOG = LoggerFactory.getLogger(HealthInfoService.class);
 
 	@Autowired
 	private HealthInfoDao healthInfoDao;
@@ -126,6 +129,10 @@ public class HealthInfoService {
 		healthInfoEntity.setCycle(cycle);
 		healthInfoEntity.setBatchId(importBatchId);
 		healthInfoEntity.setLogId(logId);
+		StringBuilder randomRequestCode = new StringBuilder();
+		randomRequestCode.append(oldPerson.getLastHealthYear()).append(oldPerson.getConvertBaseCode()).append(oldPerson.getHealthCount());
+		LOG.info("generator random request coe : [{}]", randomRequestCode.toString());
+		healthInfoEntity.setRandomRequestCode(randomRequestCode.toString());
 		healthInfoDao.save(healthInfoEntity);
 		
 		//获得终端上传的体检信息
