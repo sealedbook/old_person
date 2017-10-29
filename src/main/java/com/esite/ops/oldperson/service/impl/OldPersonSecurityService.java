@@ -3,6 +3,7 @@ package com.esite.ops.oldperson.service.impl;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.esite.framework.security.service.RoleService;
 import com.esite.framework.user.entity.User;

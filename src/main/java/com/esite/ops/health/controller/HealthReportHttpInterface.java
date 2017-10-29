@@ -1,5 +1,7 @@
 package com.esite.ops.health.controller;
 
+import java.util.Date;
+
 import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.esite.ops.health.entity.HealthInfoEntity;
 import com.esite.ops.health.entity.HealthResultEntity;
 import com.esite.ops.health.service.impl.HealthInfoService;
+import com.esite.ops.mission.entity.CycleEntity;
+import com.esite.ops.mission.service.impl.CycleService;
 import com.esite.ops.oldperson.entity.OldPersonEntity;
 import com.esite.ops.oldperson.service.impl.OldPersonService;
 import com.esite.ops.operator.entity.OperatorEntity;
@@ -25,6 +29,8 @@ public class HealthReportHttpInterface {
     private HealthInfoService healthInfoService;
     @Resource
     private OldPersonService oldPersonService;
+    @Resource
+    private CycleService cycleService;
 
     @RequestMapping("/{oldPersonId}/report/view")
     public String reportOnlineView(@PathVariable String oldPersonId, Model model) {
@@ -47,6 +53,13 @@ public class HealthReportHttpInterface {
 
     @RequestMapping("/miss")
     public ResponseEntity<String> healthMiss(String oldPersonId, String missCause, Model model) {
+
+        CycleEntity cycle = null;
+        try {
+            cycle = cycleService.getCycle(new Date());
+        } catch (Throwable e) {
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
         HealthInfoEntity health = healthInfoService.getLastHealthByOldPersonId(oldPersonId);
         if (null == health) {
             return new ResponseEntity<String>("体检信息不存在", HttpStatus.BAD_REQUEST);

@@ -60,6 +60,7 @@ public class UserService {
 		}
 	}
 
+
 	public void deleteByIdCard(String idCard) {
 		this.userDAO.deleteUserByIdCard(idCard);
 	}

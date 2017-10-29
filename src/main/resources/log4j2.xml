@@ -42,7 +42,7 @@
             <AppenderRef ref="stdout"/>
             <AppenderRef ref="console"/>
         </AsyncLogger>
-        <AsyncLogger name="org" level="DEBUG" additivity="false" includeLocation="true">
+        <AsyncLogger name="org" level="INFO" additivity="false" includeLocation="true">
             <AppenderRef ref="stdout"/>
             <AppenderRef ref="console"/>
         </AsyncLogger>
