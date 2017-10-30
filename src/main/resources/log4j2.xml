@@ -5,13 +5,13 @@
         <!-- 定义控制台输出 -->
         <Console name="console">
             <PatternLayout
-                pattern="%d{MMM dd HH:mm:ss,SSS} [%p] [%M(%F:%L)]  bid:[%X{AD_TRACKING_LOG_TRACK_KEY}] :%m%n"/>
+                pattern="%d{MMM dd HH:mm:ss,SSS} [%p] [%M(%F:%L)]  bid:[%X{LOG_TRACK_KEY}] :%m%n"/>
         </Console>
         <!-- 程序员调试日志 -->
         <RollingRandomAccessFile name="stdout" fileName="logs/stdout.log"
             filePattern="logs/stdout_%d{yyyy-MM-dd}_%i.log" immediateFlush="false">
             <PatternLayout>
-                <Pattern>%d{MMM dd HH:mm:ss,SSS} [%-5p] [%M(%F:%L)] bid:[%X{AD_TRACKING_LOG_TRACK_KEY}]:%m%n</Pattern>
+                <Pattern>%d{MMM dd HH:mm:ss,SSS} [%-5p] [%M(%F:%L)] bid:[%X{LOG_TRACK_KEY}]:%m%n</Pattern>
             </PatternLayout>
             <Policies>
                 <TimeBasedTriggeringPolicy modulate="true"/>
@@ -23,7 +23,7 @@
         <RollingFile name="error" fileName="logs/error.log" filePattern="logs/error_%d{yyyy-MM-dd}_%i.log"
             immediateFlush="false">
             <PatternLayout>
-                <Pattern>%d [%-5p] [%t] [%c] bid:[%X{AD_TRACKING_LOG_TRACK_KEY}]:%m%n</Pattern>
+                <Pattern>%d [%-5p] [%t] [%c] bid:[%X{LOG_TRACK_KEY}]:%m%n</Pattern>
             </PatternLayout>
             <Policies>
                 <TimeBasedTriggeringPolicy modulate="true"/>

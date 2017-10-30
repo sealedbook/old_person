@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -151,11 +152,10 @@ public class OldPersonHttpInterface {
     }
 
     @RequestMapping(value = "/sign_died")
-    public ResponseEntity<String> died(OldPersonEntity oldPerson, HttpServletRequest request) {
+    public ResponseEntity<String> died(String id, String diedLocation, String diedCause, long diedTime, HttpServletRequest request) {
         try {
             oldPersonService
-                .died(oldPerson.getId(), oldPerson.getDiedTime(), oldPerson.getDiedLocation(), oldPerson.getDiedCause(),
-                    new Customer(request));
+                .died(id, new Date(diedTime), diedLocation, diedCause, new Customer(request));
             return new ResponseEntity<String>(HttpStatus.OK);
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);

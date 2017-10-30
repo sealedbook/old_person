@@ -252,9 +252,9 @@
 
     <profiles>
         <profile>
-            <id>PRODUCT</id>
+            <id>TAIZHOU-PRODUCT</id>
             <properties>
-                <env>PRODUCT</env>
+                <env>TAIZHOU-PRODUCT</env>
                 <package.target>op-product</package.target>
             </properties>
         </profile>

@@ -61,9 +61,10 @@ public class OldPersonEntity {
 
     /**
      * 老年人类型
+     * 默认本地
      */
     @Column(name = "TYPE")
-    private int type;
+    private int type = 1;
 
     /**
      * 电话号码
@@ -146,6 +147,7 @@ public class OldPersonEntity {
     private String status = "";
 
     @Column(name = "died_time")
+    @DateTimeFormat(iso = ISO.DATE)
     private Date diedTime;
 
     @Column(name = "died_location")
@@ -167,6 +169,7 @@ public class OldPersonEntity {
      * 基线队列调查时间
      */
     @Column(name = "base_queue_time")
+    @DateTimeFormat(iso = ISO.DATE)
     private Date baseQueueTime;
 
     /**

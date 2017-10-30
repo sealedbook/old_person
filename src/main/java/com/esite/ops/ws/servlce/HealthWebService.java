@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.annotation.Resource;
 import javax.jws.WebMethod;
@@ -17,6 +18,7 @@ import javax.xml.ws.WebServiceContext;
 import javax.xml.ws.handler.MessageContext;
 
 import org.apache.log4j.Logger;
+import org.slf4j.MDC;
 import org.springframework.data.domain.Page;
 
 import com.esite.framework.core.factory.WebApplicationContextUtil;
@@ -60,6 +62,8 @@ public class HealthWebService {
      */
     @WebMethod
     public String upload(@WebParam(name = "healthInfo") String healthInfo, @WebParam(name = "token") String token) {
+        MDC.put("LOG_TRACK_KEY", UUID.randomUUID().toString().replaceAll("-", ""));
+
         Map<String, String> webServiceResult = new HashMap<String, String>(2);
         User user = getUser(token);
         if (null == user) {
@@ -97,8 +101,8 @@ public class HealthWebService {
                     }
                     String logContent = JsonConverter.convert(upLoadDataVO);
                     //logger.info("=======Web Service 上传老年人日志记录内容：" + logContent);
-                    String logId = healthInfoImportLogService
-                        .log(importHealthInfoBatchId, user, getIpAddress(), logContent);
+                    String logId = MDC.get("LOG_TRACK_KEY");
+                    logger.info("fetch uoload data:" + logContent);
                     String uploadOldPersonId = "";
                     if (null != upLoadDataVO.getOldPersonId()) {
                         uploadOldPersonId = upLoadDataVO.getOldPersonId().toString();

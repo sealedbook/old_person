@@ -130,11 +130,15 @@ public class HealthInfoService {
 		healthInfoEntity.setBatchId(importBatchId);
 		healthInfoEntity.setLogId(logId);
 		StringBuilder randomRequestCode = new StringBuilder();
-		randomRequestCode.append(oldPerson.getLastHealthYear()).append(oldPerson.getConvertBaseCode()).append(oldPerson.getHealthCount());
+		randomRequestCode.append(oldPerson.getLastHealthYear())
+			.append(oldPerson.getConvertBaseCode())
+			.append("SF")
+			.append(oldPerson.getHealthCount());
 		LOG.info("generator random request coe : [{}]", randomRequestCode.toString());
 		healthInfoEntity.setRandomRequestCode(randomRequestCode.toString());
 		healthInfoDao.save(healthInfoEntity);
-		
+
+		LOG.info("health info save finish.");
 		//获得终端上传的体检信息
 		UpLoadOldPersonHealthVO healthResultVO = upLoadDataVO.getOldPersonHealthVO();
 		if(null == healthResultVO) {
@@ -142,8 +146,14 @@ public class HealthInfoService {
 		}
 		//转换并保存体检信息
 		HealthResultEntity healthResultEntity = new HealthResultEntity(healthInfoEntity,healthResultVO);
-		this.healthResultDao.save(healthResultEntity);
-		
+		try {
+			this.healthResultDao.save(healthResultEntity);
+		} catch (Throwable e) {
+			LOG.error("healthResultDao.save error", e);
+			throw e;
+		}
+		LOG.info("health result save finish.");
+
 		//获得终端上传的指纹信息
 		UpLoadOldPersonFingerprint fingerprint = upLoadDataVO.getOldPersonFingerprint();
 		if(null == fingerprint) {
@@ -152,7 +162,8 @@ public class HealthInfoService {
 		//转换并保存指纹信息
 		HealthFingerprintEntity fingerprintEntity = new HealthFingerprintEntity(healthInfoEntity.getId(),oldPerson.getId(),fingerprint);
 		this.healthFingerprintDao.save(fingerprintEntity);
-		
+		LOG.info("healthFingerprintDao save finish.");
+
 		//更新体检信息的终端指纹验证状态FingerVerifyState
 		healthInfoEntity.setFingerVerifyState(fingerprint.getFingerVerifyState().getCode());
 		this.healthInfoDao.save(healthInfoEntity);
