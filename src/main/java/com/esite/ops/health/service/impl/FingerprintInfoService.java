@@ -1,5 +1,7 @@
 package com.esite.ops.health.service.impl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -8,9 +10,12 @@ import com.esite.ops.health.dao.FingerprintVerifyLogDao;
 import com.esite.ops.health.dao.HealthFingerprintDao;
 import com.esite.ops.health.entity.FingerprintVerifyLogEntity;
 import com.esite.ops.health.entity.HealthFingerprintEntity;
+import com.mchange.v2.log.LogUtils;
 
 @Service("fingerprintInfoService")
 public class FingerprintInfoService {
+
+	private static final Logger LOG = LoggerFactory.getLogger(FingerprintInfoService.class);
 
 	@Autowired
 	private FingerprintVerifyLogDao fingerprintVerifyLogDao;
@@ -33,7 +38,11 @@ public class FingerprintInfoService {
 		fingerprintVerifyEntity.setSubmitIpAddress(ipAddress);
 		fingerprintVerifyEntity.setSubmitUserId(operatorUser.getId());
 		fingerprintVerifyEntity.setVeriftState(verifyState);
-		fingerprintVerifyLogDao.save(fingerprintVerifyEntity);
+		try {
+			fingerprintVerifyLogDao.save(fingerprintVerifyEntity);
+		} catch (Throwable e) {
+			LOG.error("fingerprintVerifyLogDao.save error", e);
+		}
 	}
 
 	public HealthFingerprintEntity getFingerprintInfoByHealthId(String healthId) {
