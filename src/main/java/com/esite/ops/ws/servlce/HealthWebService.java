@@ -17,7 +17,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.xml.ws.WebServiceContext;
 import javax.xml.ws.handler.MessageContext;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 import org.springframework.data.domain.Page;
 
@@ -27,7 +28,6 @@ import com.esite.framework.util.JsonConverter;
 import com.esite.framework.util.PagerRequest;
 import com.esite.framework.util.SerializerHelper;
 import com.esite.framework.util.StringHelper;
-import com.esite.ops.health.service.impl.HealthInfoImportErrorLogService;
 import com.esite.ops.health.service.impl.HealthInfoImportLogService;
 import com.esite.ops.health.service.impl.HealthInfoService;
 import com.esite.ops.mission.entity.CycleEntity;
@@ -52,7 +52,7 @@ import com.esite.ops.ws.enums.HandEnum;
 @SOAPBinding(style = Style.DOCUMENT, use = Use.LITERAL)
 public class HealthWebService {
 
-    private static Logger logger = Logger.getLogger(HealthWebService.class);
+    private static Logger logger = LoggerFactory.getLogger(HealthWebService.class);
 
     @Resource
     private WebServiceContext wsContext;
@@ -121,7 +121,7 @@ public class HealthWebService {
                     }
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error("upload error.", e);
                 logger.info("=======Web Service 第" + (i) + "位老人处理出错:", e);
                 logger.info("=======Web Service 第" + (i) + "位老人处理出错:" + e.getMessage());
                 String message = "第" + (i) + "位老人处理出错:" + e.getMessage();

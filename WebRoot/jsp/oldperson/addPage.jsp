@@ -102,23 +102,9 @@ function copyIdCard() {
 		    	</table>
 	    	</fieldset>
 	    	<fieldset>
-	    		<legend>社保信息</legend>
+	    		<legend>其他信息</legend>
 	    		<table class="tableStyle">
 	    			<tr>
-		    			<td width="20%" class="right">社保编号</td>
-						<td width="30%" colspan="3">
-							<input class="easyui-textbox" data-options="validType:['blankSpace','length[0,18]']" name="socialNumber" id="socialNumber"/>
-							<a href="#" onclick="copyIdCard()">同身份证号</a>
-						</td>
-	    			</tr>
-	    			<tr>
-		    			<td width="20%" class="right">缴纳社保</td>
-						<td width="30%">
-							<input id="jnsbrq" name="jnsbrq" class="easyui-datebox" 
-								data-options="editable:false,validType:{
-									
-								}" />
-						</td>
 						<td width="20%" class="right">退休日期</td>
 						<td width="30%">
 							<input id="txrq" name="txrq" class="easyui-datebox" 
@@ -126,17 +112,8 @@ function copyIdCard() {
 									
 								}" />
 						</td>
-	    			</tr>
-	    			<tr>
-		    			<td width="20%" class="right">领取社保</td>
-						<td width="30%">
-							<input id="lqsbrq" name="lqsbrq" class="easyui-datebox" 
-								data-options="editable:false,validType:{
-									
-								}" />
-						</td>
 						<td width="20%" class="right" colspan="2"></td>
-	    			</tr>
+					</tr>
 	    			<tr>
 	    				<td width="20%" class="right">身份类型</td>
 						<td width="30%" >

@@ -14,7 +14,7 @@
 </head>
   
   <body class="easyui-layout">
-	<table id="dg" title="老年人社保发放管理"  data-options="
+	<table id="dg" title="人员发放管理"  data-options="
 				rownumbers:true,
 				fit : true,
 				singleSelect:false,

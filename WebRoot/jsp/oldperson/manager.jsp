@@ -69,7 +69,6 @@
 			<form name="verifyForm" id="verifyForm">
 				<input id="name" name="name" prompt='老年人姓名' class="easyui-textbox" data-options="validType:['minLength[1]','length[0,10]']" style="width:150px">
 				<input id="idCard" name="idCard" prompt='老年人身份证号' class="easyui-textbox" style="width:150px">
-				<input id="socialNumber" name="socialNumber" prompt='老年人社保号' class="easyui-textbox" style="width:150px">  
 				<input id="ageRangeBegin" name="ageRangeBegin" prompt='年龄段-起始' data-options="validType:['number']" class="easyui-textbox" style="width:90px">
 				<input id="ageRangeEnd" name="ageRangeEnd" prompt='年龄段-结束' data-options="validType:['number']" class="easyui-textbox" style="width:90px">
 				<input prompt='老年人性别' class="easyui-combobox" name="sex" id="sex"
@@ -151,8 +150,8 @@
 				<a href="#" title="还原为正常状态" class="easyui-linkbutton" iconCls="icon-undo" plain="true" onclick="undo();">还原</a>
 			</view:security>
 			|
-			<a href="<c:url value="/jsp/oldperson/mb.zip"/>" title="社保模板下载" class="easyui-linkbutton" iconCls="icon-rar" plain="true">模板下载</a>
-			<a href="#" title="社保导入" class="easyui-linkbutton" iconCls="icon-xls" plain="true" onclick="importOldPerson()">导入(社保来源)</a>
+			<a href="<c:url value="/jsp/oldperson/mb.zip"/>" title="模板下载" class="easyui-linkbutton" iconCls="icon-rar" plain="true">模板下载</a>
+			<a href="#" title="导入人员" class="easyui-linkbutton" iconCls="icon-xls" plain="true" onclick="importOldPerson()">导入人员</a>
 			|
 			<a href="#" title="已建模转换为未建模" class="easyui-linkbutton" iconCls="icon-wrench" plain="true" onclick="createdToNone()">已建模->未建模</a>
 			<a href="#" title="未建模转换为无法建模" class="easyui-linkbutton" iconCls="icon-wrench_orange" plain="true" onclick="noneToContCreated()">未建模->无法建模</a>
@@ -181,15 +180,15 @@
 			$.messager.alert("系统提示","请选择一项","info");
 		}else{
 			var url = '<c:url value="/oldperson/"/>' + row[0].id + '.do';
-			top.openDialog({onClose:function(){$('#dg').datagrid();},width:'50%',height:'90%',title:'老年人档案信息',url:url});
+			top.openDialog({onClose:function(){$('#dg').datagrid();},width:'50%',height:'90%',title:'人员档案信息',url:url});
 		}
 	}
 	
 	function importOldPerson() {
-		top.openDialog({onClose:function(){$('#dg').datagrid();},width:'50%',height:'50%',title:'社保数据导入',url:'<c:url value="/oldperson/importPage.do"/>'});
+		top.openDialog({onClose:function(){$('#dg').datagrid();},width:'50%',height:'50%',title:'数据导入',url:'<c:url value="/oldperson/importPage.do"/>'});
 	}
 	function add(){
-		top.openDialog({onClose:function(){$('#dg').datagrid();},width:'40%',height:'80%',title:'老年人基本信息录入',url:'<c:url value="/oldperson/addPage.do"/>'});
+		top.openDialog({onClose:function(){$('#dg').datagrid();},width:'40%',height:'80%',title:'人员基本信息录入',url:'<c:url value="/oldperson/addPage.do"/>'});
 	}
 	function undo() {
 		//获取选中行

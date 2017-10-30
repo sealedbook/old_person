@@ -268,7 +268,7 @@ public class StatisticsController {
 			model.addAttribute("wdYrz", wdYrz);
 			model.addAttribute("wdWrz", wdWrz);
 			
-			String statisticsName = "儋州市%s至%s社保人员身份认证状态汇总";
+			String statisticsName = "%s至%s随访人员身份认证状态汇总";
 			SimpleDateFormat yyyyMMdd= new SimpleDateFormat("yyyy-MM-dd");
 			statisticsName = String.format(statisticsName, yyyyMMdd.format(cycle.getCycleBegin()),yyyyMMdd.format(cycle.getCycleEnd()),"55");
 			model.addAttribute("statisticsName", statisticsName);

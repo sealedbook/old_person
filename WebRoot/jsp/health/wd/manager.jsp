@@ -58,7 +58,7 @@
 				<th field="oldPerson" formatter="formatOldPerson" align="center" width="10%">老年人姓名</th>
 				<th field="sex" align="center" width="5%" formatter="esite.convertCode2Name" parentId="xb">性别</th>
 				<th field="idCard" align="center" width="13%">身份证号</th>
-				<th field="socialNumber" align="center" width="13%">社保编号</th>
+				<th field="socialNumber" align="center" width="13%">编号</th>
 				<th field="birthday" align="center" width="10%" formatter="esite.formatDate" pattern="yyyy-MM-dd" >出生日期</th>
 				<th field="age" align="center" width="5%" >年龄</th>
 				<th field="oldPersonArea" formatter="formatOldPersonArea" align="center" width="20%">老年人所属地区</th>

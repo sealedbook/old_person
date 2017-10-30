@@ -184,7 +184,7 @@ public class HealthReportController {
 		}
 		String cycleBegin = new SimpleDateFormat("yyyy-MM-dd").format(cycleEntity.getCycleBegin());
 		String cycleEnd = new SimpleDateFormat("yyyy-MM-dd").format(cycleEntity.getCycleEnd());
-		String title = cycleBegin + "至" + cycleEnd + "社保人员身份认证统计表";
+		String title = cycleBegin + "至" + cycleEnd + "人员身份认证统计表";
 		WritableWorkbook wwb = null;
 		Workbook wb = null;
 		try {
@@ -323,7 +323,7 @@ public class HealthReportController {
 		}
 		String cycleBegin = new SimpleDateFormat("yyyy-MM-dd").format(cycleEntity.getCycleBegin());
 		String cycleEnd = new SimpleDateFormat("yyyy-MM-dd").format(cycleEntity.getCycleEnd());
-		String title = cycleBegin + "至" + cycleEnd + "社保人员身份认证汇总.doc";
+		String title = cycleBegin + "至" + cycleEnd + "人员身份认证汇总.doc";
 		
 		response.setCharacterEncoding("UTF-8");
 		String fileName = title;

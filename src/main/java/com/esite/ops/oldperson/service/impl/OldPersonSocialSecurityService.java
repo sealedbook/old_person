@@ -86,31 +86,31 @@ public class OldPersonSocialSecurityService {
 					
 					OldPersonEntity importOldPerson = new OldPersonEntity();
 					if(null == row.get(0) || row.get(0).length() <= 0) {
-						simpleErrorMessage.append("Excel文件中第").append(i+1).append("行,老人【姓名】为空.");
+						simpleErrorMessage.append("Excel文件中第").append(i+1).append("行,人员【姓名】为空.");
 					} else {
 						importOldPerson.setName(row.get(0));
 					}
 					
 					if(null == row.get(2) || row.get(2).length() <= 0) {
-						simpleErrorMessage.append("Excel文件中第").append(i+1).append("行,老人【社保编号】为空.");
+						simpleErrorMessage.append("Excel文件中第").append(i+1).append("行,人员【编号】为空.");
 					} else {
 						importOldPerson.setSocialNumber(row.get(2));
 					}
 					
 					if(null == row.get(1) || row.get(1).length() <= 0) {
-						simpleErrorMessage.append("Excel文件中第").append(i+1).append("行,老人【身份证号】为空.");
+						simpleErrorMessage.append("Excel文件中第").append(i+1).append("行,人员【身份证号】为空.");
 					}
 					if(!IdentityCardHelper.isIdCard(row.get(1))) {
-						simpleErrorMessage.append("Excel文件中第").append(i+1).append("行,老人【身份证号】格式错误.");
+						simpleErrorMessage.append("Excel文件中第").append(i+1).append("行,人员【身份证号】格式错误.");
 					} else {
 						importOldPerson.setIdCard(row.get(1));
 						OldPersonEntity dbOldPerson = oldPersonService.getOldPersonWithIdCard(row.get(1));
 						if(null == dbOldPerson) {
-							simpleErrorMessage.append("Excel文件中第").append(i+1).append("行,老年人不在系统中.");
+							simpleErrorMessage.append("Excel文件中第").append(i+1).append("行,人员不在系统中.");
 						} else if (!dbOldPerson.getStatus().equals("")) {
-							simpleErrorMessage.append("Excel文件中第").append(i+1).append("行,老年人在系统中的状态不属于正常状态.");
+							simpleErrorMessage.append("Excel文件中第").append(i+1).append("行,人员在系统中的状态不属于正常状态.");
 						} else if(!dbOldPerson.equals(importOldPerson)) {
-							simpleErrorMessage.append("Excel文件中第").append(i+1).append("行,老人信息与系统中不匹配,请确认老年人的姓名、身份证号以及社保编号.");
+							simpleErrorMessage.append("Excel文件中第").append(i+1).append("行,人员信息与系统中不匹配,请确认人员的姓名、身份证号.");
 						} else {
 							oldPersonSocialSecurityEntity.setOldPerson(dbOldPerson);
 						}
@@ -118,33 +118,33 @@ public class OldPersonSocialSecurityService {
 					
 					
 					if(null == row.get(3) || row.get(3).length() <= 0) {
-						simpleErrorMessage.append("Excel文件中第").append(i+1).append("行,社保【发放时间】为空.");
+						simpleErrorMessage.append("Excel文件中第").append(i+1).append("行,【发放时间】为空.");
 					} else {
 						try {
 							Date sendDate = new SimpleDateFormat("yyyy-MM-dd").parse(row.get(3));
 							oldPersonSocialSecurityEntity.setSendDate(sendDate);
 						} catch(ParseException e) {
-							simpleErrorMessage.append("Excel文件中第").append(i+1).append("行,社保【发放时间】格式错误,请检查是否为【yyyy-MM-dd】的时间格式.");
+							simpleErrorMessage.append("Excel文件中第").append(i+1).append("行,【发放时间】格式错误,请检查是否为【yyyy-MM-dd】的时间格式.");
 						}
 					}
 					
 					if(null == row.get(4) || row.get(4).length() <= 0) {
-						simpleErrorMessage.append("Excel文件中第").append(i+1).append("行,社保【发放状态】为空.");
+						simpleErrorMessage.append("Excel文件中第").append(i+1).append("行,【发放状态】为空.");
 					}
 					DictionaryEntity oldPersonSocialStatus = this.dictionaryService.getDictionaryByParentIdAndName("sendStatus", row.get(4));
 					if(null == oldPersonSocialStatus) {
-						simpleErrorMessage.append("Excel文件中第").append(i+1).append("行,社保【发放状态】输入错误,系统中找不到对应的发放状态.");
+						simpleErrorMessage.append("Excel文件中第").append(i+1).append("行,【发放状态】输入错误,系统中找不到对应的发放状态.");
 					} else {
 						oldPersonSocialSecurityEntity.setSendStatus(oldPersonSocialStatus.getDicCode());
 					}
 
 					if(null != oldPersonSocialStatus && !"1".equals(oldPersonSocialStatus.getDicCode())) {
 						if(null == row.get(5) || row.get(5).length() <= 0) {
-							simpleErrorMessage.append("Excel文件中第").append(i+1).append("行,社保【停发或暂停原因】为空.");
+							simpleErrorMessage.append("Excel文件中第").append(i+1).append("行,【停发或暂停原因】为空.");
 						} else {
 							DictionaryEntity socialStopSendCause = this.dictionaryService.getDictionaryByParentIdAndName("socialStopSendCause", row.get(5));
 							if(null == socialStopSendCause) {
-								simpleErrorMessage.append("Excel文件中第").append(i+1).append("行,社保【停发或暂停原因】输入错误,系统中找不到对应的停发或暂停原因.");
+								simpleErrorMessage.append("Excel文件中第").append(i+1).append("行,【停发或暂停原因】输入错误,系统中找不到对应的停发或暂停原因.");
 							} else {
 								oldPersonSocialSecurityEntity.setSocialStopSendCause(socialStopSendCause.getDicCode());
 							}
@@ -157,7 +157,7 @@ public class OldPersonSocialSecurityService {
 					}
 					OldPersonSocialSecurityEntity dbOldPersonSocialSecurityEntity = this.oldPersonSocialSecurityDao.getSocialSecurityByOldPersonIdAndSendDate(oldPersonSocialSecurityEntity.getOldPerson().getId(),oldPersonSocialSecurityEntity.getSendDate());
 					if(null != dbOldPersonSocialSecurityEntity) {
-						//新导入的老年人社保发放状态如果与数据库中冲突(检测冲突根据老年人id和发放时间检查),则替换为最新的数据(更新发放时间、发放状态、以及批次)
+						//新导入的发放状态如果与数据库中冲突(检测冲突根据老年人id和发放时间检查),则替换为最新的数据(更新发放时间、发放状态、以及批次)
 						oldPersonSocialSecurityEntity.setOldBatchId(dbOldPersonSocialSecurityEntity.getBatchId());
 						dbOldPersonSocialSecurityEntity.setStatus("delete");
 						this.oldPersonSocialSecurityDao.save(dbOldPersonSocialSecurityEntity);

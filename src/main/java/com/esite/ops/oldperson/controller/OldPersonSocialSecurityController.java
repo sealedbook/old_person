@@ -23,7 +23,7 @@ import com.esite.ops.oldperson.entity.OldPersonSocialSecurityQueryVO;
 import com.esite.ops.oldperson.service.impl.OldPersonSocialSecurityService;
 
 /**
- * 老年人社保
+ * 人员
  * @author Administrator
  *
  */

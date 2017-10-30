@@ -134,7 +134,7 @@ public class HealthInfoService {
 			.append(oldPerson.getConvertBaseCode())
 			.append("SF")
 			.append(oldPerson.getHealthCount());
-		LOG.info("generator random request coe : [{}]", randomRequestCode.toString());
+		LOG.info("generator random request code : [{}]", randomRequestCode.toString());
 		healthInfoEntity.setRandomRequestCode(randomRequestCode.toString());
 		healthInfoDao.save(healthInfoEntity);
 

@@ -63,7 +63,7 @@ function formaterArea(val,row,index) {
 							<th field="name" align="center" width="10%">姓名</th>
 							<th field="sex" align="center" width="5%" formatter="esite.convertCode2Name" parentId="xb">性别</th>
 							<th field="idCard" align="center" width="15%">身份证号</th>
-							<th field="socialNumber" align="center" width="15%">社保编号</th>
+							<th field="socialNumber" align="center" width="15%">编号</th>
 							<th field="birthday" align="center" width="12%" formatter="esite.formatDate" pattern="yyyy-MM-dd" >出生日期</th>
 							<th field="age" align="center" width="5%" >年龄</th>
 							<th field="type" align="center" width="10%" formatter="esite.convertCode2Name" parentId="lnrlb" >人员状态</th>
