@@ -13,7 +13,7 @@ public class DownloadDataInfoVO implements java.io.Serializable {
 	private static final long serialVersionUID = -3920257198693112078L;
 
 	/**
-	 * 老年人基本信息
+	 * 随访人员基本信息
 	 */
 	private DownloadOldPersonInfoVO oldPerson;
 	

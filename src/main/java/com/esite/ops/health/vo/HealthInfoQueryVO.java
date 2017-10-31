@@ -25,17 +25,17 @@ public class HealthInfoQueryVO {
 	private String operatorId;
 	
 	/**
-	 * 老年人姓名
+	 * 随访人员姓名
 	 */
 	private String oldPersonName;
 	
 	/**
-	 * 老年人身份证号
+	 * 随访人员身份证号
 	 */
 	private String oldPersonIdCard;
 	
 	/**
-	 * 老年人id
+	 * 随访人员id
 	 */
 	private String oldPersonId;
 	

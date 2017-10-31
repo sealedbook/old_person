@@ -31,7 +31,7 @@
 				<th field="idCard" align="center" width="15%">身份证号</th>
 				<th field="socialNumber" align="center" width="15%">社保编号</th>
 				<th field="age" align="center" width="5%" >年龄</th>
-				<th field="area" align="center" width="20%" >老年人所属地区</th>
+				<th field="area" align="center" width="20%" >随访人员所属地区</th>
 				<th field="type" align="center" width="8%" formatter="esite.convertCode2Name" parentId="lnrlb" >人员状态</th>
 				<th field="sendDate" formatter="esite.formatDate" pattern="yyyy-MM-dd" align="center" width="10%" >发放时间</th>
 				<th field="sendStatus" formatter="esite.convertCode2Name" parentId="sendStatus" align="center" width="10%" >发放状态</th>
@@ -42,7 +42,7 @@
 		<div>
 			<!-- <a href="#" title="查看历史导入记录以及历史导入的文件" class="easyui-linkbutton" iconCls="icon-application_double" plain="true" onclick="alert('未实现')">历史导入</a> -->
 			<a href="<c:url value="/jsp/oldperson/socialSecurity/mb.rar"/>" title="社保模板下载" class="easyui-linkbutton" iconCls="icon-rar" plain="true">模板下载</a>
-			<a href="#" title="老年人社保发放情况导入" class="easyui-linkbutton" iconCls="icon-xls" plain="true" onclick="dataImport()">导入(社保来源)</a>
+			<a href="#" title="随访人员社保发放情况导入" class="easyui-linkbutton" iconCls="icon-xls" plain="true" onclick="dataImport()">导入(社保来源)</a>
 		</div>
 	</div>
 	<script type="text/javascript">
@@ -51,7 +51,7 @@
 			//双击事件
 			onDblClickRow: function(rowIndex,rowData){
 				//var url = '<c:url value="/oldperson/"/>' + rowData.id + '.do';
-				//top.openDialog({onClose:function(){$('#dg').datagrid();},width:'40%',height:'80%',title:'老年人档案信息',url:url});
+				//top.openDialog({onClose:function(){$('#dg').datagrid();},width:'40%',height:'80%',title:'随访人员档案信息',url:url});
 			}
 		});
 	});

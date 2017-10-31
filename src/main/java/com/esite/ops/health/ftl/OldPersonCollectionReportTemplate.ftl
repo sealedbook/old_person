@@ -578,7 +578,7 @@
 <w:b/>
 <w:sz w:val="24"/>
 </w:rPr>
-<w:t>儋州市社会</w:t>
+<w:t>泰州市社会</w:t>
 </w:r>
 <w:r wsp:rsidR="001429BE">
 <w:rPr>
@@ -2492,7 +2492,7 @@
 <w:sz w:val="28"/>
 <w:sz-cs w:val="24"/>
 </w:rPr>
-<w:t>儋州市社会保险事业局</w:t>
+<w:t>泰州市社会保险事业局</w:t>
 </w:r>
 <w:r wsp:rsidRPr="002004AF">
 <w:rPr>

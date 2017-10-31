@@ -104,7 +104,7 @@ public class StatisticsController {
 				if(null != rzbfbMap.get("area_name")) {
 					areaName = rzbfbMap.get("area_name").toString();
 				} else {
-					areaName = "儋州市";
+					areaName = "泰州市";
 				}
 				Label name = new Label(x++,y,areaName);
 				wws.addCell(name);

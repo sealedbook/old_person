@@ -36,12 +36,12 @@ public class FingerprintCollectService {
 			throw new IllegalArgumentException("请上传采集的指纹数据.");
 		}
 		if(StringHelper.isEmpty(fingerprintCollectEntity.getOldPersonId())) {
-			throw new IllegalArgumentException("请指定一个老年人.");
+			throw new IllegalArgumentException("请指定一个随访人员.");
 		}
 		OldPersonEntity oldPerson = oldPersonService.getOldPerson(fingerprintCollectEntity.getOldPersonId());
 		oldPerson.setFfStatus("ffStatus01");
 		if(null == oldPerson) {
-			throw new IllegalArgumentException("系统中没有找到对应的老年人.");
+			throw new IllegalArgumentException("系统中没有找到对应的随访人员.");
 		}
 		if(null != fingerprintTemplate) {
 			fingerprintCollectEntity.setFingerprintTemplate(fingerprintTemplate.getBytes());
@@ -79,7 +79,7 @@ public class FingerprintCollectService {
 			return;
 		}
 		if("1".equals(dbFingerprintCollectEntity.getFingerVerifyState())) {
-			throw new IllegalArgumentException("该老年人指纹已经采集成功,不能重复采集指纹.");
+			throw new IllegalArgumentException("该随访人员指纹已经采集成功,不能重复采集指纹.");
 		}
 		dbFingerprintCollectEntity.setFinger(fingerprintCollectEntity.getFinger());
 		dbFingerprintCollectEntity.setFingerprintCharOne(fingerprintCollectEntity.getFingerprintCharOne());

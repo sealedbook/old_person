@@ -20,7 +20,7 @@ public class OldPersonSecurityService {
 		if(null == oldPerson) {
 			return;
 		}
-		//当老年人属于本地人时,不进行用户创建
+		//当随访人员属于本地人时,不进行用户创建
 		if(1 == oldPerson.getType()) {
 			return;
 		}
@@ -28,7 +28,7 @@ public class OldPersonSecurityService {
 		user.setAccount(oldPerson.getIdCard());
 		user.setIdCard(oldPerson.getIdCard());
 		//user.setPassword(oldPerson.getIdCard().substring(12, 18));
-		//老年人登陆密码由于输入15位导致后6位人工无法准确知道，因此修改为默认密码是123456
+		//随访人员登陆密码由于输入15位导致后6位人工无法准确知道，因此修改为默认密码是123456
 		user.setPassword("123456");
 		user.setSex(oldPerson.getSex());
 		user.setShowName(oldPerson.getName());

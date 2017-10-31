@@ -90,16 +90,16 @@ public class HealthInfoService {
 	@Transactional
 	public void addNew(User operatorUser,String ipAddress,UpLoadDataVO upLoadDataVO,String importBatchId,String logId) {
 		if(null == upLoadDataVO) {
-			throw new IllegalArgumentException("老年人认证整体对象【upLoadDataVO】是空指针.");
+			throw new IllegalArgumentException("随访人员认证整体对象【upLoadDataVO】是空指针.");
 		}
 		
 		CycleEntity cycle = cycleService.getCycle(new Date(upLoadDataVO.getEndDateTime()));
 		if(null == cycle) {
-			throw new IllegalArgumentException("老年人结束认证时间不在任何一个周期范围内.");
+			throw new IllegalArgumentException("随访人员结束认证时间不在任何一个周期范围内.");
 		}
 		HealthInfoEntity dbHealthInfoEntity = this.healthInfoDao.queryByCycleIdAndOldPersonId(cycle.getId(),upLoadDataVO.getOldPersonId().toString());
 		if(null != dbHealthInfoEntity) {
-			throw new IllegalArgumentException("老年人的认证信息已经存在.");
+			throw new IllegalArgumentException("随访人员的认证信息已经存在.");
 		}
 		
 		OperatorEntity operator = operatorService.getOperatorByIdentityCard(operatorUser.getIdCard());
@@ -114,7 +114,7 @@ public class HealthInfoService {
 		}
 		OldPersonEntity oldPerson = oldPersonService.getOldPerson(upLoadDataVO.getOldPersonId().toString());
 		if(null == oldPerson) {
-			throw new IllegalArgumentException("老年人不存在.老年人ID：【" + upLoadDataVO.getOldPersonId().toString() + "】");
+			throw new IllegalArgumentException("随访人员不存在.随访人员ID：【" + upLoadDataVO.getOldPersonId().toString() + "】");
 		}
 		oldPerson.setLastHealthYear(upLoadDataVO.getLastHealthYear());
 		oldPerson.setHealthCount(upLoadDataVO.getHealthCount());
@@ -142,7 +142,7 @@ public class HealthInfoService {
 		//获得终端上传的体检信息
 		UpLoadOldPersonHealthVO healthResultVO = upLoadDataVO.getOldPersonHealthVO();
 		if(null == healthResultVO) {
-			throw new IllegalArgumentException("老年人人这个对象-认证结果信息【healthVO】是空指针.");
+			throw new IllegalArgumentException("随访人员这个对象-认证结果信息【healthVO】是空指针.");
 		}
 		//转换并保存体检信息
 		HealthResultEntity healthResultEntity = new HealthResultEntity(healthInfoEntity,healthResultVO);
@@ -157,7 +157,7 @@ public class HealthInfoService {
 		//获得终端上传的指纹信息
 		UpLoadOldPersonFingerprint fingerprint = upLoadDataVO.getOldPersonFingerprint();
 		if(null == fingerprint) {
-			throw new IllegalArgumentException("老年人认证对象-指纹信息【fingerprint】是空指针.");
+			throw new IllegalArgumentException("随访人员认证对象-指纹信息【fingerprint】是空指针.");
 		}
 		//转换并保存指纹信息
 		HealthFingerprintEntity fingerprintEntity = new HealthFingerprintEntity(healthInfoEntity.getId(),oldPerson.getId(),fingerprint);
@@ -190,10 +190,10 @@ public class HealthInfoService {
 		List<UpLoadOldPersonPhotoVO> photoCollection = upLoadDataVO.getPhotoCollection();
 		for(UpLoadOldPersonPhotoVO personPhotoVO : photoCollection) {
 			if(null == personPhotoVO) {
-				throw new IllegalArgumentException("老年人认证对象-照片信息【personPhotoVO】是空指针.");
+				throw new IllegalArgumentException("随访人员认证对象-照片信息【personPhotoVO】是空指针.");
 			}
 			if(null == personPhotoVO.getPosition()) {
-				throw new IllegalArgumentException("老年人认证对象-照片未知描述信息【personPhotoVO.getPosition()】是空指针.");
+				throw new IllegalArgumentException("随访人员认证对象-照片未知描述信息【personPhotoVO.getPosition()】是空指针.");
 			}
 			HealthPhotoEntity healthPhotoEntity = new HealthPhotoEntity(healthInfoEntity.getId(),oldPerson.getId(),personPhotoVO);
 			this.healthPhotoDao.save(healthPhotoEntity);
@@ -374,7 +374,7 @@ public class HealthInfoService {
 	}
 
 	/**
-	 * 获得指定老年人的体检记录
+	 * 获得指定随访人员的体检记录
 	 * @param oldPersonId
 	 * @param instance
 	 * @return

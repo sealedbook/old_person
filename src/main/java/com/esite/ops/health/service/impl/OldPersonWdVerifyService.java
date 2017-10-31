@@ -51,7 +51,7 @@ public class OldPersonWdVerifyService {
 		}
 		OldPersonEntity oldPerson = oldPersonService.getOldPerson(oldPersonId);
 		if(null == oldPerson) {
-			throw new IllegalArgumentException("系统中没有找到对应的老年人.");
+			throw new IllegalArgumentException("系统中没有找到对应的随访人员.");
 		}
 		CycleEntity cycle = cycleService.getCycle(new Date());
 		if(null == cycle) {

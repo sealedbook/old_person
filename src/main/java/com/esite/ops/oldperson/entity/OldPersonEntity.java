@@ -48,19 +48,19 @@ public class OldPersonEntity {
     private String nationality;
 
     /**
-     * 老年人建模状态
+     * 随访人员建模状态
      */
     @Column(name = "modeling_status")
     private String modelingStatus = "none";
 
     /**
-     * 老年人发放状态
+     * 随访人员发放状态
      */
     @Column(name = "ff_status")
     private String ffStatus = "ffStatus01";
 
     /**
-     * 老年人类型
+     * 随访人员类型
      * 默认本地
      */
     @Column(name = "TYPE")

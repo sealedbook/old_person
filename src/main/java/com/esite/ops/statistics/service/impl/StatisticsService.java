@@ -64,7 +64,7 @@ public class StatisticsService {
 	}
 
 	/**
-	 * 本地老年人已认证占比
+	 * 本地随访人员已认证占比
 	 * @param cycle
 	 * @param organizeViewEntity
 	 * @return
@@ -80,7 +80,7 @@ public class StatisticsService {
 	}
 
 	/**
-	 * 外地老年人已认证占比
+	 * 外地随访人员已认证占比
 	 * @param cycle
 	 * @param organizeViewEntity
 	 * @return

@@ -120,10 +120,10 @@ public class OldPersonHttpInterface {
     Map<String, String> update(OldPersonEntity oldPerson, HttpServletRequest request) {
         Map<String, String> result = new HashMap<String, String>();
         try {
-            //需要重新设置终端提交上来的老年人信息属性,不应该使用实体对象
+            //需要重新设置终端提交上来的随访人员信息属性,不应该使用实体对象
             OldPersonEntity dbOldPersonEntity = this.oldPersonService.getOldPerson(oldPerson.getId());
             if (null == dbOldPersonEntity) {
-                throw new IllegalArgumentException("系统中没有相关的老年人.");
+                throw new IllegalArgumentException("系统中没有相关的随访人员.");
             }
             if (StringHelper.isNotEmpty(oldPerson.getHomeAddress())) {
                 dbOldPersonEntity.setHomeAddress(oldPerson.getHomeAddress());
@@ -202,7 +202,7 @@ public class OldPersonHttpInterface {
             OldPersonEntity oldPerson = oldPersonService.getOldPersonWithIdCard(idCard);
             if (null == oldPerson) {
                 result.put("responseStatus", "ERROR");
-                result.put("errorMessage", "系统中不存在这个老年人的身份证号【" + idCard + "】");
+                result.put("errorMessage", "系统中不存在这个随访人员的身份证号【" + idCard + "】");
             } else {
                 result.put("oldPerson", oldPerson);
                 result.put("responseStatus", "OK");

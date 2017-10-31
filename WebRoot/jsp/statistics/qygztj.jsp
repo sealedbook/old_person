@@ -204,7 +204,7 @@
 		var zdjcwcdtjChar = ec.init(document.getElementById('zdjcwcdtj'), theme);
 		zdjcwcdtjOption = {
 			title : {
-		        text: '${area.name}-终端检测完成度(本地老年人)',
+		        text: '${area.name}-终端检测完成度(随访人员)',
 		        subtext: '',
 		        x:'center'
 		    },
@@ -213,7 +213,7 @@
 		    },
 		    series : [
 		        {
-		            name:'老年人',
+		            name:'随访人员',
 		            type:'gauge',
 		            detail : {formatter:'${yjczb}%'},
 		            data:[{value:${yjczb}, name: '已检测占比'}]
@@ -230,7 +230,7 @@
 		var rzwcdtjChar = ec.init(document.getElementById('rzwcdtj'), theme);
 		rzwcdtjOption = {
 			title : {
-		        text: '${area.name}-认证完成度(所有老年人)',
+		        text: '${area.name}-认证完成度(所有随访人员)',
 		        subtext: '',
 		        x:'center'
 		    },
@@ -239,7 +239,7 @@
 		    },
 		    series : [
 		        {
-		            name:'老年人',
+		            name:'随访人员',
 		            type:'gauge',
 		            detail : {formatter:'${yrzzb}%'},
 		            data:[{value: ${yrzzb}, name: '已认证占比'}]
@@ -257,7 +257,7 @@
 		var rzwcdtjChar = ec.init(document.getElementById('bdrzwcdtj'), theme);
 		rzwcdtjOption = {
 			title : {
-		        text: '${area.name}-认证完成度(本地老年人)',
+		        text: '${area.name}-认证完成度(随访人员)',
 		        subtext: '',
 		        x:'center'
 		    },
@@ -266,7 +266,7 @@
 		    },
 		    series : [
 		        {
-		            name:'老年人',
+		            name:'随访人员',
 		            type:'gauge',
 		            detail : {formatter:'${bdyrzzb}%'},
 		            data:[{value: ${bdyrzzb}, name: '已认证占比'}]
@@ -285,7 +285,7 @@
 		var rzwcdtjChar = ec.init(document.getElementById('wdrzwcdtj'), theme);
 		rzwcdtjOption = {
 			title : {
-		        text: '${area.name}-认证完成度(外地老年人)',
+		        text: '${area.name}-认证完成度(其他随访人员)',
 		        subtext: '',
 		        x:'center'
 		    },
@@ -294,7 +294,7 @@
 		    },
 		    series : [
 		        {
-		            name:'老年人',
+		            name:'随访人员',
 		            type:'gauge',
 		            detail : {formatter:'${wdyrzzb}%'},
 		            data:[{value: ${wdyrzzb}, name: '已认证占比'}]

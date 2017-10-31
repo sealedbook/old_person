@@ -74,7 +74,7 @@
 				toolbar:'#tb'">
 		<thead>
 			<tr>
-				<th field="old_person_count" align="center" width="10%">老年人数</th>
+				<th field="old_person_count" align="center" width="10%">随访人员数</th>
 				<th field="health_total" align="center" width="10%">认证数</th>
 				<th field="work" formatter="formaterWork" align="center" width="10%">工作进度</th>
 				<th field="NAME" align="center" width="10%">操作员</th>

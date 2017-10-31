@@ -36,7 +36,7 @@ public interface OldPersonDao extends CrudRepository<OldPersonEntity, String> {
 	OldPersonEntity queryByIdCard(String idCard);
 
 	/**
-	 * 只查询本地老年人
+	 * 只查询本地随访人员
 	 * @param areaCollection
 	 * @param cycleId
 	 * @return

@@ -83,9 +83,9 @@ public class HealthWebService {
         if (obj instanceof UpLoadDataVO[]) {
             UpLoadDataVO[] upLoadDataVOArray = (UpLoadDataVO[]) obj;
             if (null == upLoadDataVOArray || upLoadDataVOArray.length <= 0) {
-                logger.info("=======Web Service 您没有上传老年人认证信息.");
+                logger.info("=======Web Service 您没有上传随访人员认证信息.");
                 webServiceResult.put("responseStatus", "ERROR");
-                webServiceResult.put("message", "您没有上传老年人认证信息.");
+                webServiceResult.put("message", "您没有上传随访人员认证信息.");
                 return JsonConverter.convert(webServiceResult);
             }
             logger.info("=======Web Service 反序列化Object属于UpLoadDataVO[]类型");
@@ -100,7 +100,7 @@ public class HealthWebService {
                         continue;
                     }
                     String logContent = JsonConverter.convert(upLoadDataVO);
-                    //logger.info("=======Web Service 上传老年人日志记录内容：" + logContent);
+                    //logger.info("=======Web Service 上传随访人员日志记录内容：" + logContent);
                     String logId = MDC.get("LOG_TRACK_KEY");
                     logger.info("fetch uoload data:" + logContent);
                     String uploadOldPersonId = "";
@@ -137,7 +137,7 @@ public class HealthWebService {
         }
         logger.info("=======Web Service 所有信息已经处理完成.");
         webServiceResult.put("responseStatus", "SUCCESS");
-        webServiceResult.put("message", "共处理了" + uploadOldPersonTotal + "位老年人,已全部成功.");
+        webServiceResult.put("message", "共处理了" + uploadOldPersonTotal + "位随访人员,已全部成功.");
         return JsonConverter.convert(webServiceResult);
     }
 
@@ -170,8 +170,8 @@ public class HealthWebService {
         logger.info("=======Web Service 操作员信息已查到,操作员姓名:【" + operatorEntity.getName() + "】");
         List<String> areaCollection = areaConfigService.getAreaIdCollectionWithOperatorId(operatorEntity.getId());
         if (null == areaCollection || areaCollection.size() <= 0) {
-            logger.info("=======Web Service 操作员没有对应的管理地区.因此也无法查询对应的老年人");
-            return "操作员没有对应的管理地区.因此也无法查询对应的老年人";
+            logger.info("=======Web Service 操作员没有对应的管理地区.因此也无法查询对应的随访人员");
+            return "操作员没有对应的管理地区.因此也无法查询对应的随访人员";
         }
         //List<OldPersonEntity> oldPersonCollection = oldPersonService.getLocalOldPersonWithArea(areaCollection);
         PagerRequest page = new PagerRequest();
@@ -181,8 +181,8 @@ public class HealthWebService {
         Page<OldPersonEntity> oldPersonCollection = oldPersonService
             .getLocalOldPersonWithArea(areaCollection, page.getInstance());
         if (null == oldPersonCollection || oldPersonCollection.getContent().size() <= 0) {
-            logger.info("=======Web Service 操作员没有任何老年人数据.");
-            return "操作员没有任何老年人数据.";
+            logger.info("=======Web Service 操作员没有任何随访人员数据.");
+            return "操作员没有任何随访人员数据.";
         }
 
         DownloadDataInfoVO[] downloadCollection = new DownloadDataInfoVO[oldPersonCollection.getContent().size()];
@@ -210,8 +210,8 @@ public class HealthWebService {
             downloadDataInfoVO.setFingerprint(fingerprint);
             downloadCollection[index++] = downloadDataInfoVO;
         }
-        logger.info("=======Web Service 老年人数据已加载完毕,共有加载" + oldPersonCollection.getSize() + "/" + oldPersonCollection
-            .getTotalElements() + "位老年人.");
+        logger.info("=======Web Service 随访人员数据已加载完毕,共有加载" + oldPersonCollection.getSize() + "/" + oldPersonCollection
+            .getTotalElements() + "位随访人员.");
         return SerializerHelper.serialize(downloadCollection);
     }
 
@@ -244,7 +244,7 @@ public class HealthWebService {
         if (null != oldPersonEntity && null != cycle) {
             boolean hasHealth = healthInfoService.hasHealthInCycleByOldPersonId(oldPersonEntity.getId(), cycle);
             if (hasHealth) {
-                logger.info("=======Web Service 老年人数据已加载完毕,但是没有体检信息.");
+                logger.info("=======Web Service 随访人员数据已加载完毕,但是没有体检信息.");
                 return null;
             }
         }
@@ -256,7 +256,7 @@ public class HealthWebService {
         DownloadOldPersonFingerprintVO fingerprint = createDownloadOldPersonFingerprintVO(fingerprintCollect);
         downloadDataInfoVO.setFingerprint(fingerprint);
         downloadCollection[index++] = downloadDataInfoVO;
-        logger.info("=======Web Service 老年人数据已加载完毕,共有加载1/1位老年人.");
+        logger.info("=======Web Service 随访人员数据已加载完毕,共有加载1/1位随访人员.");
         return SerializerHelper.serialize(downloadCollection);
     }
 

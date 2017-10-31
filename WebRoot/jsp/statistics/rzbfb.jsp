@@ -97,7 +97,7 @@
 				<tr>
 					<td>${idx.index + 1}<!-- 序号 --></td>
 					<td>${r.ROOT_AREA_ID }</td><!-- 地区编号-->
-					<td><c:out value="${r.area_name }" default="儋州市"/><!-- 地区 --></td>
+					<td><c:out value="${r.area_name }" default="泰州市"/><!-- 地区 --></td>
 					<td>${r.total } 人<!-- 总人数 --></td>
 					<td>${r.bd } 人<!-- 本地人数 --></td>
 					<td>${r.bd_yrz } 人</td><!-- 本地完成人数 -->

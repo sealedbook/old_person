@@ -112,7 +112,7 @@ public class OrganizeService {
     public void remove(String id) {
         long oldPersonCount = oldPersonService.count(id);
         if (oldPersonCount > 0) {
-            throw new IllegalArgumentException("操作失败,所选的地区下有" + oldPersonCount + "位老年人,请先将这些老年人转到其他地区.");
+            throw new IllegalArgumentException("操作失败,所选的地区下有" + oldPersonCount + "位随访人员,请先将这些随访人员转到其他地区.");
         }
         long operatorCount = operatorService.count(id);
         if (operatorCount > 0) {

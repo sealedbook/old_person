@@ -48,7 +48,7 @@
 	}
    function formatOldPerson(val,row,index) {
 	   if(null == val) {
-		   return '系统中老年人被意外删除';
+		   return '系统中随访人员被意外删除';
 	   }
 	   return val.name;
    }
@@ -87,7 +87,7 @@
 		<thead>
 			<tr>
 				<th field="ck" checkbox="true"></th>
-				<th field="oldPerson" formatter="formatOldPerson" align="center" width="10%">老年人</th>
+				<th field="oldPerson" formatter="formatOldPerson" align="center" width="10%">随访人员</th>
 				<th field="beginDateTime" formatter="esite.formatDate"  pattern="yyyy-MM-dd HH:mm" align="center" width="17%">开始认证时间</th>
 				<th field="endDateTime" formatter="esite.formatDate"  pattern="yyyy-MM-dd HH:mm" align="center" width="17%">完成认证时间</th>
 				<th field="heartRate" formatter="convertNullToEmpty" align="center" width="7%" >心率</th>
@@ -104,15 +104,15 @@
 		<form name="verifyForm" id="verifyForm">
 			<input type="hidden" name="verifyState" value="1"/>
 			<input prompt="选择周期" id="cycle" name="cycleId" class="easyui-combogrid" width="200px"/>
-			<input id="oldPersonName" name="oldPersonName" prompt='老年人姓名' class="easyui-textbox" data-options="validType:['minLength[1]','length[0,10]']" style="width:150px">
-			<input id="oldPersonIdCard" name="oldPersonIdCard" prompt='老年人身份证号' class="easyui-textbox" style="width:150px">  
+			<input id="oldPersonName" name="oldPersonName" prompt='随访人员姓名' class="easyui-textbox" data-options="validType:['minLength[1]','length[0,10]']" style="width:150px">
+			<input id="oldPersonIdCard" name="oldPersonIdCard" prompt='随访人员身份证号' class="easyui-textbox" style="width:150px">
 			<a class="easyui-linkbutton" iconCls="icon-search" onclick="query()">查询</a>
 			<a class="easyui-linkbutton" iconCls="icon-reload" onclick="reset()">重置</a>
 		</form>
-		<a href="#" title="下载老年人报告(Word文档)" class="easyui-linkbutton" iconCls="icon-word" plain="true" onclick="downReportWord();">认证报告-个人(Word)</a>
-		<a href="#" title="批量下载老年人报告(Word文档)" class="easyui-linkbutton" iconCls="icon-word" plain="true" onclick="downReportCollectionWord();">认证报告-批量(Word)</a>
-		<!-- <a href="#" title="下载老年人报告(PDF文档)" class="easyui-linkbutton" iconCls="icon-acrobat" plain="true" onclick="$.messager.alert('系统提示','该功能还没实现.');">认证报告(PDF)</a> -->
-		<a href="#" title="下载老年人报告(Excel文档)" class="easyui-linkbutton" iconCls="icon-xls" plain="true" onclick="exportExcel()">身份认证统计表-批量(Excel)</a>
+		<a href="#" title="下载随访人员报告(Word文档)" class="easyui-linkbutton" iconCls="icon-word" plain="true" onclick="downReportWord();">认证报告-个人(Word)</a>
+		<a href="#" title="批量下载随访人员报告(Word文档)" class="easyui-linkbutton" iconCls="icon-word" plain="true" onclick="downReportCollectionWord();">认证报告-批量(Word)</a>
+		<!-- <a href="#" title="下载随访人员报告(PDF文档)" class="easyui-linkbutton" iconCls="icon-acrobat" plain="true" onclick="$.messager.alert('系统提示','该功能还没实现.');">认证报告(PDF)</a> -->
+		<a href="#" title="下载随访人员报告(Excel文档)" class="easyui-linkbutton" iconCls="icon-xls" plain="true" onclick="exportExcel()">身份认证统计表-批量(Excel)</a>
 		<a href="#" title="在线预览认证报告" class="easyui-linkbutton" iconCls="icon-office" plain="true" onclick="onlineView()">认证报告</a>
 		|
 		<a href="#" title="查看认证结果" class="easyui-linkbutton" iconCls="icon-page_paste" plain="true" onclick="healthResult()">结果比对</a>
@@ -125,7 +125,7 @@
 			onDblClickRow: function(rowIndex,rowData){
 				//var url = '<c:url value="/health/result/"/>' + rowData.id + '/view.do';
 				var url = '<c:url value="/health/report/"/>' + rowData.id + '/view.do';
-				top.openDialog({width:'50%',height:'80%',title:'老年人【'+ rowData.oldPerson.name + '】的认证报告',url:url});
+				top.openDialog({width:'50%',height:'80%',title:'随访人员【'+ rowData.oldPerson.name + '】的认证报告',url:url});
 			}
 		});
 	});
@@ -141,7 +141,7 @@
 			}
 			var healthId = row[0].id;
 			var url = '<c:url value="/health/report/"/>' + healthId + '/view.do';
-			top.openDialog({width:'50%',height:'100%',title:'老年人【'+ row[0].oldPerson.name + '】的认证报告',url:url});
+			top.openDialog({width:'50%',height:'100%',title:'随访人员【'+ row[0].oldPerson.name + '】的认证报告',url:url});
 		}
 	}
 	
@@ -156,7 +156,7 @@
 			}
 			var healthId = row[0].id;
 			var url = '<c:url value="/health/result/"/>' + healthId + '/view.do';
-			top.openDialog({width:'50%',height:'80%',title:'老年人【'+ row[0].oldPerson.name + '】的认证结果比对',url:url});
+			top.openDialog({width:'50%',height:'80%',title:'随访人员【'+ row[0].oldPerson.name + '】的认证结果比对',url:url});
 		}
 	}
 	function downReportWord() {

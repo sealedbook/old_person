@@ -5,7 +5,7 @@ import java.util.List;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 /**
- * 老年人体检上传实体类
+ * 随访人员体检上传实体类
  * @author Administrator
  *
  */
@@ -19,7 +19,7 @@ public class UpLoadDataVO implements java.io.Serializable {
 	private static final long serialVersionUID = -6563696996556079718L;
 
 	/**
-	 * 老年人唯一编号
+	 * 随访人员唯一编号
 	 */
 	private java.io.Serializable oldPersonId;
 

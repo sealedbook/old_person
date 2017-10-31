@@ -157,7 +157,7 @@ public class OldPersonSocialSecurityService {
 					}
 					OldPersonSocialSecurityEntity dbOldPersonSocialSecurityEntity = this.oldPersonSocialSecurityDao.getSocialSecurityByOldPersonIdAndSendDate(oldPersonSocialSecurityEntity.getOldPerson().getId(),oldPersonSocialSecurityEntity.getSendDate());
 					if(null != dbOldPersonSocialSecurityEntity) {
-						//新导入的发放状态如果与数据库中冲突(检测冲突根据老年人id和发放时间检查),则替换为最新的数据(更新发放时间、发放状态、以及批次)
+						//新导入的发放状态如果与数据库中冲突(检测冲突根据随访人员id和发放时间检查),则替换为最新的数据(更新发放时间、发放状态、以及批次)
 						oldPersonSocialSecurityEntity.setOldBatchId(dbOldPersonSocialSecurityEntity.getBatchId());
 						dbOldPersonSocialSecurityEntity.setStatus("delete");
 						this.oldPersonSocialSecurityDao.save(dbOldPersonSocialSecurityEntity);
@@ -171,7 +171,7 @@ public class OldPersonSocialSecurityService {
 					}
 					//记录操作记录,customer
 				} catch(JpaSystemException e) {
-					//errorMessage.add("Excel文件中第" + (i+1) + "行,老年人【" + oldPersonEntity.getName() + "】,身份证号【" + oldPersonEntity.getIdCard() + "】已存在.");
+					//errorMessage.add("Excel文件中第" + (i+1) + "行,随访人员【" + oldPersonEntity.getName() + "】,身份证号【" + oldPersonEntity.getIdCard() + "】已存在.");
 					//errorMessage.add(e.getMostSpecificCause().getMessage());
 					errorMessage.add(e.getRootCause().getMessage());
 					continue;

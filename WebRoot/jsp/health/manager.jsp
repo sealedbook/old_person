@@ -9,7 +9,7 @@
    <script>
    function formatOldPerson(val,row,index) {
 	   if(null == val) {
-		   return '系统中老年人被意外删除';
+		   return '系统中随访人员被意外删除';
 	   }
 	   return val.name;
    }
@@ -34,7 +34,7 @@
    }
    function formatOldPersonArea(val,row,index) {
 	   if(null == row.oldPerson) {
-		   return '系统中老年人被意外删除';
+		   return '系统中随访人员被意外删除';
 	   }
 	   return row.oldPerson.area.name;
    }
@@ -54,8 +54,8 @@
 				toolbar:'#tb'">
 		<thead>
 			<tr>
-				<th field="oldPerson" formatter="formatOldPerson" align="center" width="12%">老年人姓名</th>
-				<th field="oldPersonArea" formatter="formatOldPersonArea" align="center" width="22%">老年人所属地区</th>
+				<th field="oldPerson" formatter="formatOldPerson" align="center" width="12%">随访人员姓名</th>
+				<th field="oldPersonArea" formatter="formatOldPersonArea" align="center" width="22%">随访人员所属地区</th>
 				<th field="beginDateTime" formatter="esite.formatDate"  pattern="yyyy-MM-dd HH:mm" align="center" width="12%">开始认证时间</th>
 				<th field="useTime"  align="center" width="8%" >用时</th>
 				<th field="operator" formatter="showOperatorName" align="center" width="12%" >操作员姓名</th>
@@ -99,10 +99,10 @@
 								}
 			 " style="width:150px">
 			<!-- 
-			<input id="oldPersonName" name="oldPersonName" prompt='老年人姓名' class="easyui-textbox" data-options="validType:['minLength[1]','length[0,10]']" style="width:150px"> 
-			<input id="oldPersonIdCard" name="oldPersonIdCard" prompt='老年人身份证号' class="easyui-textbox" style="width:150px"> 
+			<input id="oldPersonName" name="oldPersonName" prompt='随访人员姓名' class="easyui-textbox" data-options="validType:['minLength[1]','length[0,10]']" style="width:150px">
+			<input id="oldPersonIdCard" name="oldPersonIdCard" prompt='随访人员身份证号' class="easyui-textbox" style="width:150px">
 			 -->
-			 <input id="oldPersonId" name="oldPersonId" prompt='老年人' class="easyui-combogrid" data-options="
+			 <input id="oldPersonId" name="oldPersonId" prompt='随访人员' class="easyui-combogrid" data-options="
 			 			panelWidth: 500,
 								idField: 'id',
 								textField: 'name',
@@ -153,7 +153,7 @@
 					return;
 				}
 				var url = '<c:url value="/health/verify/"/>' + rowData.id + '/view.do?verifyState='+$("#verifyState").combobox('getValue') + '&operatorId=' + $('#operatorId').combogrid('getValue');
-				top.openDialog({onClose:function(){$('#dg').datagrid();},width:'60%',height:'100%',title:'老年人指纹与脸部照片信息审核',url:url});
+				top.openDialog({onClose:function(){$('#dg').datagrid();},width:'60%',height:'100%',title:'随访人员指纹与脸部照片信息审核',url:url});
 			}
 		});
 	});

@@ -18,7 +18,7 @@ import com.esite.ops.oldperson.entity.FingerprintCollectEntity;
 import com.esite.ops.oldperson.service.impl.FingerprintCollectService;
 
 /**
- * 老年人指纹采集
+ * 随访人员指纹采集
  * @author Administrator
  *
  */

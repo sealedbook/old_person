@@ -79,7 +79,7 @@ public class OldPersonService {
     private static final Logger LOG = LoggerFactory.getLogger(OldPersonService.class);
 
     /**
-     * 多条件查询老年人
+     * 多条件查询随访人员
      *
      * @param oldPersonQueryEntity 查询条件
      * @param instance 分页对象
@@ -169,15 +169,15 @@ public class OldPersonService {
         }
         String status = dbOldPerson.getStatus();
         if (StringHelper.isEmpty(oldPerson.getId()) && null != dbOldPerson) {
-            throw new IllegalArgumentException("身份证号【" + dbOldPerson.getIdCard() + "】的老年人已经存在.");
+            throw new IllegalArgumentException("身份证号【" + dbOldPerson.getIdCard() + "】的随访人员已经存在.");
         }
         if (StringHelper.isNotEmpty(oldPerson.getId()) && StringHelper.isEmpty(status) && !oldPerson.getId()
             .equals(dbOldPerson.getId())) {
-            throw new IllegalArgumentException("身份证号【" + dbOldPerson.getIdCard() + "】的老年人已经存在.");
+            throw new IllegalArgumentException("身份证号【" + dbOldPerson.getIdCard() + "】的随访人员已经存在.");
         } else if ("delete".equals(status)) {
-            throw new IllegalArgumentException("身份证号【" + dbOldPerson.getIdCard() + "】的老年人已经存在,但目前被标记为删除状态.");
+            throw new IllegalArgumentException("身份证号【" + dbOldPerson.getIdCard() + "】的随访人员已经存在,但目前被标记为删除状态.");
         } else if ("died".equals(status)) {
-            throw new IllegalArgumentException("身份证号【" + dbOldPerson.getIdCard() + "】的老年人已经存在,但目前被标记为死亡状态.");
+            throw new IllegalArgumentException("身份证号【" + dbOldPerson.getIdCard() + "】的随访人员已经存在,但目前被标记为死亡状态.");
         }
     }
 
@@ -187,9 +187,9 @@ public class OldPersonService {
     }
 
     /**
-     * 添加一个新的老年人
+     * 添加一个新的随访人员
      *
-     * @param oldPerson 老年人实体对象
+     * @param oldPerson 随访人员实体对象
      * @param customer 系统操作人员
      */
     public OldPersonEntity addNew(OldPersonEntity oldPerson, Customer customer) {
@@ -203,16 +203,16 @@ public class OldPersonService {
             oldPerson.setRootAreaId(org.getId());
             this.oldPersonDao.save(oldPerson);
 
-            //系统中添加老年人信息,提供登陆功能
+            //系统中添加随访人员信息,提供登陆功能
             oldPersonSecurityService.addSystemUser(oldPerson);
             //记录操作记录,customer
             oldPersonOperationLogService.addLog(oldPerson, customer);
             return oldPerson;
         } catch (JpaSystemException e) {
-            throw new IllegalArgumentException("身份证号【" + oldPerson.getIdCard() + "】的老年人已经存在");
+            throw new IllegalArgumentException("身份证号【" + oldPerson.getIdCard() + "】的随访人员已经存在");
         } catch (BadHanyuPinyinOutputFormatCombination e) {
             e.printStackTrace();
-            throw new IllegalArgumentException("老年人的姓名输入可能有错.");
+            throw new IllegalArgumentException("随访人员的姓名输入可能有错.");
         }
     }
 
@@ -227,7 +227,7 @@ public class OldPersonService {
     }
 
     /**
-     * 更新老年人信息ForHttpRequest
+     * 更新随访人员信息ForHttpRequest
      */
     public OldPersonEntity updateForHttpRequest(OldPersonEntity oldPerson, Customer customer) {
         this.oldPersonDao.save(oldPerson);
@@ -235,15 +235,15 @@ public class OldPersonService {
     }
 
     /**
-     * 更新老年人信息
+     * 更新随访人员信息
      */
     public OldPersonEntity update(OldPersonEntity oldPerson, Customer customer) {
         if (StringHelper.isEmpty(oldPerson.getId())) {
-            throw new IllegalArgumentException("系统无法根据空的编号查询老年人信息");
+            throw new IllegalArgumentException("系统无法根据空的编号查询随访人员信息");
         }
         OldPersonEntity dbPersonEntity = this.getOldPerson(oldPerson.getId());
         if (null == dbPersonEntity) {
-            throw new IllegalArgumentException("系统中不存在这个老年人.本次查询的编号是【" + oldPerson.getId() + "】");
+            throw new IllegalArgumentException("系统中不存在这个随访人员.本次查询的编号是【" + oldPerson.getId() + "】");
         }
         String idCard = oldPerson.getIdCard();
         checkOldPerson(oldPerson);
@@ -261,34 +261,34 @@ public class OldPersonService {
             this.oldPersonDao.save(oldPerson);
             int oldPersonType = oldPerson.getType();
             if (2 == oldPersonType) {
-                //向系统中添加老年人用户信息,提供登陆功能
+                //向系统中添加随访人员用户信息,提供登陆功能
                 oldPersonSecurityService.addSystemUser(oldPerson);
             }
 
             return oldPerson;
         } catch (JpaSystemException e) {
             LOG.error("update old person error", e);
-            throw new IllegalArgumentException("身份证号【" + oldPerson.getIdCard() + "】的老年人已经存在");
+            throw new IllegalArgumentException("身份证号【" + oldPerson.getIdCard() + "】的随访人员已经存在");
         } catch (BadHanyuPinyinOutputFormatCombination e) {
             e.printStackTrace();
-            throw new IllegalArgumentException("老年人的姓名输入可能有错.");
+            throw new IllegalArgumentException("随访人员的姓名输入可能有错.");
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException(e.getMessage());
         }
     }
 
     /**
-     * 根据老年人ID 获得老年人实体对象
+     * 根据随访人员ID 获得随访人员实体对象
      */
     public OldPersonEntity getOldPerson(String oldPersonId) {
         if (StringHelper.isEmpty(oldPersonId)) {
-            throw new IllegalArgumentException("老年人id不能为空.");
+            throw new IllegalArgumentException("随访人员id不能为空.");
         }
         return this.oldPersonDao.findOne(oldPersonId);
     }
 
     /**
-     * 以Excel的方式导入老年人信息
+     * 以Excel的方式导入随访人员信息
      */
     public List<String> importOldPersonExcelFile(MultipartFile file, Customer customer) {
         List<String> errorMessage = new ArrayList<String>();
@@ -393,7 +393,7 @@ public class OldPersonService {
                         oldPersonEntity.setBaseQueueAddress(row.get(columnIndex));
                     }
 
-                    /** 老年人所属地区 */
+                    /** 随访人员所属地区 */
                     columnIndex = 6;
                     if (null == row.get(columnIndex) || row.get(columnIndex).length() <= 0) {
                         simpleErrorMessage.append("Excel文件中第").append(i + 1).append("行,老人【所属地区】为空.");
@@ -430,13 +430,11 @@ public class OldPersonService {
                     oldPersonEntity.setConvertBaseCode(convertBaseCode);
 
                     this.oldPersonDao.save(oldPersonEntity);
-                    //向系统中添加老年人用户信息,提供登陆功能
+                    //向系统中添加随访人员用户信息,提供登陆功能
                     oldPersonSecurityService.addSystemUser(oldPersonEntity);
                     //记录操作记录,customer
                     this.oldPersonOperationLogService.addLog(oldPersonEntity, customer);
                 } catch (JpaSystemException e) {
-                    //errorMessage.add("Excel文件中第" + (i+1) + "行,老年人【" + oldPersonEntity.getName() + "】,身份证号【" + oldPersonEntity.getIdCard() + "】已存在.");
-                    //errorMessage.add(e.getMostSpecificCause().getMessage());
                     errorMessage.add(e.getRootCause().getMessage());
                     continue;
                 } catch (IndexOutOfBoundsException e) {
@@ -464,7 +462,7 @@ public class OldPersonService {
     }
 
     /**
-     * 根据地区获得老年人数量，当参数为空时，获得全系统老年人数量
+     * 根据地区获得随访人员数量，当参数为空时，获得全系统随访人员数量
      */
     public long count(String areaId) {
         if (StringHelper.isEmpty(areaId)) {
@@ -474,7 +472,7 @@ public class OldPersonService {
     }
 
     /**
-     * 获得指定区域下的正常状态的老年人数量(除死亡、删除外的老年人)
+     * 获得指定区域下的正常状态的随访人员数量(除死亡、删除外的随访人员)
      */
     public long count(List<String> areaIdCollection) {
         if (null == areaIdCollection || areaIdCollection.size() <= 0) {
@@ -484,21 +482,21 @@ public class OldPersonService {
     }
 
     /**
-     * 获得某个地区的所有老年人
+     * 获得某个地区的所有随访人员
      */
     public List<OldPersonEntity> getOldPersonWithArea(List<String> areaCollection) {
         return this.oldPersonDao.queryByAreaCollection(areaCollection);
     }
 
     /**
-     * 获得某个地区的本地老年人
+     * 获得某个地区的本地随访人员
      */
     public List<OldPersonEntity> getLocalOldPersonWithArea(List<String> areaCollection) {
         return this.oldPersonDao.queryLocalOldPersonByAreaCollection(areaCollection);
     }
 
     /**
-     * 获得某个地区的本地老年人
+     * 获得某个地区的本地随访人员
      */
     public Page<OldPersonEntity> getLocalOldPersonWithArea(
         List<String> areaCollection, Pageable instance) {
@@ -507,7 +505,7 @@ public class OldPersonService {
     }
 
     /**
-     * 删除某个老年人
+     * 删除某个随访人员
      */
     @Transactional
     public void delete(String oldPersonId, Customer customer) {
@@ -518,12 +516,12 @@ public class OldPersonService {
         //删除日志
         oldPersonOperationLogService.deleteLog(oldPerson, customer);
 
-        //将系统中的老年人从用户表中删除.撤销登陆功能
+        //将系统中的随访人员从用户表中删除.撤销登陆功能
         oldPersonSecurityService.deleteSystemUser(oldPerson);
     }
 
     /**
-     * 标记某位老年人已经死亡
+     * 标记某位随访人员已经死亡
      */
     @Transactional
     public void died(String oldPersonId, Customer customer) {
@@ -532,7 +530,7 @@ public class OldPersonService {
         oldPerson.setFfStatus("ffStatus04");
         this.oldPersonDao.save(oldPerson);
 
-        //将系统中的老年人从用户表中删除.撤销登陆功能
+        //将系统中的随访人员从用户表中删除.撤销登陆功能
         oldPersonSecurityService.deleteSystemUser(oldPerson);
         //删除日志
         oldPersonOperationLogService.diedLog(oldPerson, customer);
@@ -548,33 +546,33 @@ public class OldPersonService {
         oldPerson.setDiedCause(diedCause);
         this.oldPersonDao.save(oldPerson);
 
-        //将系统中的老年人从用户表中删除.撤销登陆功能
+        //将系统中的随访人员从用户表中删除.撤销登陆功能
         oldPersonSecurityService.deleteSystemUser(oldPerson);
         //删除日志
         oldPersonOperationLogService.diedLog(oldPerson, customer);
     }
 
     /**
-     * 撤销老年人的死亡状态、删除状态
+     * 撤销随访人员的死亡状态、删除状态
      */
     public void undo(String oldPersonId, Customer customer) {
         OldPersonEntity oldPerson = this.getOldPerson(oldPersonId);
         oldPerson.setStatus("");
         this.oldPersonDao.save(oldPerson);
-        //将系统中的老年人加入用户表中.提供登陆功能
+        //将系统中的随访人员加入用户表中.提供登陆功能
         oldPersonSecurityService.addSystemUser(oldPerson);
         //撤销日志
         oldPersonOperationLogService.undoLog(oldPerson, customer);
     }
 
     /**
-     * 更新老年人照片
+     * 更新随访人员照片
      */
     @Transactional
     public void updatePhoto(String oldPersonId, byte[] photo, Customer customer) {
         OldPersonEntity oldPerson = this.getOldPerson(oldPersonId);
         if (null == oldPerson) {
-            throw new IllegalArgumentException("系统中没有找到相关的老年人.");
+            throw new IllegalArgumentException("系统中没有找到相关的随访人员.");
         }
         SysFileInfo sysFileInfo = fileService.save(photo);
         oldPerson.setPhotoKey(sysFileInfo.getFileKey());
@@ -582,7 +580,7 @@ public class OldPersonService {
     }
 
     /**
-     * 根据操作员的身份证号，获得对应操作员的所有本地老年人状态信息 <br/> 该接口仅提供给终端应用
+     * 根据操作员的身份证号，获得对应操作员的所有本地随访人员状态信息 <br/> 该接口仅提供给终端应用
      */
     public List<Map<String, Object>> getLocalOldPersonWithOperatorIdCard(String idCard) {
         if (StringHelper.isEmpty(idCard)) {
@@ -660,7 +658,7 @@ public class OldPersonService {
     }
 
     /**
-     * 根据操作员的身份证号，获得对应操作员的已完成认证的老年人信息 <br/> 该接口仅提供给终端应用
+     * 根据操作员的身份证号，获得对应操作员的已完成认证的随访人员信息 <br/> 该接口仅提供给终端应用
      */
     public List<Map<String, Object>> getFinishAuthOldPersonWithOperatorIdCard(String idCard) {
         if (StringHelper.isEmpty(idCard)) {

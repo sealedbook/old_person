@@ -109,7 +109,7 @@ $(function(){
  		<c:forEach items="${healthPhotoCollection }" var="healthPhoto" varStatus="idx">
  			<div style="position: relative; height: 250px;float: left;margin-left: 2px">
 				<img height="250" alt="" src="<c:url value="/health/face/photo.do?id=${healthPhoto.id}"/>">
-				<span style="position: absolute; top:100%; left: 0;">老年人${healthPhoto.photoPositionName }照片</span>
+				<span style="position: absolute; top:100%; left: 0;">随访人员${healthPhoto.photoPositionName }照片</span>
 			</div>
 	   	</c:forEach>
  		 -->

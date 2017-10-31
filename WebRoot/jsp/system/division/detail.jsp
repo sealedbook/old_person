@@ -45,7 +45,7 @@ function formaterArea(val,row,index) {
 				</thead>
 			</table>
 		</div>
-		<div title="老年人${oldPersonNumber }人" >
+		<div title="随访人员${oldPersonNumber }人" >
 				<table id="oldPerson"  data-options="
 							fit:true,
 							rownumbers:true,

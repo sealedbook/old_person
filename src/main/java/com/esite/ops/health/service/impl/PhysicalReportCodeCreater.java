@@ -4,7 +4,7 @@ import com.esite.framework.util.StringHelper;
 import com.esite.ops.ws.entity.UpLoadOldPersonHealthVO;
 
 /**
- * 老年人体检报告编号生成器
+ * 随访人员体检报告编号生成器
  * @author Administrator
  *
  */

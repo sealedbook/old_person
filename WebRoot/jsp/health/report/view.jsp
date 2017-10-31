@@ -22,7 +22,7 @@
 </head>
   <body>
  	<fieldset>
- 		<legend>老年人基本信息</legend>
+ 		<legend>随访人员基本信息</legend>
  		<table class="tableStyle">
 	   		<tr>
 	   			<td width="15%" class="right">老人姓名</td>
@@ -76,7 +76,7 @@
 	   	</table>
  	</fieldset>
    	<fieldset>
-   		<legend>老年人认证信息</legend>
+   		<legend>随访人员认证信息</legend>
    		<table class="tableStyle">
    			<tr>
 	   			<td width="15%" class="right">认证时间</td>

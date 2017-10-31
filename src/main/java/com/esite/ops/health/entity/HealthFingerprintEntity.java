@@ -16,7 +16,7 @@ import com.esite.ops.ws.entity.UpLoadOldPersonFingerprint;
 import com.esite.ops.ws.enums.FingerVerifyState;
 
 /**
- * 老年人体检指纹信息,指定了哪个老年人的哪次体检,并且提供了指纹特征码和指纹照片
+ * 随访人员体检指纹信息,指定了哪个随访人员的哪次体检,并且提供了指纹特征码和指纹照片
  * @author Administrator
  *
  */

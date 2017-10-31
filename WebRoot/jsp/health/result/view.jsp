@@ -23,7 +23,7 @@
 
 		option = {
 			    title : {
-			        text: '老年人本次认证 vs 本期平均值',
+			        text: '随访人员本次认证 vs 本期平均值',
 			        subtext: ''
 			    },
 			    tooltip : {

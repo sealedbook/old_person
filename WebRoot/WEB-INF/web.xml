@@ -4,7 +4,7 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
 	http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
 	
-	<display-name>老年人综合信息管理系统</display-name>
+	<display-name>随访人员综合信息管理系统</display-name>
 	
 	<welcome-file-list>
 		<welcome-file>/jsp/login.jsp</welcome-file>
