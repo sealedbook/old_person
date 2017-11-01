@@ -44,7 +44,7 @@
 				orient : 'horizontal',//horizontal vertical
 				x : 'center',
 				y : 'bottom',
-				data : [ '本地已完成', '本地未完成', '外地已完成', '外地未完成' ]
+				data : [ '已完成', '未完成']
 			},
 			calculable : false,
 			xAxis : [ {
@@ -57,29 +57,17 @@
 			} ],
 			series : [
 					{
-						name : '本地已完成',
+						name : '已完成',
 						type : 'bar',
 						stack : '本地',
 						data : [${bdYrz}]
 					},
 					{
-						name : '本地未完成',
+						name : '未完成',
 						type : 'bar',
 						stack : '本地',
 						data : [${bdWrz}]
-					},
-					{
-						name : '外地已完成',
-						type : 'bar',
-						stack : '外地',
-						data : [${wdYrz}]
-					},
-					{
-						name : '外地未完成',
-						type : 'bar',
-						stack : '外地',
-						data : [${wdWrz}]
-					} ]
+					}]
 		};
 
 		// 为echarts对象加载数据

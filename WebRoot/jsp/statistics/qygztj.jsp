@@ -105,19 +105,14 @@
 			<td width="33%">
 				<div id="rzwcdtj" style="height:100%;width: 100%"></div>
 			</td>
-			<td width="33%">
-				<div id="bdrzwcdtj" style="height:100%;width: 100%"></div>
-			</td>
+
 		</tr>
 		<tr height="50%">
-			<td width="33%">
-				<div id="wdrzwcdtj" style="height:100%;width: 100%"></div>
-			</td>
 			<td width="33%">
 				<div id="gkxxtj" style="height:100%;width: 100%"></div>
 			</td>
 			<td width="33%">
-				<div id="yhzbtj" style="height:100%;width: 100%"></div>
+				<div id="bdrzwcdtj" style="height:100%;width: 100%"></div>
 			</td>
 		</tr>
 	</table>
@@ -165,46 +160,14 @@
 		gkxxtjChar.setOption(gkxxtjOption);
 		
 	});
-	
-	require([ 'echarts', 'echarts/theme/macarons', 'echarts/chart/line','echarts/chart/pie'], function(ec, theme) {
-		// 基于准备好的dom，初始化echarts图表
-		var yhzbtjChar = ec.init(document.getElementById('yhzbtj'), theme);
-		yhzbtjOption = {
-		    title : {
-		        text: '${area.name}-用户占比统计',
-		        subtext: '',
-		        x:'center'
-		    },
-		    tooltip : {
-		        trigger: 'item',
-		        formatter: "{a} <br/>{b} : {c} ({d}%)"
-		    },
-		    calculable : true,
-		    series : [
-		        {
-		            name:'${area.name}',
-		            type:'pie',
-		            radius : '60%',
-		            center: ['50%', '50%'],
-		            data:[
-		                {value:${yhzbtj.bd}, name:'本地人'},
-		                {value:${yhzbtj.wd}, name:'外地人'}
-		            ]
-		        }
-		    ]
-		};
-		// 为echarts对象加载数据
-		yhzbtjChar.setOption(yhzbtjOption);
-		
-	});
-	
-	
+
+
 	require([ 'echarts', 'echarts/theme/macarons', 'echarts/chart/line','echarts/chart/gauge'], function(ec, theme) {
 		// 基于准备好的dom，初始化echarts图表
 		var zdjcwcdtjChar = ec.init(document.getElementById('zdjcwcdtj'), theme);
 		zdjcwcdtjOption = {
 			title : {
-		        text: '${area.name}-终端检测完成度(随访人员)',
+		        text: '${area.name}-终端检测完成度',
 		        subtext: '',
 		        x:'center'
 		    },
@@ -230,7 +193,7 @@
 		var rzwcdtjChar = ec.init(document.getElementById('rzwcdtj'), theme);
 		rzwcdtjOption = {
 			title : {
-		        text: '${area.name}-认证完成度(所有随访人员)',
+		        text: '${area.name}-认证完成度',
 		        subtext: '',
 		        x:'center'
 		    },
@@ -257,7 +220,7 @@
 		var rzwcdtjChar = ec.init(document.getElementById('bdrzwcdtj'), theme);
 		rzwcdtjOption = {
 			title : {
-		        text: '${area.name}-认证完成度(随访人员)',
+		        text: '${area.name}-认证完成度',
 		        subtext: '',
 		        x:'center'
 		    },
@@ -270,34 +233,6 @@
 		            type:'gauge',
 		            detail : {formatter:'${bdyrzzb}%'},
 		            data:[{value: ${bdyrzzb}, name: '已认证占比'}]
-		        }
-		    ]
-		};
-		// 为echarts对象加载数据
-		rzwcdtjChar.setOption(rzwcdtjOption);
-		
-	});
-	
-	
-	
-	require([ 'echarts', 'echarts/theme/macarons', 'echarts/chart/line','echarts/chart/gauge'], function(ec, theme) {
-		// 基于准备好的dom，初始化echarts图表
-		var rzwcdtjChar = ec.init(document.getElementById('wdrzwcdtj'), theme);
-		rzwcdtjOption = {
-			title : {
-		        text: '${area.name}-认证完成度(其他随访人员)',
-		        subtext: '',
-		        x:'center'
-		    },
-		    tooltip : {
-		        formatter: "{a} <br/>{b} : {c}%"
-		    },
-		    series : [
-		        {
-		            name:'随访人员',
-		            type:'gauge',
-		            detail : {formatter:'${wdyrzzb}%'},
-		            data:[{value: ${wdyrzzb}, name: '已认证占比'}]
 		        }
 		    ]
 		};

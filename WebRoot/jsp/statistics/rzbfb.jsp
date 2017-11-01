@@ -81,15 +81,11 @@
 				<th data-options="field:'areaName',width:10">地区</th>
 				<th data-options="field:'total',width:6">总人数</th>
 				<th data-options="field:'name',width:8">本地人数</th>
-				<th data-options="field:'price7',width:12">已完成人数(本)</th>
+				<th data-options="field:'price7',width:12">已完成人数</th>
 				<th data-options="field:'price',width:12">本地人占比</th>
 				<th data-options="field:'price3',width:10">待认证人数</th>
 				<th data-options="field:'price4',width:12">待认证占比</th>
-				<th data-options="field:'price5',width:15">已完成人数(本+外)</th>
-				<th data-options="field:'price1',width:10">外地人数</th>
-				<th data-options="field:'price2',width:12">外地人占比</th>
 				<th data-options="field:'price6',width:12">已完成占比</th>
-				<th data-options="field:'price8',width:12">已完成人数(外)</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -104,11 +100,7 @@
 					<td><c:out value="${r.bd_bfb }" default="0%" /><!-- 本地人占比 --></td>
 					<td>${r.wrz } 人<!-- 待认证人数 --></td>
 					<td><c:out value="${r.wrz_bfb }" default="0%" /><!-- 待认证占比 --></td>
-					<td>${r.yrz } 人<!-- 已完成人数(本+外) --></td>
-					<td>${r.wd } 人<!-- 外地人数 --></td>
-					<td><c:out value="${r.wd_bfb }" default="0%" /><!-- 外地人占比 --></td>
 					<td><c:out value="${r.yrz_bfb }" default="0%" /><!-- 已完成占比 --></td>
-					<td>${r.wd_yrz } 人<!-- 已完成人数(外) --></td>
 				</tr>
 			</c:forEach>
 		</tbody>

@@ -579,7 +579,7 @@ public class HealthReportController {
         int healthNumber = healthInfoService.getHealthNumberByOldPerson(healthId, oldPerson.getId());
 
         response.setCharacterEncoding("UTF-8");
-        String fileNameFormat = "随访人员【%1$s】%2$s认证报告.pdf";
+        String fileNameFormat = "随访人员【%1$s】%2$s认证报告.doc";
         String fileName = String.format(fileNameFormat, oldPerson.getName(),
             new SimpleDateFormat("yyyy-MM-dd").format(health.getBeginDateTime()));
         response
