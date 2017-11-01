@@ -23,7 +23,7 @@ public class EcgTimeWorker {
     @Resource
     private HealthResultService healthResultService;
 
-    private static final String OUTPUT_PATH = "/data/ECG/output";
+    private static final String OUTPUT_PATH = "/home/data/ECG/output";
 
     @Scheduled(cron = "0 0/10 * * * ? ")   //每5秒执行一次
     public void myTest() {

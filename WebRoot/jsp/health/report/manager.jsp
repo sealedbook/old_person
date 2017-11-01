@@ -110,9 +110,13 @@
 			<a class="easyui-linkbutton" iconCls="icon-reload" onclick="reset()">重置</a>
 		</form>
 		<a href="#" title="下载随访人员报告(Word文档)" class="easyui-linkbutton" iconCls="icon-word" plain="true" onclick="downReportWord();">认证报告-个人(Word)</a>
+		<!--
 		<a href="#" title="批量下载随访人员报告(Word文档)" class="easyui-linkbutton" iconCls="icon-word" plain="true" onclick="downReportCollectionWord();">认证报告-批量(Word)</a>
+		-->
 		<!-- <a href="#" title="下载随访人员报告(PDF文档)" class="easyui-linkbutton" iconCls="icon-acrobat" plain="true" onclick="$.messager.alert('系统提示','该功能还没实现.');">认证报告(PDF)</a> -->
+		<!--
 		<a href="#" title="下载随访人员报告(Excel文档)" class="easyui-linkbutton" iconCls="icon-xls" plain="true" onclick="exportExcel()">身份认证统计表-批量(Excel)</a>
+		-->
 		<a href="#" title="在线预览认证报告" class="easyui-linkbutton" iconCls="icon-office" plain="true" onclick="onlineView()">认证报告</a>
 		|
 		<a href="#" title="查看认证结果" class="easyui-linkbutton" iconCls="icon-page_paste" plain="true" onclick="healthResult()">结果比对</a>

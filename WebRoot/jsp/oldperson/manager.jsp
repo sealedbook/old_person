@@ -145,7 +145,9 @@
 			<a href="#" title="修改" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="update();">修改</a>
 			<a href="#" title="删除" class="easyui-linkbutton" iconCls="icon-user_delete" plain="true" onclick="del();">删除</a>
 			<a href="#" title="查看随访人员详细" class="easyui-linkbutton" iconCls="icon-user" plain="true" onclick="view();">查看</a>
+			<!--
 			<a href="#" title="标记随访人员已经死亡" class="easyui-linkbutton" iconCls="icon-status_offline" plain="true" onclick="died();">死亡</a>
+			-->
 			<view:security url="/oldperson/number/undo.do">
 				<a href="#" title="还原为正常状态" class="easyui-linkbutton" iconCls="icon-undo" plain="true" onclick="undo();">还原</a>
 			</view:security>

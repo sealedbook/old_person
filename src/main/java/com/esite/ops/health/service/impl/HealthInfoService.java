@@ -85,7 +85,7 @@ public class HealthInfoService {
 	/**
 	 * 心电图输入目录
 	 */
-	private static final String path = "/data/ECG/input";
+	private static final String path = "/home/data/ECG/input";
 	
 	@Transactional
 	public void addNew(User operatorUser,String ipAddress,UpLoadDataVO upLoadDataVO,String importBatchId,String logId) {
