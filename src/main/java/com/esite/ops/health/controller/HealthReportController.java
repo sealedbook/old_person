@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
@@ -64,6 +65,8 @@ import com.esite.ops.mission.entity.CycleEntity;
 import com.esite.ops.mission.service.impl.CycleService;
 import com.esite.ops.oldperson.entity.OldPersonEntity;
 import com.esite.ops.operator.entity.OperatorEntity;
+import com.lowagie.text.DocWriter;
+import com.lowagie.text.pdf.PdfWriter;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -576,7 +579,7 @@ public class HealthReportController {
         int healthNumber = healthInfoService.getHealthNumberByOldPerson(healthId, oldPerson.getId());
 
         response.setCharacterEncoding("UTF-8");
-        String fileNameFormat = "随访人员【%1$s】%2$s认证报告.doc";
+        String fileNameFormat = "随访人员【%1$s】%2$s认证报告.pdf";
         String fileName = String.format(fileNameFormat, oldPerson.getName(),
             new SimpleDateFormat("yyyy-MM-dd").format(health.getBeginDateTime()));
         response
