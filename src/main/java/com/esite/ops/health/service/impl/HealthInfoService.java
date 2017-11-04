@@ -30,6 +30,7 @@ import com.esite.framework.security.entity.Customer;
 import com.esite.framework.user.entity.User;
 import com.esite.framework.util.JpaLikeQueryHelper;
 import com.esite.framework.util.StringHelper;
+import com.esite.framework.util.SystemConfigUtil;
 import com.esite.ops.health.dao.HealthInfoDao;
 import com.esite.ops.health.dao.HealthResultDao;
 import com.esite.ops.health.dao.HealthFingerprintDao;
@@ -85,7 +86,7 @@ public class HealthInfoService {
 	/**
 	 * 心电图输入目录
 	 */
-	private static final String path = "/home/data/ECG/input";
+	private static final String path = SystemConfigUtil.getEcgBasePath() + "input";
 	
 	@Transactional
 	public void addNew(User operatorUser,String ipAddress,UpLoadDataVO upLoadDataVO,String importBatchId,String logId) {
@@ -211,6 +212,7 @@ public class HealthInfoService {
 		writeByteFile(healthId + "-" + oldPerson.getIdCard(), ".resp", resp);
 		writeByteFile(healthId + "-" + oldPerson.getIdCard(), ".spo", spo);
 		writeStringFile(healthId + "-" + oldPerson.getIdCard(), healthInfoEntity, ".txt", oldPersonHealthVO);
+		LOG.info("write ecg file. healthId:[{}], idCard:[{}]", healthId, oldPerson.getIdCard());
 	}
 	
 	private void writeStringFile(String fileName, HealthInfoEntity healthInfoEntity, String postfix,
@@ -243,8 +245,9 @@ public class HealthInfoService {
             sb.append("RESP=").append(oldPersonHealthVO.getRespiratoryRate()).append("\n");
             sb.append("SPO2=").append(oldPersonHealthVO.getBloodOxygen());
             bos.write(sb.toString().getBytes());
+            LOG.info("file write finish. path:[{}], content:[{}]", path + "/" + tempFileName, sb.toString());
         } catch (Exception e) {  
-            e.printStackTrace();  
+            LOG.error("write file error", e);
         } finally {  
             if (bos != null) {  
                 try {  

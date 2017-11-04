@@ -12,6 +12,7 @@ import org.apache.log4j.Logger;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import com.esite.framework.util.SystemConfigUtil;
 import com.esite.ops.health.service.impl.HealthResultService;
 
 
@@ -23,7 +24,7 @@ public class EcgTimeWorker {
     @Resource
     private HealthResultService healthResultService;
 
-    private static final String OUTPUT_PATH = "/home/data/ECG/output";
+    private static final String OUTPUT_PATH = SystemConfigUtil.getEcgBasePath() + "output";
 
     @Scheduled(cron = "0 0/10 * * * ? ")   //每5秒执行一次
     public void myTest() {
