@@ -600,7 +600,13 @@ public class HealthReportController {
         }
 
         dataMap.put("oldPersonName", oldPerson.getName());
-        dataMap.put("oldPersonSex", oldPerson.getSex());
+        DictionaryEntity dictionarySex = dictionaryService
+            .getDictionaryByParentIdAndCode("xb", oldPerson.getSex() + "");
+        if (null != dictionarySex) {
+            dataMap.put("oldPersonSex", dictionarySex.getDicName());
+        } else {
+            dataMap.put("oldPersonSex", "未知");
+        }
         dataMap.put("oldPersonSocialNumber", oldPerson.getSocialNumber());
         dataMap.put("oldPersonIdCard", oldPerson.getIdCard());
 
@@ -657,7 +663,11 @@ public class HealthReportController {
 
         dataMap.put("operatorName", operatorName);
 
-        dataMap.put("healthBeginTime", health.getBeginDateTime());
+        if (null != health.getBeginDateTime()) {
+            dataMap.put("healthBeginTime", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(health.getBeginDateTime()));
+        } else {
+            dataMap.put("healthBeginTime", "");
+        }
         dataMap.put("healthEndTime", health.getEndDateTime());
 
         HealthResultEntity healthResultEntity = health.getHealthResult();
@@ -667,7 +677,7 @@ public class HealthReportController {
             System.out.println("心电图二进制数据是空的.oldPersonId:" + oldPerson.getId() + ".healthId:" + healthId);
 //        	dataMap.put("ecgPhoto", "");
         } else {
-            BufferedImage b = Rotate(ImageIO.read(new ByteArrayInputStream(ecg)), 90);
+            BufferedImage b = Rotate(ImageIO.read(new ByteArrayInputStream(ecg)), 0);
             if (null != b) {
                 ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
                 ImageIO.write(b, "png", byteArrayOutputStream);

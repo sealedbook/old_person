@@ -123,11 +123,9 @@ public class HealthInfoEntity {
     @NotFound(action = NotFoundAction.IGNORE)
     private HealthResultEntity healthResult;
 
-    @Column(name = "miss_cause")
-    private String missCause;
-
     @Column(name = "random_request_code")
     private String randomRequestCode;
+
 
     public String getId() {
         return id;
@@ -286,14 +284,6 @@ public class HealthInfoEntity {
         return this.healthResult.getDiastolicPressure();
     }
 
-    public String getMissCause() {
-        return missCause;
-    }
-
-    public void setMissCause(String missCause) {
-        this.missCause = missCause;
-    }
-
     public String getRandomRequestCode() {
         return randomRequestCode;
     }
@@ -318,7 +308,6 @@ public class HealthInfoEntity {
         sb.append(", cycle=").append(cycle);
         sb.append(", insertDateTime=").append(insertDateTime);
         sb.append(", healthResult=").append(healthResult);
-        sb.append(", missCause='").append(missCause).append('\'');
         sb.append(", randomRequestCode='").append(randomRequestCode).append('\'');
         sb.append('}');
         return sb.toString();

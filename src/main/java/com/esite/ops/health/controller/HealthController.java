@@ -20,10 +20,12 @@ import com.esite.framework.util.PagerResponse;
 import com.esite.framework.util.StringHelper;
 import com.esite.ops.health.entity.HealthFingerprintEntity;
 import com.esite.ops.health.entity.HealthInfoEntity;
+import com.esite.ops.health.entity.HealthMissEntity;
 import com.esite.ops.health.entity.HealthPhotoEntity;
 import com.esite.ops.health.entity.HealthResultEntity;
 import com.esite.ops.health.service.impl.FingerprintInfoService;
 import com.esite.ops.health.service.impl.HealthInfoService;
+import com.esite.ops.health.service.impl.HealthMissService;
 import com.esite.ops.health.service.impl.HealthPhotoService;
 import com.esite.ops.health.service.impl.HealthResultService;
 import com.esite.ops.health.vo.HealthInfoQueryVO;
@@ -35,15 +37,14 @@ public class HealthController {
 	
 	@Resource
 	private HealthInfoService healthInfoService;
-	
 	@Resource
 	private FingerprintInfoService fingerprintInfoService;
-	
 	@Resource
 	private HealthPhotoService healthPhotoService;
-	
 	@Resource
 	private HealthResultService healthResultService;
+	@Resource
+	private HealthMissService healthMissService;
 	
 	@RequestMapping(value="/verify/manager")
 	public String manager() {
@@ -54,8 +55,14 @@ public class HealthController {
 	public @ResponseBody PagerResponse<HealthInfoEntity> list(String oldPersonId,PagerRequest pageRequest) {
 		Page<HealthInfoEntity> page = healthInfoService.getHealthByOldPersonId(oldPersonId,pageRequest.getInstance());
 		return new PagerResponse<HealthInfoEntity>(page);
-	} 
-	
+	}
+
+	@RequestMapping(value="/miss/list")
+	public @ResponseBody PagerResponse<HealthMissEntity> missList(String oldPersonId, PagerRequest pageRequest) {
+		Page<HealthMissEntity> page = healthMissService.fetchMiss(oldPersonId,pageRequest.getInstance());
+		return new PagerResponse<HealthMissEntity>(page);
+	}
+
 	@RequestMapping(value="/verify/list")
 	public @ResponseBody PagerResponse<HealthInfoEntity> list(HealthInfoQueryVO healthInfoQueryVO,PagerRequest pageRequest) {
 		Page<HealthInfoEntity> page = healthInfoService.getVerifyHealth(healthInfoQueryVO,pageRequest.getInstance());
