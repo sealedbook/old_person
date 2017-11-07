@@ -1,6 +1,8 @@
 package com.esite.ops.ws.entity;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import com.esite.ops.oldperson.entity.OldPersonEntity;
 import com.esite.ops.ws.enums.OldPersonType;
@@ -92,7 +94,8 @@ public class DownloadOldPersonInfoVO implements java.io.Serializable {
 		this.baseQueueCode = oldPersonEntity.getBaseQueueCode();
 		this.baseQueueAddress = oldPersonEntity.getBaseQueueAddress();
 		this.healthCount = oldPersonEntity.getHealthCount() + 1;
-		int year = Calendar.getInstance().get(Calendar.YEAR);
+
+		String year = new SimpleDateFormat("yy").format(new Date());
 		this.surveyCode = year + oldPersonEntity.getConvertBaseCode() + this.healthCount;
 	}
 
