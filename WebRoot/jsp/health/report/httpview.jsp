@@ -142,6 +142,10 @@
 	   		</tr>
    		</table>
    	</fieldset>
+	<fieldset>
+		<legend>心电图</legend>
+		<img src="<c:url value="/health/report/ecg.do?healthResultId=${healthResult.id }"/>"/>
+	</fieldset>
    	<!-- 
    	<fieldset>
    		<legend>检测结果分析</legend>

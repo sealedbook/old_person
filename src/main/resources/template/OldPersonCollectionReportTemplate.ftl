@@ -880,9 +880,7 @@
                                                     <v:path o:extrusionok="f" gradientshapeok="t" o:connecttype="rect" />
                                                     <o:lock v:ext="edit" aspectratio="t" />
                                                 </v:shapetype>
-                                                <w:binData w:name="wordml://0200000${healthMap.idx}.jpg" xml:space="preserve">
-                                                ${healthMap.oldPersonPhoto}
-</w:binData>
+                                                <w:binData w:name="wordml://0200000${healthMap.idx}.jpg" xml:space="preserve">${healthMap.oldPersonPhoto}</w:binData>
                                                 <v:shape id="_x0000_i1028" type="#_x0000_t75" style="width:61.5pt;height:74.25pt">
                                                     <v:imagedata src="wordml://0200000${healthMap.idx}.jpg" o:title="photo.do" />
                                                 </v:shape>
@@ -2235,11 +2233,9 @@
                     <w:sz-cs w:val="20" />
                 </w:rPr>
                 <w:pict>
-                    <w:binData w:name="wordml://02000002.jpg" xml:space="preserve">
-                    ${healthMap.ecgPhoto!''}
-</w:binData>
-                    <v:shape id="_x0000_i1027" type="#_x0000_t75" style="width:405.75pt;height:218.25pt">
-                        <v:imagedata src="wordml://02000002.jpg" o:title="" />
+                    <w:binData w:name="wordml://02000002${healthMap.idx}.jpg" xml:space="preserve">${healthMap.ecgPhoto!''}</w:binData>
+                  <v:shape id="_x0000_i1027" type="#_x0000_t75" style="width:405.75pt;height:218.25pt">
+                        <v:imagedata src="wordml://02000002${healthMap.idx}.jpg" o:title="" />
                     </v:shape>
                 </w:pict>
             </w:r>

@@ -458,6 +458,21 @@ public class HealthReportController {
             dataMap.put("healthEndTime", health.getEndDateTime());
 
             HealthResultEntity healthResultEntity = health.getHealthResult();
+            byte[] ecg = healthResultEntity.getEcgData();
+            if (null == ecg) {
+                System.out.println("心电图二进制数据是空的.oldPersonId:" + oldPerson.getId() + ".healthId:" + healthResultEntity.getId());
+            } else {
+                BufferedImage b = Rotate(ImageIO.read(new ByteArrayInputStream(ecg)), 0);
+                if (null != b) {
+                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                    ImageIO.write(b, "png", byteArrayOutputStream);
+                    ecg = byteArrayOutputStream.toByteArray();
+                    if (null != ecg) {
+                        String ecgBase64Str = Base64.encodeBase64String(ecg);
+                        dataMap.put("ecgPhoto", ecgBase64Str);
+                    }
+                }
+            }
             if (null == healthResultEntity) {
                 dataMap.put("healthResult", "未检测");
                 //心率结果 xljg
