@@ -9,6 +9,8 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -17,13 +19,15 @@ import com.esite.framework.util.WebRequestHelper;
 
 public class ExceptionInterceptor extends HandlerInterceptorAdapter {
 
+	private static final Logger LOG = LoggerFactory.getLogger(ExceptionInterceptor.class);
+
 	@Override
 	public void afterCompletion(HttpServletRequest request,HttpServletResponse response, Object handler, Exception exception) throws Exception {
 		
 		if(null == exception) {
 			return;
 		}
-		exception.printStackTrace();
+		LOG.error("catch exception", exception);
         if(WebRequestHelper.isWebClient(request)) {
         	System.out.println(request.getHeader("Content-Type"));
         	HandlerMethod handlerMethod = (HandlerMethod)handler;

@@ -340,7 +340,7 @@ public class HealthReportController {
 
     @RequestMapping("/export/word")
     public String exportWord(String cycleId, HttpServletRequest request, HttpServletResponse response, Model model)
-        throws UnsupportedEncodingException {
+        throws IOException {
         CycleEntity cycleEntity = this.cycleService.getCycle(cycleId);
         List<HealthInfoEntity> healthInfoEntityCollection = this.healthInfoService.getAllHealthInfoByCycleId(cycleId);
         if (null == healthInfoEntityCollection || healthInfoEntityCollection.size() <= 0) {
@@ -386,6 +386,13 @@ public class HealthReportController {
             dataMap.put("idx", idx);
 
             dataMap.put("oldPersonName", oldPerson.getName());
+            DictionaryEntity dictionarySex = dictionaryService
+                .getDictionaryByParentIdAndCode("xb", oldPerson.getSex() + "");
+            if (null != dictionarySex) {
+                dataMap.put("oldPersonSex", dictionarySex.getDicName());
+            } else {
+                dataMap.put("oldPersonSex", "未知");
+            }
             dataMap.put("oldPersonSocialNumber", oldPerson.getSocialNumber());
             dataMap.put("oldPersonIdCard", oldPerson.getIdCard());
 
@@ -443,7 +450,11 @@ public class HealthReportController {
 
             dataMap.put("operatorName", operatorName);
 
-            dataMap.put("healthBeginTime", health.getBeginDateTime());
+            if (null != health.getBeginDateTime()) {
+                dataMap.put("healthBeginTime", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(health.getBeginDateTime()));
+            } else {
+                dataMap.put("healthBeginTime", "");
+            }
             dataMap.put("healthEndTime", health.getEndDateTime());
 
             HealthResultEntity healthResultEntity = health.getHealthResult();
@@ -543,12 +554,13 @@ public class HealthReportController {
 
             list.add(dataMap);
         }
-        configuration.setClassForTemplateLoading(this.getClass(), "/com/esite/ops/health/ftl");  //FTL文件所存在的位置
+        String filePath = FileService.class.getClassLoader().getResource("template").getPath();
+        configuration.setDirectoryForTemplateLoading(new File(filePath));  //FTL文件所存在的位置
         Template t = null;
         try {
             t = configuration.getTemplate("OldPersonCollectionReportTemplate.ftl"); //文件名
         } catch (IOException e) {
-            e.printStackTrace();
+            LOG.error("export word error", e);
         }
         PrintWriter out = null;
         try {
@@ -558,8 +570,9 @@ public class HealthReportController {
             t.process(m, out);
         } catch (IOException e) {
             e.printStackTrace();
+            LOG.error("export word error", e);
         } catch (TemplateException e) {
-            e.printStackTrace();
+            LOG.error("export word error", e);
         }
         return "redirect:/health/report/manager.do";
     }
