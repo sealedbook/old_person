@@ -381,19 +381,19 @@ public class HealthReportController {
             Map<String, Object> dataMap = new HashMap<String, Object>();
             dataMap.put("healthNumber", healthNumber);
             if (null != otherInfo && null != otherInfo.get("height")) {
-                dataMap.put("height", otherInfo.get("height"));
+                dataMap.put("height", otherInfo.get("height") + "cm");
             } else {
                 dataMap.put("height", "-");
             }
 
             if (null != otherInfo && null != otherInfo.get("weight")) {
-                dataMap.put("weight", otherInfo.get("weight"));
+                dataMap.put("weight", otherInfo.get("weight") + "kg");
             } else {
                 dataMap.put("weight", "-");
             }
 
             if (null != otherInfo && null != otherInfo.get("blood")) {
-                dataMap.put("blood", otherInfo.get("blood"));
+                dataMap.put("blood", otherInfo.get("blood") + "mmol/L");
             } else {
                 dataMap.put("blood", "-");
             }
@@ -672,19 +672,19 @@ public class HealthReportController {
         dataMap.put("healthNumber", healthNumber);
 
         if (null != otherInfo && null != otherInfo.get("height")) {
-            dataMap.put("height", otherInfo.get("height"));
+            dataMap.put("height", otherInfo.get("height") + "cm");
         } else {
             dataMap.put("height", "-");
         }
 
         if (null != otherInfo && null != otherInfo.get("weight")) {
-            dataMap.put("weight", otherInfo.get("weight"));
+            dataMap.put("weight", otherInfo.get("weight") + "kg");
         } else {
             dataMap.put("weight", "-");
         }
 
         if (null != otherInfo && null != otherInfo.get("blood")) {
-            dataMap.put("blood", otherInfo.get("blood"));
+            dataMap.put("blood", otherInfo.get("blood") + "mmol/L");
         } else {
             dataMap.put("blood", "-");
         }
