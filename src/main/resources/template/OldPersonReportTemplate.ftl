@@ -1145,7 +1145,7 @@
                     <w:sz w:val="24" />
                     <w:sz-cs w:val="24" />
                 </w:rPr>
-                <w:t>158cm</w:t>
+                <w:t>${height}</w:t>
             </w:r>
             <w:r>
                 <w:rPr>
@@ -1183,7 +1183,7 @@
                     <w:sz w:val="24" />
                     <w:sz-cs w:val="24" />
                 </w:rPr>
-                <w:t>48kg</w:t>
+                <w:t>${weight}</w:t>
             </w:r>
             <w:r>
                 <w:rPr>
@@ -1210,7 +1210,7 @@
                     <w:sz w:val="24" />
                     <w:sz-cs w:val="24" />
                 </w:rPr>
-                <w:t>6.5</w:t>
+                <w:t>${blood}</w:t>
             </w:r>
             <w:r>
                 <w:rPr>
@@ -1229,7 +1229,7 @@
                     <w:sz w:val="24" />
                     <w:sz-cs w:val="24" />
                 </w:rPr>
-                <w:t>mmol/L</w:t>
+                <w:t></w:t>
             </w:r>
         </w:p>
         <w:tbl>

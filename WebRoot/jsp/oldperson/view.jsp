@@ -83,7 +83,9 @@
     </tr>
     <tr>
         <td width="15%" class="right">家庭住址</td>
-        <td colspan="3">${oldPerson.homeAddress}</td>
+        <td width="84%" colspan="3">
+            <input class="easyui-textbox" readonly="true" data-options="validType:['blankSpace'],width:'95%',height:'120px'" multiline="true"  value="${oldPerson.homeAddress}"/>
+        </td>
     </tr>
     <tr>
         <td width="15%" class="right">退休日期</td>
@@ -93,7 +95,7 @@
     </tr>
     <tr>
         <td width="15%" class="right">工作单位</td>
-        <td colspan="3">${oldPerson.workUnit}</td>
+        <td width="84%" colspan="3"><input class="easyui-textbox" readonly="true" multiline="true"  data-options="width:'95%',height:'120px'" value="${oldPerson.workUnit}"/></td>
     </tr>
 </table>
 <c:choose>

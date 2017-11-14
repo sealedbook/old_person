@@ -54,6 +54,7 @@ import com.esite.framework.file.service.impl.FileService;
 import com.esite.framework.organize.entity.OrganizeViewEntity;
 import com.esite.framework.organize.service.impl.OrganizeService;
 import com.esite.framework.security.entity.Customer;
+import com.esite.framework.util.DBHelper;
 import com.esite.framework.util.StringHelper;
 import com.esite.ops.health.entity.HealthInfoEntity;
 import com.esite.ops.health.entity.HealthResultEntity;
@@ -184,13 +185,15 @@ public class HealthReportController {
         return "/health/report/view";
     }
 
-    @RequestMapping("/ecg")
+    @RequestMapping(value = "/ecg", produces = "image/png")
     public @ResponseBody
-    byte[] fingerprintPhoto(@RequestParam String healthResultId) {
+    byte[] fingerprintPhoto(@RequestParam String healthResultId, HttpServletResponse response) {
+        LOG.info("fetch ecg. healthResultId:[{}]", healthResultId);
         HealthResultEntity healthResult = this.healthResultService.getHealthResult(healthResultId);
         if (null == healthResult) {
             return null;
         }
+        response.setContentType("image/png");
         return healthResult.getEcgData();
     }
 
@@ -372,8 +375,28 @@ public class HealthReportController {
             }
             int healthNumber = healthInfoService.getHealthNumberByOldPerson(health.getId(), oldPerson.getId());
 
+            Map<String, String> otherInfo = fetchPersonOtherInfo(health.getRandomRequestCode());
+
+
             Map<String, Object> dataMap = new HashMap<String, Object>();
             dataMap.put("healthNumber", healthNumber);
+            if (null != otherInfo && null != otherInfo.get("height")) {
+                dataMap.put("height", otherInfo.get("height"));
+            } else {
+                dataMap.put("height", "-");
+            }
+
+            if (null != otherInfo && null != otherInfo.get("weight")) {
+                dataMap.put("weight", otherInfo.get("weight"));
+            } else {
+                dataMap.put("weight", "-");
+            }
+
+            if (null != otherInfo && null != otherInfo.get("blood")) {
+                dataMap.put("blood", otherInfo.get("blood"));
+            } else {
+                dataMap.put("blood", "-");
+            }
 
             SysFileInfo sysFileInfo = fileService.findByFileKey(oldPerson.getPhotoKey());
             byte[] photo = sysFileInfo.getContent();
@@ -592,8 +615,35 @@ public class HealthReportController {
         return "redirect:/health/report/manager.do";
     }
 
+
+    private void fetchOtherPersonInfo(String randomRequestCode) {
+
+    }
+
+    private Map<String, String> fetchPersonOtherInfo(String requestCode) {
+        //身高
+        String heightColumn = "-";
+        heightColumn = DBHelper.queryHeightColumn();
+        //体重
+        String weightColumn = DBHelper.queryWeightColumn();
+        //血糖
+        String bloodColumn = DBHelper.queryBloodColumn();
+        //随机访问编号
+        String requestColumn = DBHelper.queryRequestColumn();
+
+        StringBuilder sql = new StringBuilder();
+        sql.append("select ").append(heightColumn).append(" as height, ").append(weightColumn).append(" as weight, ").append(bloodColumn)
+            .append(" as blood from lime.lime_survey_645457 where ").append(requestColumn).append("='").append(requestCode).append("'");
+
+        LOG.info("query sql:[{}]", sql.toString());
+
+        Map<String,String> data = DBHelper.query(sql.toString());
+        return data;
+    }
+
     @RequestMapping("/{healthId}/download")
     public void exportWord(@PathVariable String healthId, HttpServletResponse response) throws IOException {
+
         HealthInfoEntity health = healthInfoService.getHealth(healthId);
         OperatorEntity operator = health.getOperator();
         String operatorName = "";
@@ -604,6 +654,9 @@ public class HealthReportController {
         if (null == oldPerson) {
             return;
         }
+
+        Map<String, String> otherInfo = fetchPersonOtherInfo(health.getRandomRequestCode());
+
         int healthNumber = healthInfoService.getHealthNumberByOldPerson(healthId, oldPerson.getId());
 
         response.setCharacterEncoding("UTF-8");
@@ -617,6 +670,24 @@ public class HealthReportController {
         configuration.setDefaultEncoding("UTF-8");
         Map<String, Object> dataMap = new HashMap<String, Object>();
         dataMap.put("healthNumber", healthNumber);
+
+        if (null != otherInfo && null != otherInfo.get("height")) {
+            dataMap.put("height", otherInfo.get("height"));
+        } else {
+            dataMap.put("height", "-");
+        }
+
+        if (null != otherInfo && null != otherInfo.get("weight")) {
+            dataMap.put("weight", otherInfo.get("weight"));
+        } else {
+            dataMap.put("weight", "-");
+        }
+
+        if (null != otherInfo && null != otherInfo.get("blood")) {
+            dataMap.put("blood", otherInfo.get("blood"));
+        } else {
+            dataMap.put("blood", "-");
+        }
 
         SysFileInfo sysFileInfo = fileService.findByFileKey(oldPerson.getPhotoKey());
         byte[] photo = sysFileInfo.getContent();

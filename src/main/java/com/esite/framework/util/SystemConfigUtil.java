@@ -47,4 +47,8 @@ public class SystemConfigUtil {
     public static String getEcgBasePath() {
         return ECG_BASE_PATH;
     }
+
+    public static Properties fetchConfig() {
+        return config;
+    }
 }

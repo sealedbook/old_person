@@ -96,7 +96,7 @@ function copyIdCard() {
 					<tr>
 						<td width="20%" class="right">家庭住址</td>
 						<td colspan="3">
-							<input class="easyui-textbox" data-options="validType:['blankSpace'],width:'95%'" name="homeAddress" id="homeAddress"/>
+							<input class="easyui-textbox" data-options="validType:['blankSpace'],width:'95%',height:'120px'" multiline="true"  name="homeAddress" id="homeAddress"/>
 			    		</td>
 					</tr>
 		    	</table>
@@ -149,7 +149,7 @@ function copyIdCard() {
 	    			</tr>
 	    			<tr id="workUnitTr">
 	    				<td width="20%" class="right">工作单位</td>
-	    				<td colspan="3"><input class="easyui-textbox" data-options="width:'95%',required:true,validType:['blankSpace','length[0,100]']" name="workUnit" id="workUnit"/></td>
+	    				<td colspan="3"><input class="easyui-textbox" multiline="true"  data-options="width:'95%',height:'120px',required:true,validType:['blankSpace','length[0,100]']" name="workUnit" id="workUnit"/></td>
 	    			</tr>
 	    		</table>
 	    	</fieldset>

@@ -144,7 +144,7 @@
    	</fieldset>
 	<fieldset>
 		<legend>心电图</legend>
-		<img src="<c:url value="/health/report/ecg.do?healthResultId=${healthResult.id }"/>"/>
+		<img width="100%" height="100%" src="<c:url value="/health/report/ecg.do?healthResultId=${healthResult.id }"/>"/>
 	</fieldset>
    	<!-- 
    	<fieldset>

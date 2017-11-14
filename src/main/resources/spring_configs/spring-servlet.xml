@@ -27,6 +27,7 @@
 			<mvc:exclude-mapping path="/security/login.do" />
 			<mvc:exclude-mapping path="/oldperson/**/photo.do" />
 			<mvc:exclude-mapping path="/ruok.do" />
+			<mvc:exclude-mapping path="/health/report/ecg.do" />
 			<beans:bean class="com.esite.framework.system.interceptor.TerminalTokenInterceptor"/>
 		</mvc:interceptor>
 		
@@ -38,6 +39,7 @@
 			<mvc:exclude-mapping path="/security/logout.do" />
 			<mvc:exclude-mapping path="/security/login/page.do" />
 			<mvc:exclude-mapping path="/ruok.do" />
+			<mvc:exclude-mapping path="/health/report/ecg.do" />
 			<beans:bean class="com.esite.framework.system.interceptor.SessionTimeoutInterceptor"/>
 		</mvc:interceptor>
 		
@@ -62,7 +64,6 @@
 			<mvc:exclude-mapping path="/http/notice/**/**.do" />
 			<mvc:exclude-mapping path="/http/cycle/**/**.do" />
 			<mvc:exclude-mapping path="/http/oldperson/**/photo.do" />
-			
 			<mvc:exclude-mapping path="/user/up/manager.do" />
 			<mvc:exclude-mapping path="/user/down/manager.do" />
 			<mvc:exclude-mapping path="/health/report/ecg.do" />
