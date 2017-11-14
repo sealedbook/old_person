@@ -96,7 +96,7 @@ public class DownloadOldPersonInfoVO implements java.io.Serializable {
 		this.healthCount = oldPersonEntity.getHealthCount() + 1;
 
 		String year = new SimpleDateFormat("yy").format(new Date());
-		this.surveyCode = year + oldPersonEntity.getConvertBaseCode() + this.healthCount;
+		this.surveyCode = year + oldPersonEntity.getConvertBaseCode() + "SF" + this.healthCount;
 	}
 
 	public String getId() {

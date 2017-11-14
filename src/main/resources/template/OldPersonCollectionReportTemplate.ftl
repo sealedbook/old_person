@@ -1144,7 +1144,7 @@
                     <w:sz w:val="24" />
                     <w:sz-cs w:val="24" />
                 </w:rPr>
-                <w:t>${height}</w:t>
+                <w:t>${healthMap.height}</w:t>
             </w:r>
             <w:r>
                 <w:rPr>
@@ -1182,7 +1182,7 @@
                     <w:sz w:val="24" />
                     <w:sz-cs w:val="24" />
                 </w:rPr>
-                <w:t>${weight}</w:t>
+                <w:t>${healthMap.weight}</w:t>
             </w:r>
             <w:r>
                 <w:rPr>
@@ -1209,7 +1209,7 @@
                     <w:sz w:val="24" />
                     <w:sz-cs w:val="24" />
                 </w:rPr>
-                <w:t>${blood}</w:t>
+                <w:t>${healthMap.blood}</w:t>
             </w:r>
             <w:r>
                 <w:rPr>

@@ -56,6 +56,7 @@ import com.esite.framework.organize.service.impl.OrganizeService;
 import com.esite.framework.security.entity.Customer;
 import com.esite.framework.util.DBHelper;
 import com.esite.framework.util.StringHelper;
+import com.esite.framework.util.SystemConfigUtil;
 import com.esite.ops.health.entity.HealthInfoEntity;
 import com.esite.ops.health.entity.HealthResultEntity;
 import com.esite.ops.health.service.impl.HealthInfoService;
@@ -91,6 +92,7 @@ public class HealthReportController {
     private FileService fileService;
     @Autowired
     private DictionaryService dictionaryService;
+    public static final String QA_RESULT_TABLE_NAME = SystemConfigUtil.fetchConfig().getProperty("qa.result.db.table.name");
 
     @RequestMapping(value = "/manager")
     public String manager() {
@@ -633,7 +635,7 @@ public class HealthReportController {
 
         StringBuilder sql = new StringBuilder();
         sql.append("select ").append(heightColumn).append(" as height, ").append(weightColumn).append(" as weight, ").append(bloodColumn)
-            .append(" as blood from lime.lime_survey_645457 where ").append(requestColumn).append("='").append(requestCode).append("'");
+            .append(" as blood from ").append(QA_RESULT_TABLE_NAME).append(" where ").append(requestColumn).append("='").append(requestCode).append("'");
 
         LOG.info("query sql:[{}]", sql.toString());
 

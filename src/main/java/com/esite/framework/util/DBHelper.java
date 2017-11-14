@@ -28,6 +28,8 @@ public class DBHelper {
     public static final String user = SystemConfigUtil.fetchConfig().getProperty("jdbc.user");
     public static final String password = SystemConfigUtil.fetchConfig().getProperty("jdbc.password");
 
+    public static final String QA_TABLE_NAME = SystemConfigUtil.fetchConfig().getProperty("qa.db.table.name");
+
     public PreparedStatement pst = null;
 
     public static Map<String, String> query(String sql) {
@@ -74,7 +76,7 @@ public class DBHelper {
     }
 
     public static String queryHeightColumn() {
-        String sql = "select CONCAT(`sid`,\"X\",`gid`,\"X\",`qid`,\"SQ001\") height from lime.lime_questions where title = 'G5Q00007'";
+        String sql = "select CONCAT(`sid`,\"X\",`gid`,\"X\",`qid`,\"SQ001\") height from " + QA_TABLE_NAME + " where title = 'G5Q00007'";
         Connection conn = null;
         Statement statement = null;
         try {
@@ -112,7 +114,7 @@ public class DBHelper {
     }
 
     public static String queryWeightColumn() {
-        String sql = "select CONCAT(`sid`,\"X\",`gid`,\"X\",`qid`,\"SQ002\") weight from lime.lime_questions where title = 'G5Q00007'";
+        String sql = "select CONCAT(`sid`,\"X\",`gid`,\"X\",`qid`,\"SQ002\") weight from " + QA_TABLE_NAME + " where title = 'G5Q00007'";
         Connection conn = null;
         Statement statement = null;
         try {
@@ -150,7 +152,7 @@ public class DBHelper {
     }
 
     public static String queryBloodColumn() {
-        String sql = "select CONCAT(`sid`,\"X\",`gid`,\"X\",`qid`) blood from lime.lime_questions where title = 'G5Q00004'";
+        String sql = "select CONCAT(`sid`,\"X\",`gid`,\"X\",`qid`) blood from " + QA_TABLE_NAME + " where title = 'G5Q00004'";
         Connection conn = null;
         Statement statement = null;
         try {
@@ -188,7 +190,7 @@ public class DBHelper {
     }
 
     public static String queryRequestColumn() {
-        String sql = "select CONCAT(`sid`,\"X\",`gid`,\"X\",`qid`) request from lime.lime_questions where title = 'G1Q00004'";
+        String sql = "select CONCAT(`sid`,\"X\",`gid`,\"X\",`qid`) request from " + QA_TABLE_NAME + " where title = 'G1Q00004'";
         Connection conn = null;
         Statement statement = null;
         try {
