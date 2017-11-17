@@ -215,31 +215,7 @@
 	});
 	
 	
-	require([ 'echarts', 'echarts/theme/macarons', 'echarts/chart/line','echarts/chart/gauge'], function(ec, theme) {
-		// 基于准备好的dom，初始化echarts图表
-		var rzwcdtjChar = ec.init(document.getElementById('bdrzwcdtj'), theme);
-		rzwcdtjOption = {
-			title : {
-		        text: '${area.name}-认证完成度',
-		        subtext: '',
-		        x:'center'
-		    },
-		    tooltip : {
-		        formatter: "{a} <br/>{b} : {c}%"
-		    },
-		    series : [
-		        {
-		            name:'随访人员',
-		            type:'gauge',
-		            detail : {formatter:'${bdyrzzb}%'},
-		            data:[{value: ${bdyrzzb}, name: '已认证占比'}]
-		        }
-		    ]
-		};
-		// 为echarts对象加载数据
-		rzwcdtjChar.setOption(rzwcdtjOption);
-		
-	});
+
 	</script>
   </body>
 </html>

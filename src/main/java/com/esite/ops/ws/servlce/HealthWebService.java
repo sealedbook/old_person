@@ -89,14 +89,14 @@ public class HealthWebService {
                 return JsonConverter.convert(webServiceResult);
             }
             logger.info("=======Web Service 反序列化Object属于UpLoadDataVO[]类型");
-            logger.info("=======Web Service 共有" + upLoadDataVOArray.length + "位老人信息.");
+            logger.info("=======Web Service 共有" + upLoadDataVOArray.length + "位人信息.");
             uploadOldPersonTotal = upLoadDataVOArray.length;
             int i = 0;
             String importHealthInfoBatchId = StringHelper.createUUID().toString();
             try {
                 for (UpLoadDataVO upLoadDataVO : upLoadDataVOArray) {
                     if (null == upLoadDataVO) {
-                        logger.info("=======Web Service 第" + (i) + "位老人的对象是空指针.程序继续运行.");
+                        logger.info("=======Web Service 第" + (i) + "位人的对象是空指针.程序继续运行.");
                         continue;
                     }
                     String logContent = JsonConverter.convert(upLoadDataVO);
@@ -108,7 +108,7 @@ public class HealthWebService {
                         uploadOldPersonId = upLoadDataVO.getOldPersonId().toString();
                     }
                     try {
-                        logger.info("=======Web Service 开始第" + (++i) + "位老人,老人ID:【" + uploadOldPersonId + "】");
+                        logger.info("=======Web Service 开始第" + (++i) + "位人,人ID:【" + uploadOldPersonId + "】");
                         healthInfoService.addNew(user, getIpAddress(), upLoadDataVO, importHealthInfoBatchId, logId);
 
                         logger.info("=======Web Service 第" + (i) + "位处理完成");
@@ -122,9 +122,9 @@ public class HealthWebService {
                 }
             } catch (Exception e) {
                 logger.error("upload error.", e);
-                logger.info("=======Web Service 第" + (i) + "位老人处理出错:", e);
-                logger.info("=======Web Service 第" + (i) + "位老人处理出错:" + e.getMessage());
-                String message = "第" + (i) + "位老人处理出错:" + e.getMessage();
+                logger.info("=======Web Service 第" + (i) + "位人处理出错:", e);
+                logger.info("=======Web Service 第" + (i) + "位人处理出错:" + e.getMessage());
+                String message = "第" + (i) + "位人处理出错:" + e.getMessage();
                 webServiceResult.put("responseStatus", "ERROR");
                 webServiceResult.put("message", message);
                 return JsonConverter.convert(webServiceResult);

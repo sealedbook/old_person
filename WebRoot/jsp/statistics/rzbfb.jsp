@@ -80,9 +80,9 @@
 				<th data-options="field:'areaId',hidden:true"></th>
 				<th data-options="field:'areaName',width:10">地区</th>
 				<th data-options="field:'total',width:6">总人数</th>
-				<th data-options="field:'name',width:8">本地人数</th>
+				<!-- <th data-options="field:'name',width:8">本地人数</th> -->
 				<th data-options="field:'price7',width:12">已完成人数</th>
-				<th data-options="field:'price',width:12">本地人占比</th>
+				<!-- <th data-options="field:'price',width:12">本地人占比</th> -->
 				<th data-options="field:'price3',width:10">待认证人数</th>
 				<th data-options="field:'price4',width:12">待认证占比</th>
 				<th data-options="field:'price6',width:12">已完成占比</th>
@@ -95,9 +95,9 @@
 					<td>${r.ROOT_AREA_ID }</td><!-- 地区编号-->
 					<td><c:out value="${r.area_name }" default="泰州市"/><!-- 地区 --></td>
 					<td>${r.total } 人<!-- 总人数 --></td>
-					<td>${r.bd } 人<!-- 本地人数 --></td>
+					<!-- <td>${r.bd } 人本地人数 </td>-->
 					<td>${r.bd_yrz } 人</td><!-- 本地完成人数 -->
-					<td><c:out value="${r.bd_bfb }" default="0%" /><!-- 本地人占比 --></td>
+					<!-- <td><c:out value="${r.bd_bfb }" default="0%" />本地人占比 </td>-->
 					<td>${r.wrz } 人<!-- 待认证人数 --></td>
 					<td><c:out value="${r.wrz_bfb }" default="0%" /><!-- 待认证占比 --></td>
 					<td><c:out value="${r.yrz_bfb }" default="0%" /><!-- 已完成占比 --></td>

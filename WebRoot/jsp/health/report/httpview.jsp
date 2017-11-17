@@ -25,14 +25,14 @@
  		<legend>随访人员基本信息</legend>
  		<table class="tableStyle">
 	   		<tr>
-	   			<td width="15%" class="right">老人姓名</td>
+	   			<td width="15%" class="right">人员姓名</td>
 	   			<td>${oldPerson.name}</td>
 	   			<td colspan="2" rowspan="6" align="center">
 	   				<img alt="xxx" style="cursor:pointer;" width="150" src="<c:url value="/oldperson/${oldPerson.id}/photo.do"/>">
 	   			</td>
 	   		</tr>
 	   		<tr>
-	   			<td class="right">老人性别</td>
+	   			<td class="right">性别</td>
 	   			<td><code2name:dictionary code="${oldPerson.sex}" parentId="xb"/></td>
 	   		</tr>
 	   		<tr>
@@ -44,7 +44,7 @@
 	   			<td><fmt:formatDate value="${oldPerson.birthday}" pattern="yyyy-MM-dd"/></td>
 	   		</tr>
 	   		<tr>
-	   			<td class="right">老人年龄</td>
+	   			<td class="right">年龄</td>
 	   			<td>${oldPerson.age}</td>
 	   		</tr>
 	   		<tr>

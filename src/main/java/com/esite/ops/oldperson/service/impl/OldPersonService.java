@@ -324,26 +324,26 @@ public class OldPersonService {
                     /** 基线队列编号处理 */
                     int columnIndex = 0;
                     if (null == row.get(columnIndex) || row.get(columnIndex).length() <= 0) {
-                        simpleErrorMessage.append("Excel文件中第").append(i + 1).append("行,老人【基线队列编号】为空.");
+                        simpleErrorMessage.append("Excel文件中第").append(i + 1).append("行,【基线队列编号】为空.");
                     }
                     oldPersonEntity.setBaseQueueCode(row.get(columnIndex));
 
                     /** 姓名处理 */
                     columnIndex = 1;
                     if (null == row.get(columnIndex) || row.get(columnIndex).length() <= 0) {
-                        simpleErrorMessage.append("Excel文件中第").append(i + 1).append("行,老人【姓名】为空.");
+                        simpleErrorMessage.append("Excel文件中第").append(i + 1).append("行,【姓名】为空.");
                     }
                     oldPersonEntity.setName(row.get(columnIndex));
 
                     /** 性别处理 */
 //                    if (null == row.get(2) || row.get(2).length() <= 0) {
-//                        simpleErrorMessage.append("Excel文件中第").append(i + 1).append("行,老人【性别】为空.");
+//                        simpleErrorMessage.append("Excel文件中第").append(i + 1).append("行,【性别】为空.");
 //                    }
 //                    DictionaryEntity oldPersonType = this.dictionaryService
 //                        .getDictionaryByParentIdAndName("xb", row.get(2));
 //                    if (null == oldPersonType) {
 //                        simpleErrorMessage.append("Excel文件中第").append(i + 1)
-//                            .append("行,老人【性别】输入错误,系统中找不到对应类型.");
+//                            .append("行,【性别】输入错误,系统中找不到对应类型.");
 //                    } else {
 //                        oldPersonEntity.setSex(Integer.parseInt(oldPersonType.getDicCode()));
 //                    }
@@ -351,13 +351,13 @@ public class OldPersonService {
                     /** 民族处理 */
                     columnIndex = 2;
                     if (null == row.get(columnIndex) || row.get(columnIndex).length() <= 0) {
-                        simpleErrorMessage.append("Excel文件中第").append(i + 1).append("行,老人【民族】为空.");
+                        simpleErrorMessage.append("Excel文件中第").append(i + 1).append("行,【民族】为空.");
                     }
                     DictionaryEntity oldPersonNation = this.dictionaryService
                         .getDictionaryByParentIdAndName("nationality", row.get(columnIndex));
                     if (null == oldPersonNation) {
                         simpleErrorMessage.append("Excel文件中第").append(i + 1)
-                            .append("行,老人【民族】输入错误,系统中找不到对应类型.");
+                            .append("行,人员【民族】输入错误,系统中找不到对应类型.");
                     } else {
                         oldPersonEntity.setNationality(oldPersonNation.getDicCode());
                     }
@@ -365,30 +365,30 @@ public class OldPersonService {
                     /** 身份证处理 */
                     columnIndex = 3;
                     if (null == row.get(columnIndex) || row.get(columnIndex).length() <= 0) {
-                        simpleErrorMessage.append("Excel文件中第").append(i + 1).append("行,老人【身份证号】为空.");
+                        simpleErrorMessage.append("Excel文件中第").append(i + 1).append("行,【身份证号】为空.");
                     }
                     if (!IdentityCardHelper.isIdCard(row.get(columnIndex))) {
-                        simpleErrorMessage.append("Excel文件中第").append(i + 1).append("行,老人【身份证号】格式错误.");
+                        simpleErrorMessage.append("Excel文件中第").append(i + 1).append("行,【身份证号】格式错误.");
                     }
                     oldPersonEntity.setIdCard(row.get(columnIndex));
 
                     /** 基线队列调查时间 */
                     columnIndex = 4;
                     if (null == row.get(columnIndex) || row.get(columnIndex).length() <= 0) {
-                        simpleErrorMessage.append("Excel文件中第").append(i + 1).append("行,老人【基线队列调查时间】为空.");
+                        simpleErrorMessage.append("Excel文件中第").append(i + 1).append("行,【基线队列调查时间】为空.");
                     } else {
                         try {
                             Date baseQueueDate = new SimpleDateFormat("yyyy-M-d").parse(row.get(columnIndex));
                             oldPersonEntity.setBaseQueueTime(baseQueueDate);
                         } catch (ParseException e) {
-                            simpleErrorMessage.append("Excel文件中第").append(i + 1).append("行,老人【基线队列调查时间】格式错误.");
+                            simpleErrorMessage.append("Excel文件中第").append(i + 1).append("行,【基线队列调查时间】格式错误.");
                         }
                     }
 
                     /** 基线队列调查时住址处理 */
                     columnIndex = 5;
                     if (null == row.get(columnIndex) || row.get(columnIndex).length() <= 0) {
-                        simpleErrorMessage.append("Excel文件中第").append(i + 1).append("行,老人【基线队列调查时住址】为空.");
+                        simpleErrorMessage.append("Excel文件中第").append(i + 1).append("行,【基线队列调查时住址】为空.");
                     } else {
                         oldPersonEntity.setBaseQueueAddress(row.get(columnIndex));
                     }
@@ -396,14 +396,14 @@ public class OldPersonService {
                     /** 随访人员所属地区 */
                     columnIndex = 6;
                     if (null == row.get(columnIndex) || row.get(columnIndex).length() <= 0) {
-                        simpleErrorMessage.append("Excel文件中第").append(i + 1).append("行,老人【所属地区】为空.");
+                        simpleErrorMessage.append("Excel文件中第").append(i + 1).append("行,【所属地区】为空.");
                     }
                     String areaName = row.get(columnIndex);
                     OrganizeViewEntity org = this.organizeService.getOrganizeByName(areaName);
                     if (null == org) {
-                        simpleErrorMessage.append("Excel文件中第").append(i + 1).append("行,老人【所属地区】输入错误,系统中找不到对应的地区.");
+                        simpleErrorMessage.append("Excel文件中第").append(i + 1).append("行,【所属地区】输入错误,系统中找不到对应的地区.");
                     } else if (!org.isLeaf()) {
-                        simpleErrorMessage.append("Excel文件中第").append(i + 1).append("行,老人【所属地区】输入错误,该区域不属于最下层的管辖地区.");
+                        simpleErrorMessage.append("Excel文件中第").append(i + 1).append("行,【所属地区】输入错误,该区域不属于最下层的管辖地区.");
                     } else {
                         //TODO
                         OrganizeEntity orgEntity = new OrganizeEntity();

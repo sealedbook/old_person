@@ -42,7 +42,7 @@ function copyIdCard() {
 	    		<legend>基本信息</legend>
 	    		<table class="tableStyle">
 					<tr>
-						<td width="20%" class="right">老人姓名</td>
+						<td width="20%" class="right">人员姓名</td>
 						<td width="30%"><input data-options="required:true,validType:['blankSpace','length[0,10]']" class="easyui-textbox" name="name" id="name" /></td>
 						<td width="20%" class="right">身份证号</td>
 						<td width="30%"><input data-options="required:true,validType:['blankSpace','checkIdCard[]']" class="easyui-textbox" name="idCard" id="idCard" /></td>
@@ -100,58 +100,6 @@ function copyIdCard() {
 			    		</td>
 					</tr>
 		    	</table>
-	    	</fieldset>
-	    	<fieldset>
-	    		<legend>其他信息</legend>
-	    		<table class="tableStyle">
-	    			<tr>
-						<td width="20%" class="right">退休日期</td>
-						<td width="30%">
-							<input id="txrq" name="txrq" class="easyui-datebox" 
-								data-options="editable:false,validType:{
-									
-								}" />
-						</td>
-						<td width="20%" class="right" colspan="2"></td>
-					</tr>
-	    			<tr>
-	    				<td width="20%" class="right">身份类型</td>
-						<td width="30%" >
-							<input class="easyui-combobox" value="sflx01" name="sflx" id="sflx"
-									data-options="
-									required:true,
-									editable:false,
-									valueField:'dicCode',
-									textField:'dicName',
-									url:'<c:url value="/dictionary/sflx/sub.do"/>'
-									,onChange:function(newValue, oldValue) {
-										if(newValue == 'sflx01') {
-											$('#workUnitTr').show();
-											$('#workUnit').textbox('enableValidation');
-										} else {
-											$('#workUnitTr').hide();
-											$('#workUnit').textbox('disableValidation');
-										}
-									}
-								">
-						</td>
-						<td width="20%" class="right">人员状态</td>
-						<td width="30%">
-							<input class="easyui-combobox" name="type" id="type"
-								data-options="
-								required:true,
-								editable:false,
-								valueField:'dicCode',
-								textField:'dicName',
-								url:'<c:url value="/dictionary/lnrlb/sub.do"/>'
-							">
-						</td>
-	    			</tr>
-	    			<tr id="workUnitTr">
-	    				<td width="20%" class="right">工作单位</td>
-	    				<td colspan="3"><input class="easyui-textbox" multiline="true"  data-options="width:'95%',height:'120px',required:true,validType:['blankSpace','length[0,100]']" name="workUnit" id="workUnit"/></td>
-	    			</tr>
-	    		</table>
 	    	</fieldset>
 	    	<div style="text-align:center;padding:5px">
 		    	<a href="javascript:void(0)" class="easyui-linkbutton" id="userCreateButton">提 交</a>

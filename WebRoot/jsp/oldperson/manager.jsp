@@ -182,7 +182,7 @@
 			$.messager.alert("系统提示","请选择一项","info");
 		}else{
 			var url = '<c:url value="/oldperson/"/>' + row[0].id + '.do';
-			top.openDialog({onClose:function(){$('#dg').datagrid();},width:'50%',height:'90%',title:'人员档案信息',url:url});
+			top.openDialog({onClose:function(){$('#dg').datagrid();},width:'50%',height:'50%',title:'人员档案信息',url:url});
 		}
 	}
 	
@@ -190,7 +190,7 @@
 		top.openDialog({onClose:function(){$('#dg').datagrid();},width:'50%',height:'50%',title:'数据导入',url:'<c:url value="/oldperson/importPage.do"/>'});
 	}
 	function add(){
-		top.openDialog({onClose:function(){$('#dg').datagrid();},width:'40%',height:'80%',title:'人员基本信息录入',url:'<c:url value="/oldperson/addPage.do"/>'});
+		top.openDialog({onClose:function(){$('#dg').datagrid();},width:'40%',height:'50%',title:'人员基本信息录入',url:'<c:url value="/oldperson/addPage.do"/>'});
 	}
 	function undo() {
 		//获取选中行
@@ -285,7 +285,7 @@
 				return;
 			}
 			var url = '<c:url value="/oldperson/'+row[0].id+'/updatePage.do"/>';
-			top.openDialog({onClose:function(){$('#dg').datagrid();},width:'40%',height:'80%',title:'随访人员基本信息修改',url:url});
+			top.openDialog({onClose:function(){$('#dg').datagrid();},width:'40%',height:'50%',title:'随访人员基本信息修改',url:url});
 		}
 	}
 	function died() {

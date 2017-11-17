@@ -46,7 +46,7 @@
 <body>
 <table class="tableStyle">
     <tr>
-        <td width="15%" class="right">老人姓名</td>
+        <td width="15%" class="right">人员姓名</td>
         <td>${oldPerson.name}</td>
         <td colspan="2" rowspan="6" align="center">
             <img alt="xxx" style="cursor:pointer;" width="150"
@@ -54,7 +54,7 @@
         </td>
     </tr>
     <tr>
-        <td class="right">老人性别</td>
+        <td class="right">人员性别</td>
         <td><code2name:dictionary code="${oldPerson.sex}" parentId="xb"/></td>
     </tr>
     <tr>
@@ -66,7 +66,7 @@
         <td><fmt:formatDate value="${oldPerson.birthday}" pattern="yyyy-MM-dd"/></td>
     </tr>
     <tr>
-        <td class="right">老人年龄</td>
+        <td class="right">人员年龄</td>
         <td>${oldPerson.age}</td>
     </tr>
     <tr>
@@ -88,15 +88,10 @@
         </td>
     </tr>
     <tr>
-        <td width="15%" class="right">退休日期</td>
-        <td><fmt:formatDate value="${oldPerson.txrq}" pattern="yyyy-MM-dd"/></td>
         <td class="right">建模状态</td>
-        <td><code2name:dictionary code="${oldPerson.modelingStatus}" parentId="lnrModelingStatus"/></td>
+        <td  colspan="3"><code2name:dictionary code="${oldPerson.modelingStatus}" parentId="lnrModelingStatus"/></td>
     </tr>
-    <tr>
-        <td width="15%" class="right">工作单位</td>
-        <td width="84%" colspan="3"><input class="easyui-textbox" readonly="true" multiline="true"  data-options="width:'95%',height:'120px'" value="${oldPerson.workUnit}"/></td>
-    </tr>
+
 </table>
 <c:choose>
     <c:when test="${oldPerson.type == '1' }">
