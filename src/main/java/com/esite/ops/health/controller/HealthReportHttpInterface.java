@@ -68,9 +68,11 @@ public class HealthReportHttpInterface {
             return new ResponseEntity<String>("当前不在任意周期内", HttpStatus.BAD_REQUEST);
 
         }
+        OldPersonEntity oldPerson = oldPersonService.getOldPerson(oldPersonId);
         HealthMissEntity healthMissEntity = new HealthMissEntity();
-        healthMissEntity.setOldPersonId(oldPersonId);
-        healthMissEntity.setCycleId(cycle.getId());
+
+        healthMissEntity.setOldPerson(oldPerson);
+        healthMissEntity.setCycle(cycle);
         healthMissEntity.setMissCause(missCause);
         healthMissEntity.setMissDate(new Date());
         healthMissService.saveOrUpdateMiss(healthMissEntity);

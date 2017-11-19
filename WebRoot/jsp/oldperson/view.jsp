@@ -82,9 +82,21 @@
         <td><code2name:dictionary code="${oldPerson.nationality}" parentId="nationality"/></td>
     </tr>
     <tr>
+        <td width="20%" class="right">基线队列编号</td>
+        <td width="30%">${oldPerson.baseQueueCode}</td>
+        <td width="20%" class="right">基线调查时间</td>
+        <td width="30%">${oldPerson.baseQueueTime}</td>
+    </tr>
+    <tr>
+        <td width="20%" class="right">基线队列住址</td>
+        <td colspan="3">
+            <input class="easyui-textbox" readonly="true" data-options="validType:['blankSpace'],width:'95%',height:'60px'" multiline="true"  value="${oldPerson.baseQueueAddress}"/>
+        </td>
+    </tr>
+    <tr>
         <td width="15%" class="right">家庭住址</td>
         <td width="84%" colspan="3">
-            <input class="easyui-textbox" readonly="true" data-options="validType:['blankSpace'],width:'95%',height:'120px'" multiline="true"  value="${oldPerson.homeAddress}"/>
+            <input class="easyui-textbox" readonly="true" data-options="validType:['blankSpace'],width:'95%',height:'60px'" multiline="true"  value="${oldPerson.homeAddress}"/>
         </td>
     </tr>
     <tr>

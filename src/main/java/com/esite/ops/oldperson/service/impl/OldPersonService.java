@@ -169,15 +169,15 @@ public class OldPersonService {
         }
         String status = dbOldPerson.getStatus();
         if (StringHelper.isEmpty(oldPerson.getId()) && null != dbOldPerson) {
-            throw new IllegalArgumentException("身份证号【" + dbOldPerson.getIdCard() + "】的随访人员已经存在.");
+            throw new IllegalArgumentException("身份证号【" + dbOldPerson.getIdCard() + "】或基线编号【" + dbOldPerson.getBaseQueueCode() + "】的随访人员已经存在.");
         }
         if (StringHelper.isNotEmpty(oldPerson.getId()) && StringHelper.isEmpty(status) && !oldPerson.getId()
             .equals(dbOldPerson.getId())) {
-            throw new IllegalArgumentException("身份证号【" + dbOldPerson.getIdCard() + "】的随访人员已经存在.");
+            throw new IllegalArgumentException("身份证号【" + dbOldPerson.getIdCard() + "】或基线编号【" + dbOldPerson.getBaseQueueCode() + "】的随访人员已经存在.");
         } else if ("delete".equals(status)) {
-            throw new IllegalArgumentException("身份证号【" + dbOldPerson.getIdCard() + "】的随访人员已经存在,但目前被标记为删除状态.");
+            throw new IllegalArgumentException("身份证号【" + dbOldPerson.getIdCard() + "】或基线编号【" + dbOldPerson.getBaseQueueCode() + "】的随访人员已经存在,但目前被标记为删除状态.");
         } else if ("died".equals(status)) {
-            throw new IllegalArgumentException("身份证号【" + dbOldPerson.getIdCard() + "】的随访人员已经存在,但目前被标记为死亡状态.");
+            throw new IllegalArgumentException("身份证号【" + dbOldPerson.getIdCard() + "】或基线编号【" + dbOldPerson.getBaseQueueCode() + "】的随访人员已经存在,但目前被标记为死亡状态.");
         }
     }
 
@@ -201,6 +201,13 @@ public class OldPersonService {
             oldPerson.setNameSpell(ChineseHelper.convertSpell(oldPerson.getName()));
             OrganizeViewEntity org = getRootArea(this.organizeService.getOrganizeById(oldPerson.getArea().getId()));
             oldPerson.setRootAreaId(org.getId());
+
+            /** 基线队列编号处理 */
+            String convertBaseCode = oldPerson.getBaseQueueCode();
+            convertBaseCode = convertBaseCode.substring(2);
+            convertBaseCode = convertBaseCode.substring(0, convertBaseCode.indexOf("WJ"));
+            oldPerson.setConvertBaseCode(convertBaseCode);
+
             this.oldPersonDao.save(oldPerson);
 
             //系统中添加随访人员信息,提供登陆功能
@@ -209,7 +216,7 @@ public class OldPersonService {
             oldPersonOperationLogService.addLog(oldPerson, customer);
             return oldPerson;
         } catch (JpaSystemException e) {
-            throw new IllegalArgumentException("身份证号【" + oldPerson.getIdCard() + "】的随访人员已经存在");
+            throw new IllegalArgumentException("身份证号【" + oldPerson.getIdCard() + "】或基线编号【" + oldPerson.getBaseQueueCode() + "】的随访人员已经存在");
         } catch (BadHanyuPinyinOutputFormatCombination e) {
             e.printStackTrace();
             throw new IllegalArgumentException("随访人员的姓名输入可能有错.");
@@ -255,9 +262,16 @@ public class OldPersonService {
             oldPerson.setRootAreaId(org.getId());
             oldPerson.setFfStatus(dbPersonEntity.getFfStatus());
             oldPerson.setStatus(dbPersonEntity.getStatus());
-            if (!StringUtils.hasText(oldPerson.getModelingStatus())) {
+            if (!StringUtils.hasText(oldPerson.getModelingStatus()) || "none".equals(oldPerson.getModelingStatus())) {
                 oldPerson.setModelingStatus(dbPersonEntity.getModelingStatus());
             }
+
+            /** 基线队列编号处理 */
+            String convertBaseCode = oldPerson.getBaseQueueCode();
+            convertBaseCode = convertBaseCode.substring(2);
+            convertBaseCode = convertBaseCode.substring(0, convertBaseCode.indexOf("WJ"));
+            oldPerson.setConvertBaseCode(convertBaseCode);
+
             this.oldPersonDao.save(oldPerson);
             int oldPersonType = oldPerson.getType();
             if (2 == oldPersonType) {
@@ -268,7 +282,7 @@ public class OldPersonService {
             return oldPerson;
         } catch (JpaSystemException e) {
             LOG.error("update old person error", e);
-            throw new IllegalArgumentException("身份证号【" + oldPerson.getIdCard() + "】的随访人员已经存在");
+            throw new IllegalArgumentException("身份证号【" + oldPerson.getIdCard() + "】或基线编号【" + oldPerson.getBaseQueueCode() + "】的随访人员已经存在");
         } catch (BadHanyuPinyinOutputFormatCombination e) {
             e.printStackTrace();
             throw new IllegalArgumentException("随访人员的姓名输入可能有错.");

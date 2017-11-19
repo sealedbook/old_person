@@ -169,7 +169,7 @@ public class OldPersonEntity {
      * 基线队列调查时间
      */
     @Column(name = "base_queue_time")
-    @DateTimeFormat(iso = ISO.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date baseQueueTime;
 
     /**

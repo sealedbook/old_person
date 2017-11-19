@@ -58,7 +58,7 @@
 				<th field="birthday" align="center" width="12%" formatter="esite.formatDate" pattern="yyyy-MM-dd" >出生日期</th>
 				<th field="age" align="center" width="5%" >年龄</th>
 				<th field="area" formatter="formaterArea" align="center" width="20%" >随访人员所属地区</th>
-				<th field="sflx" align="center" width="8%" formatter="esite.convertSflx" parentId="sflx">身份类型</th>
+				<!-- <th field="sflx" align="center" width="8%" formatter="esite.convertSflx" parentId="sflx">身份类型</th> -->
 				<th field="modelingStatus" align="center" width="8%" formatter="esite.convertJmzt" parentId="sflx">建模状态</th>
 				<!-- <th field="type" align="center" width="8%" formatter="esite.convertLnrlb" parentId="lnrlb" >人员状态</th> -->
 			</tr>

@@ -56,6 +56,18 @@ function copyIdCard() {
 						</td>
 					</tr>
 					<tr>
+						<td width="20%" class="right">基线队列编号</td>
+						<td width="30%"><input data-options="required:true,validType:['blankSpace','length[14,17]']" class="easyui-textbox" name="baseQueueCode" id="baseQueueCode" value="${oldPerson.baseQueueCode}" /></td>
+						<td width="20%" class="right">基线调查时间</td>
+						<td width="30%"><input data-options="required:true" class="easyui-datetimebox" name="baseQueueTime" id="baseQueueTime" value="${oldPerson.baseQueueTime}" /></td>
+					</tr>
+					<tr>
+						<td width="20%" class="right">基线队列住址</td>
+						<td colspan="3">
+							<input class="easyui-textbox" data-options="validType:['blankSpace'],width:'95%',height:'60px'" multiline="true"  name="baseQueueAddress" id="baseQueueAddress" value="${oldPerson.baseQueueAddress}"/>
+						</td>
+					</tr>
+					<tr>
 						<td width="20%" class="right">所属民族</td>
 						<td>
 							<input value="${oldPerson.nationality }" class="easyui-combobox" name="nationality" id=nationality
