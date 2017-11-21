@@ -142,6 +142,7 @@
 	   		</tr>
    		</table>
    	</fieldset>
+   	<!--
    	<fieldset>
    		<legend>检测结果分析</legend>
    		<table  class="tableStyle">
@@ -171,10 +172,12 @@
    			</tr>
    		</table>
    	</fieldset>
+   	-->
    	<fieldset>
    		<legend>心电图</legend>
    		<img src="<c:url value="/health/report/ecg.do?healthResultId=${healthResult.id }"/>"/>
    	</fieldset>
+   	<!--
    	<fieldset>
    		<legend>健康小贴士</legend>
    		<table  class="tableStyle">
@@ -200,5 +203,6 @@
    			</tr>
    		</table>
    	</fieldset>
+   	-->
   </body>
 </html>
