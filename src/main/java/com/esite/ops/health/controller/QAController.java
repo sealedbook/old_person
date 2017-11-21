@@ -39,8 +39,8 @@ public class QAController {
         PostMethod postMethod = new PostMethod(requestURL);
 
         postMethod.addParameter("authMethod", "Authdb");
-        postMethod.addParameter("user", "exporter");
-        postMethod.addParameter("password", "taizhouzaq12wsxcde34rfv");
+        postMethod.addParameter("user", SystemConfigUtil.fetchConfig().getProperty("qa.login.username"));
+        postMethod.addParameter("password", SystemConfigUtil.fetchConfig().getProperty("qa.login.password"));
         postMethod.addParameter("action", "login");
         postMethod.addParameter("login_submit", "login");
         postMethod.addParameter("loginlang", "default");
