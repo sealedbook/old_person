@@ -63,29 +63,19 @@
 	   			<td width="15%" class="right">家庭住址</td>
 	   			<td colspan="3">${oldPerson.homeAddress}</td>
 	   		</tr>
-	   		<tr>
-				<td width="15%" class="right">人员状态</td>
-				<td><code2name:dictionary code="${oldPerson.type}" parentId="lnrlb"/></td>
-	   			<td width="15%" class="right">退休日期</td>
-	   			<td><fmt:formatDate value="${oldPerson.txrq}" pattern="yyyy-MM-dd"/></td>
-	   		</tr>
-	   		<tr>
-	   			<td width="15%" class="right">工作单位</td>
-	   			<td colspan="3">${oldPerson.workUnit}</td>
-	   		</tr>
 	   	</table>
  	</fieldset>
    	<fieldset>
-   		<legend>人员认证信息</legend>
+   		<legend>体检信息</legend>
    		<table class="tableStyle">
    			<tr>
-	   			<td width="15%" class="right">认证时间</td>
+	   			<td width="15%" class="right">体检时间</td>
 	   			<td width="35%">
 	   				<fmt:formatDate value="${health.beginDateTime}" pattern="yyyy-MM-dd"/>
 	   				至
 	   				<fmt:formatDate value="${health.endDateTime}" pattern="yyyy-MM-dd"/>
 	   			</td>
-	   			<td width="15%" class="right">认证人</td>
+	   			<td width="15%" class="right">体检人</td>
 	   			<td>${operator.name }</td>
 	   		</tr>
 	   		<tr>
