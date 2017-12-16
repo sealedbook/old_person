@@ -266,14 +266,14 @@
             <id>TAIZHOU-PRODUCT</id>
             <properties>
                 <env>TAIZHOU-PRODUCT</env>
-                <package.target>op-product</package.target>
+                <package.target>taizhou-prod</package.target>
             </properties>
         </profile>
         <profile>
             <id>SHANGHAI-TEST</id>
             <properties>
                 <env>SHANGHAI-TEST</env>
-                <package.target>op-product</package.target>
+                <package.target>shanghai-test</package.target>
             </properties>
         </profile>
         <profile>
