@@ -4,6 +4,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import com.esite.framework.core.factory.WebApplicationContextUtil;
+import com.esite.framework.dictionary.entity.DictionaryEntity;
+import com.esite.framework.dictionary.service.DictionaryService;
 import com.esite.ops.oldperson.entity.OldPersonEntity;
 import com.esite.ops.ws.enums.OldPersonType;
 import com.esite.ops.ws.enums.PersonSex;
@@ -80,6 +83,12 @@ public class DownloadOldPersonInfoVO implements java.io.Serializable {
 	 * 体检总次数,预计算的值
 	 */
 	private int healthCount;
+
+	/** 基线队列访问时间 */
+	private long baseQueueTime;
+
+	/** 民族 */
+	private String nationality;
 	
 	public DownloadOldPersonInfoVO(OldPersonEntity oldPersonEntity) {
 		this.area = oldPersonEntity.getArea().getName();
@@ -91,6 +100,17 @@ public class DownloadOldPersonInfoVO implements java.io.Serializable {
 		this.socialNumber = oldPersonEntity.getSocialNumber();
 		this.nameSpell = oldPersonEntity.getNameSpell();
 		this.type = OldPersonType.parse(oldPersonEntity.getType() + "");
+		Date baseQueuTime = oldPersonEntity.getBaseQueueTime();
+		if (null != baseQueuTime) {
+			baseQueueTime = baseQueuTime.getTime();
+		}
+
+		DictionaryService dictionaryService = (DictionaryService) WebApplicationContextUtil.getBean("dictionaryService");
+		DictionaryEntity dic = dictionaryService.getDictionaryByParentIdAndCode("nationality", oldPersonEntity.getNationality());
+		if (null != dic) {
+			nationality = dic.getDicName();
+		}
+
 		this.baseQueueCode = oldPersonEntity.getBaseQueueCode();
 		this.baseQueueAddress = oldPersonEntity.getBaseQueueAddress();
 		this.healthCount = oldPersonEntity.getHealthCount() + 1;
@@ -203,6 +223,22 @@ public class DownloadOldPersonInfoVO implements java.io.Serializable {
 		this.surveyCode = surveyCode;
 	}
 
+	public long getBaseQueueTime() {
+		return baseQueueTime;
+	}
+
+	public void setBaseQueueTime(long baseQueueTime) {
+		this.baseQueueTime = baseQueueTime;
+	}
+
+	public String getNationality() {
+		return nationality;
+	}
+
+	public void setNationality(String nationality) {
+		this.nationality = nationality;
+	}
+
 	@Override
 	public String toString() {
 		final StringBuilder sb = new StringBuilder("DownloadOldPersonInfoVO{");
@@ -219,6 +255,8 @@ public class DownloadOldPersonInfoVO implements java.io.Serializable {
 		sb.append(", baseQueueAddress='").append(baseQueueAddress).append('\'');
 		sb.append(", surveyCode='").append(surveyCode).append('\'');
 		sb.append(", healthCount=").append(healthCount);
+		sb.append(", baseQueueTime=").append(baseQueueTime);
+		sb.append(", nationality='").append(nationality).append('\'');
 		sb.append('}');
 		return sb.toString();
 	}

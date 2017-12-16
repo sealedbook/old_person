@@ -23,6 +23,7 @@ import org.slf4j.MDC;
 import org.springframework.data.domain.Page;
 
 import com.esite.framework.core.factory.WebApplicationContextUtil;
+import com.esite.framework.dictionary.service.DictionaryService;
 import com.esite.framework.user.entity.User;
 import com.esite.framework.util.JsonConverter;
 import com.esite.framework.util.PagerRequest;

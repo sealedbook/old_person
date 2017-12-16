@@ -40,6 +40,7 @@ import com.esite.framework.organize.entity.OrganizeEntity;
 import com.esite.framework.organize.entity.OrganizeViewEntity;
 import com.esite.framework.organize.service.impl.OrganizeService;
 import com.esite.framework.security.entity.Customer;
+import com.esite.framework.util.BaseQueueCodeUtil;
 import com.esite.framework.util.ChineseHelper;
 import com.esite.framework.util.IdentityCardHelper;
 import com.esite.framework.util.JpaLikeQueryHelper;
@@ -204,6 +205,12 @@ public class OldPersonService {
 
             /** 基线队列编号处理 */
             String convertBaseCode = oldPerson.getBaseQueueCode();
+            if (!StringUtils.hasText(convertBaseCode)) {
+                throw new IllegalArgumentException("请输入基线队列编号");
+            }
+            if (!BaseQueueCodeUtil.isRight(convertBaseCode)) {
+                throw new IllegalArgumentException("请输入正确的基线队列编号");
+            }
             convertBaseCode = convertBaseCode.substring(2);
             convertBaseCode = convertBaseCode.substring(0, convertBaseCode.indexOf("WJ"));
             oldPerson.setConvertBaseCode(convertBaseCode);
@@ -215,6 +222,8 @@ public class OldPersonService {
             //记录操作记录,customer
             oldPersonOperationLogService.addLog(oldPerson, customer);
             return oldPerson;
+        } catch (IllegalArgumentException e) {
+            throw e;
         } catch (JpaSystemException e) {
             throw new IllegalArgumentException("身份证号【" + oldPerson.getIdCard() + "】或基线编号【" + oldPerson.getBaseQueueCode() + "】的随访人员已经存在");
         } catch (BadHanyuPinyinOutputFormatCombination e) {
@@ -339,6 +348,9 @@ public class OldPersonService {
                     int columnIndex = 0;
                     if (null == row.get(columnIndex) || row.get(columnIndex).length() <= 0) {
                         simpleErrorMessage.append("Excel文件中第").append(i + 1).append("行,【基线队列编号】为空.");
+                    }
+                    if (!BaseQueueCodeUtil.isRight(row.get(columnIndex))) {
+                        simpleErrorMessage.append("Excel文件中第").append(i + 1).append("行,【基线队列编号】格式错误.");
                     }
                     oldPersonEntity.setBaseQueueCode(row.get(columnIndex));
 
