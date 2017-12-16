@@ -15,7 +15,7 @@ import org.springframework.util.StringUtils;
  */
 public class BaseQueueCodeUtil {
 
-    private static final Pattern BASE_CODE_PATTERN = Pattern.compile("^[0-9]{11}WJ[0-9]*$");
+    private static final Pattern BASE_CODE_PATTERN = Pattern.compile("^[0-9]{2}[0-9A-Z]{4}[0-9]{5}WJ[0-9]*$");
 
     public static boolean isRight(String baseCode) {
         if (!StringUtils.hasText(baseCode)) {
