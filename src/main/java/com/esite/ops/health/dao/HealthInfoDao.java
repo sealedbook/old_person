@@ -49,7 +49,10 @@ public interface HealthInfoDao extends CrudRepository<HealthInfoEntity, String> 
 
 	@Query("from HealthInfoEntity where oldPerson.id=?1 order by insertDateTime")
 	public List<HealthInfoEntity> queryByOldPersonId(String oldPersonId);
-	
+
+	@Query("from HealthInfoEntity where oldPerson.id=?1 and insertDateTime<?2 order by insertDateTime desc")
+	public List<HealthInfoEntity> queryLastHealthByOldPersonId(String oldPersonId, Date lastHealthDateTime);
+
 	@Query("from HealthInfoEntity where cycle.id=?1")
 	public List<HealthInfoEntity> queryByCycleId(String cycleId);
 	

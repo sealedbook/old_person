@@ -153,7 +153,7 @@
 					return;
 				}
 				var url = '<c:url value="/health/verify/"/>' + rowData.id + '/view.do?verifyState='+$("#verifyState").combobox('getValue') + '&operatorId=' + $('#operatorId').combogrid('getValue');
-				top.openDialog({onClose:function(){$('#dg').datagrid();},width:'60%',height:'100%',title:'随访人员指纹与脸部照片信息审核',url:url});
+				top.openDialog({onClose:function(){$('#dg').datagrid();},width:'60%',height:'90%',title:'随访人员指纹与脸部照片信息审核',url:url});
 			}
 		});
 	});

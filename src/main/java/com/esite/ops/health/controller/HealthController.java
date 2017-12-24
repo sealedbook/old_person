@@ -120,6 +120,14 @@ public class HealthController {
 				List<HealthPhotoEntity> firstHealthPhotoCollection = healthPhotoService.getPhotoCollectionByHealthId(firstHealthInfo.getId());
 				model.addAttribute("firstHealthPhotoCollection", firstHealthPhotoCollection);
 			}
+
+			HealthInfoEntity lastHealthInfo = this.healthInfoService.getLastHealthByOldPersonId(oldPerson.getId(), healthInfo.getInsertDateTime());
+			if(null == lastHealthInfo) {
+				model.addAttribute("lastHealthPhotoCollection", healthPhotoCollection);
+			} else {
+				List<HealthPhotoEntity> lastHealthPhotoCollection = healthPhotoService.getPhotoCollectionByHealthId(lastHealthInfo.getId());
+				model.addAttribute("lastHealthPhotoCollection", lastHealthPhotoCollection);
+			}
 		}
 		model.addAttribute("operatorId", operatorId);
 		model.addAttribute("verifyState", verifyState);

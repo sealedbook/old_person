@@ -458,6 +458,15 @@ public class HealthInfoService {
         return oldPersonHealthInfoList.get(0);
     }
 
+    public HealthInfoEntity getLastHealthByOldPersonId(String oldPersonId, Date lastHealthDateTime) {
+        List<HealthInfoEntity> oldPersonHealthInfoList = this.healthInfoDao
+            .queryLastHealthByOldPersonId(oldPersonId, lastHealthDateTime);
+        if (null == oldPersonHealthInfoList || oldPersonHealthInfoList.size() <= 0) {
+            return null;
+        }
+        return oldPersonHealthInfoList.get(0);
+    }
+
     public List<HealthInfoEntity> getAllHealthInfoByCycleId(String cycleId) {
         return this.healthInfoDao.queryByCycleId(cycleId);
     }

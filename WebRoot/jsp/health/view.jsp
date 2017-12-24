@@ -54,6 +54,18 @@ $(function(){
   	 			</c:otherwise>
   	 		</c:choose>
 		</div>
+		<table align="center">
+			<tr>
+				<td>
+					<fieldset>
+						<legend>手持身份证半身照-${oldPersonName }-${oldPersonIdCard }</legend>
+						<img style="cursor:pointer;" width="300" src="<c:url value="/health/face/photo.do?id=${lastHealthPhotoCollection[3].id}"/>">
+						<img style="cursor:pointer;" width="300" src="<c:url value="/health/face/photo.do?id=${healthPhotoCollection[3].id}"/>">
+					</fieldset>
+				</td>
+			</tr>
+		</table>
+		<!--
  		<table align="center">
  			<tr>
  				<td>
@@ -89,6 +101,7 @@ $(function(){
  				</td>
  			</tr>
  		</table>
+ 		-->
  		<div style="text-align:center;padding:5px">
  			<c:choose>
   	 			<c:when test="${!empty(nextHealthId)}">
