@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +26,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import com.esite.framework.security.entity.Customer;
@@ -196,6 +199,7 @@ public class HealthInfoService {
 
         //获得终端上传的人像照片
         List<UpLoadOldPersonPhotoVO> photoCollection = upLoadDataVO.getPhotoCollection();
+        sortPhotoCollection(photoCollection);
         for (UpLoadOldPersonPhotoVO personPhotoVO : photoCollection) {
             if (null == personPhotoVO) {
                 throw new IllegalArgumentException("随访人员认证对象-照片信息【personPhotoVO】是空指针.");
@@ -208,6 +212,10 @@ public class HealthInfoService {
             this.healthPhotoDao.save(healthPhotoEntity);
         }
         writeFile(healthInfoEntity, oldPerson, upLoadDataVO.getOldPersonHealthVO());
+    }
+
+    private void sortPhotoCollection(List<UpLoadOldPersonPhotoVO> photoCollection) {
+        Collections.sort(photoCollection);
     }
 
     private void writeFile(HealthInfoEntity healthInfoEntity, OldPersonEntity oldPerson,

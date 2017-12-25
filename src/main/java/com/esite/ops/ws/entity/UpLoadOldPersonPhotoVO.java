@@ -1,8 +1,10 @@
 package com.esite.ops.ws.entity;
 
+import javax.persistence.criteria.CriteriaBuilder.In;
+
 import com.esite.ops.ws.enums.PhotoPositionEnum;
 
-public class UpLoadOldPersonPhotoVO implements java.io.Serializable {
+public class UpLoadOldPersonPhotoVO implements java.io.Serializable, Comparable<UpLoadOldPersonPhotoVO> {
 	
 	/**
 	 * 
@@ -31,5 +33,17 @@ public class UpLoadOldPersonPhotoVO implements java.io.Serializable {
 	public void setPosition(PhotoPositionEnum position) {
 		this.position = position;
 	}
-	
+
+	@Override
+	public int compareTo(UpLoadOldPersonPhotoVO upLoadOldPersonPhotoVO) {
+		if (null == upLoadOldPersonPhotoVO) {
+			return 0;
+		}
+		if (null == upLoadOldPersonPhotoVO.getPosition()) {
+			return 0;
+		}
+		int comparePosition = Integer.parseInt(upLoadOldPersonPhotoVO.getPosition().getCode());
+		int thisPosition = Integer.parseInt(this.position.getCode());
+		return thisPosition - comparePosition;
+	}
 }
