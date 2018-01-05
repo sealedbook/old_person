@@ -109,7 +109,7 @@
 			<a class="easyui-linkbutton" iconCls="icon-search" onclick="query()">查询</a>
 			<a class="easyui-linkbutton" iconCls="icon-reload" onclick="reset()">重置</a>
 		</form>
-		<a href="#" title="下载随访人员报告(Word文档)" class="easyui-linkbutton" iconCls="icon-word" plain="true" onclick="downReportWord();">认证报告-个人(Word)</a>
+		<a href="#" title="下载随访人员报告(Word文档)" class="easyui-linkbutton" iconCls="icon-acrobat" plain="true" onclick="downReportWord();">认证报告-个人(PDF)</a>
 		<a href="#" title="批量下载随访人员报告(Word文档)" class="easyui-linkbutton" iconCls="icon-word" plain="true" onclick="downReportCollectionWord();">认证报告-批量(Word)</a>
 		<!-- <a href="#" title="下载随访人员报告(PDF文档)" class="easyui-linkbutton" iconCls="icon-acrobat" plain="true" onclick="$.messager.alert('系统提示','该功能还没实现.');">认证报告(PDF)</a> -->
 		<!--

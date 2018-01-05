@@ -21,6 +21,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.imageio.ImageIO;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -67,8 +68,13 @@ import com.esite.ops.mission.entity.CycleEntity;
 import com.esite.ops.mission.service.impl.CycleService;
 import com.esite.ops.oldperson.entity.OldPersonEntity;
 import com.esite.ops.operator.entity.OperatorEntity;
-import com.lowagie.text.DocWriter;
-import com.lowagie.text.pdf.PdfWriter;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.pdf.AcroFields;
+import com.itextpdf.text.pdf.AcroFields.FieldPosition;
+import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.pdf.PdfContentByte;
+import com.itextpdf.text.pdf.PdfReader;
+import com.itextpdf.text.pdf.PdfStamper;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -643,6 +649,268 @@ public class HealthReportController {
         return data;
     }
 
+//    @RequestMapping("/{healthId}/download")
+//    public void exportWord(@PathVariable String healthId, HttpServletResponse response) throws IOException {
+//
+//        HealthInfoEntity health = healthInfoService.getHealth(healthId);
+//        OperatorEntity operator = health.getOperator();
+//        String operatorName = "";
+//        if (null != operator) {
+//            operatorName = operator.getName();
+//        }
+//        OldPersonEntity oldPerson = health.getOldPerson();
+//        if (null == oldPerson) {
+//            return;
+//        }
+//
+//        Map<String, String> otherInfo = fetchPersonOtherInfo(health.getRandomRequestCode());
+//
+//        int healthNumber = healthInfoService.getHealthNumberByOldPerson(healthId, oldPerson.getId());
+//
+//        response.setCharacterEncoding("UTF-8");
+//        String fileNameFormat = "随访人员【%1$s】%2$s认证报告.doc";
+//        String fileName = String.format(fileNameFormat, oldPerson.getName(),
+//            new SimpleDateFormat("yyyy-MM-dd").format(health.getBeginDateTime()));
+//        response
+//            .addHeader("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes(), "ISO-8859-1"));
+//        //
+//        Configuration configuration = new Configuration();
+//        configuration.setDefaultEncoding("UTF-8");
+//        Map<String, Object> dataMap = new HashMap<String, Object>();
+//        dataMap.put("healthNumber", healthNumber);
+//
+//        if (null != otherInfo && null != otherInfo.get("height")) {
+//            dataMap.put("height", otherInfo.get("height") + "cm");
+//        } else {
+//            dataMap.put("height", "-");
+//        }
+//
+//        if (null != otherInfo && null != otherInfo.get("weight")) {
+//            dataMap.put("weight", otherInfo.get("weight") + "kg");
+//        } else {
+//            dataMap.put("weight", "-");
+//        }
+//
+//        if (null != otherInfo && null != otherInfo.get("blood")) {
+//            dataMap.put("blood", otherInfo.get("blood") + "mmol/L");
+//        } else {
+//            dataMap.put("blood", "-");
+//        }
+//
+//        SysFileInfo sysFileInfo = fileService.findByFileKey(oldPerson.getPhotoKey());
+//        byte[] photo = sysFileInfo.getContent();
+//        if (null != photo) {
+//            String photoBase64Str = Base64.encodeBase64String(photo);
+//            dataMap.put("oldPersonPhoto", photoBase64Str);
+//        } else {
+//            dataMap.put("oldPersonPhoto", "");
+//        }
+//
+//        dataMap.put("oldPersonName", oldPerson.getName());
+//        DictionaryEntity dictionarySex = dictionaryService
+//            .getDictionaryByParentIdAndCode("xb", oldPerson.getSex() + "");
+//        if (null != dictionarySex) {
+//            dataMap.put("oldPersonSex", dictionarySex.getDicName());
+//        } else {
+//            dataMap.put("oldPersonSex", "未知");
+//        }
+//        dataMap.put("oldPersonSocialNumber", oldPerson.getSocialNumber());
+//        dataMap.put("oldPersonIdCard", oldPerson.getIdCard());
+//
+//        DictionaryEntity dictionarySendStatus = dictionaryService
+//            .getDictionaryByParentIdAndCode("sendStatus", oldPerson.getSocialStatus());
+//        if (null != dictionarySendStatus) {
+//            dataMap.put("oldPersonSocialStatus", dictionarySendStatus.getDicName());
+//        } else {
+//            dataMap.put("oldPersonSocialStatus", "未知");
+//        }
+//
+//        DictionaryEntity dictionarySflx = dictionaryService.getDictionaryByParentIdAndCode("sflx", oldPerson.getSflx());
+//        if (null != dictionarySflx) {
+//            dataMap.put("oldPersonSflx", dictionarySflx.getDicName());
+//        } else {
+//            dataMap.put("oldPersonSflx", "未知");
+//        }
+//        String workUnit = oldPerson.getWorkUnit();
+//        if (StringHelper.isEmpty(workUnit)) {
+//            workUnit = "";
+//        }
+//        dataMap.put("oldPersonWorkUnit", workUnit);
+//        if (null == oldPerson.getJnsbrq()) {
+//            dataMap.put("oldPersonJnsbrq", "");
+//        } else {
+//            dataMap.put("oldPersonJnsbrq", new SimpleDateFormat("yyyy-MM-dd").format(oldPerson.getJnsbrq()));
+//        }
+//        if (null == oldPerson.getTxrq()) {
+//            dataMap.put("oldPersonTxrq", "");
+//        } else {
+//            dataMap.put("oldPersonTxrq", new SimpleDateFormat("yyyy-MM-dd").format(oldPerson.getTxrq()));
+//        }
+//        if (null == oldPerson.getLqsbrq()) {
+//            dataMap.put("oldPersonLqsbrq", "");
+//        } else {
+//            dataMap.put("oldPersonLqsbrq", new SimpleDateFormat("yyyy-MM-dd").format(oldPerson.getLqsbrq()));
+//        }
+//        String homeAddres = oldPerson.getHomeAddress();
+//        if (StringHelper.isEmpty(homeAddres)) {
+//            homeAddres = "";
+//        }
+//        dataMap.put("oldPersonHomeAddress", homeAddres);
+//        String phoneNumber = oldPerson.getPhoneNumber();
+//        if (StringHelper.isEmpty(phoneNumber)) {
+//            phoneNumber = "";
+//        }
+//        dataMap.put("oldPersonPhoneNumber", phoneNumber);
+//
+//        DictionaryEntity dictionaryEntity = dictionaryService
+//            .getDictionaryByParentIdAndCode("lnrlb", "" + oldPerson.getType());
+//        dataMap.put("oldPersonType", dictionaryEntity.getDicName());
+//        dataMap.put("oldPersonAge", oldPerson.getAge());
+//        dataMap.put("oldPersonArea", oldPerson.getArea().getName());
+//
+//        dataMap.put("operatorName", operatorName);
+//
+//        if (null != health.getBeginDateTime()) {
+//            dataMap.put("healthBeginTime", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(health.getBeginDateTime()));
+//        } else {
+//            dataMap.put("healthBeginTime", "");
+//        }
+//        dataMap.put("healthEndTime", health.getEndDateTime());
+//
+//        HealthResultEntity healthResultEntity = health.getHealthResult();
+//
+//        byte[] ecg = healthResultEntity.getEcgData();
+//        if (null == ecg) {
+//            System.out.println("心电图二进制数据是空的.oldPersonId:" + oldPerson.getId() + ".healthId:" + healthId);
+////        	dataMap.put("ecgPhoto", "");
+//        } else {
+//            BufferedImage b = Rotate(ImageIO.read(new ByteArrayInputStream(ecg)), 0);
+//            if (null != b) {
+//                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+//                ImageIO.write(b, "png", byteArrayOutputStream);
+//                ecg = byteArrayOutputStream.toByteArray();
+//                if (null != ecg) {
+//                    String ecgBase64Str = Base64.encodeBase64String(ecg);
+//                    dataMap.put("ecgPhoto", ecgBase64Str);
+//                } else {
+////                	dataMap.put("ecgPhoto", "");
+//                }
+//            } else {
+////        		dataMap.put("ecgPhoto", "");
+//            }
+//        }
+//        if (null == healthResultEntity) {
+//            dataMap.put("healthResult", "未检测");
+//            //心率结果 xljg
+//            dataMap.put("xljg", HealthResultHelper.formaterHealthValue(0));
+//            dataMap.put("xljg_jg", HealthResult.UNKNOW.getName());
+//            //呼吸率结果 hxljg
+//            dataMap.put("hxljg", HealthResultHelper.formaterHealthValue(0));
+//            dataMap.put("hxljg_jg", HealthResult.UNKNOW.getName());
+//            //血氧结果 xyjg
+//            dataMap.put("xyjg", HealthResultHelper.formaterHealthValue(0));
+//            dataMap.put("xyjg_jg", HealthResult.UNKNOW.getName());
+//            //脉率结果 mljg
+//            dataMap.put("mljg", HealthResultHelper.formaterHealthValue(0));
+//            dataMap.put("mljg_jg", HealthResult.UNKNOW.getName());
+//            //收缩压结果ssyjg
+//            dataMap.put("ssyjg", HealthResultHelper.formaterHealthValue(0));
+//            dataMap.put("ssyjg_jg", HealthResult.UNKNOW.getName());
+//            //舒张压结果szyjg
+//            dataMap.put("szyjg", HealthResultHelper.formaterHealthValue(0));
+//            dataMap.put("szyjg_jg", HealthResult.UNKNOW.getName());
+//
+//            dataMap.put("xljgfx", "");
+//            dataMap.put("hxljgfx", "");
+//            dataMap.put("xyjgfx", "");
+//            dataMap.put("mljgfx", "");
+//            dataMap.put("ssyjgfx", "");
+//            dataMap.put("szyjgfx", "");
+//
+//            dataMap.put("xljgtips", "");
+//            dataMap.put("hxljgtips", "");
+//            dataMap.put("xyjgtips", "");
+//            dataMap.put("ssyjgtips", "");
+//            dataMap.put("szyjgtips", "");
+//        } else {
+//            dataMap.put("healthResult", "");
+//            //心率结果 xljg
+//            dataMap.put("xljg", healthResultEntity.getHeartRateToString());
+//            dataMap.put("xljg_jg", HealthResultHelper.getHeartRateResult(healthResultEntity.getHeartRate()));
+//            //呼吸率结果 hxljg
+//            dataMap.put("hxljg", healthResultEntity.getRespiratoryRateToString());
+//            dataMap
+//                .put("hxljg_jg", HealthResultHelper.getRespiratoryRateResult(healthResultEntity.getRespiratoryRate()));
+//            //血氧结果 xyjg
+//            dataMap.put("xyjg", healthResultEntity.getBloodOxygenToString());
+//            dataMap.put("xyjg_jg", HealthResultHelper.getBloodOxygenResult(healthResultEntity.getBloodOxygen()));
+//            //脉率结果 mljg
+//            dataMap.put("mljg", healthResultEntity.getPulseRateToString());
+//            dataMap.put("mljg_jg", HealthResultHelper.getPulseRateResult(healthResultEntity.getPulseRate()));
+//            //收缩压结果ssyjg
+//            dataMap.put("ssyjg", healthResultEntity.getSystolicPressureToString());
+//            dataMap.put("ssyjg_jg",
+//                HealthResultHelper.getSystolicPressureResult(healthResultEntity.getSystolicPressure()));
+//            //舒张压结果szyjg
+//            dataMap.put("szyjg", healthResultEntity.getDiastolicPressureToString());
+//            dataMap.put("szyjg_jg",
+//                HealthResultHelper.getDiastolicPressureResult(healthResultEntity.getDiastolicPressure()));
+//
+//            //心率结果分析 xljg
+//            dataMap.put("xljgfx", HealthResultHelper.getHeartRateResultAnalyze(healthResultEntity.getHeartRate()));
+//            //呼吸率结果分析  hxljg
+//            dataMap.put("hxljgfx",
+//                HealthResultHelper.getRespiratoryRateResultAnalyze(healthResultEntity.getRespiratoryRate()));
+//            //血氧结果分析 xyjg
+//            dataMap.put("xyjgfx", HealthResultHelper.getBloodOxygenResultAnalyze(healthResultEntity.getBloodOxygen()));
+//            //脉率结果分析 mljg
+//            dataMap.put("mljgfx", HealthResultHelper.getPulseRateResultAnalyze(healthResultEntity.getPulseRate()));
+//            //收缩压结果分析ssyjg
+//            dataMap.put("ssyjgfx",
+//                HealthResultHelper.getSystolicPressureResultAnalyze(healthResultEntity.getSystolicPressure()));
+//            //舒张压结果分析szyjg
+//            dataMap.put("szyjgfx",
+//                HealthResultHelper.getDiastolicPressureResultAnalyze(healthResultEntity.getDiastolicPressure()));
+//
+//            //心率结果小贴士
+//            dataMap.put("xljgtips", HealthResultHelper.getHeartRateResultTips(healthResultEntity.getHeartRate()));
+//            //呼吸率结果小贴士
+//            dataMap.put("hxljgtips",
+//                HealthResultHelper.getRespiratoryRateResultTips(healthResultEntity.getRespiratoryRate()));
+//            //血氧结果小贴士
+//            dataMap.put("xyjgtips", HealthResultHelper.getBloodOxygenResultTips(healthResultEntity.getBloodOxygen()));
+//            //血压结果小贴士
+//            dataMap.put("ssyjgtips",
+//                HealthResultHelper.getSystolicPressureResultTips(healthResultEntity.getSystolicPressure()));
+//            dataMap.put("szyjgtips",
+//                HealthResultHelper.getDiastolicPressureResultTips(healthResultEntity.getDiastolicPressure()));
+//        }
+//
+//        DictionaryEntity verifyStatus = dictionaryService
+//            .getDictionaryByParentIdAndCode("fingerVerifyState", health.getFingerVerifyState());
+//        dataMap.put("fingerprintVerifyStatus", verifyStatus.getDicName());
+//        dataMap.put("photoVerifyStatus", verifyStatus.getDicName());
+//
+//        String filePath = FileService.class.getClassLoader().getResource("template").getPath();
+//        configuration.setDirectoryForTemplateLoading(new File(filePath));  //FTL文件所存在的位置
+//        Template t = null;
+//        try {
+//            t = configuration.getTemplate("OldPersonReportTemplate.ftl"); //文件名
+//            //t = configuration.getTemplate("test.xml"); //文件名
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        PrintWriter out = null;
+//        try {
+//            out = response.getWriter();
+//            t.process(dataMap, out);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } catch (TemplateException e) {
+//            e.printStackTrace();
+//        }
+//    }
+
     @RequestMapping("/{healthId}/download")
     public void exportWord(@PathVariable String healthId, HttpServletResponse response) throws IOException {
 
@@ -662,16 +930,14 @@ public class HealthReportController {
         int healthNumber = healthInfoService.getHealthNumberByOldPerson(healthId, oldPerson.getId());
 
         response.setCharacterEncoding("UTF-8");
-        String fileNameFormat = "随访人员【%1$s】%2$s认证报告.doc";
+        String fileNameFormat = "随访人员【%1$s】%2$s认证报告.pdf";
         String fileName = String.format(fileNameFormat, oldPerson.getName(),
             new SimpleDateFormat("yyyy-MM-dd").format(health.getBeginDateTime()));
         response
             .addHeader("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes(), "ISO-8859-1"));
         //
-        Configuration configuration = new Configuration();
-        configuration.setDefaultEncoding("UTF-8");
-        Map<String, Object> dataMap = new HashMap<String, Object>();
-        dataMap.put("healthNumber", healthNumber);
+        Map<String, String> dataMap = new HashMap<String, String>();
+        dataMap.put("healthNumber", String.valueOf(healthNumber));
 
         if (null != otherInfo && null != otherInfo.get("height")) {
             dataMap.put("height", otherInfo.get("height") + "cm");
@@ -693,12 +959,6 @@ public class HealthReportController {
 
         SysFileInfo sysFileInfo = fileService.findByFileKey(oldPerson.getPhotoKey());
         byte[] photo = sysFileInfo.getContent();
-        if (null != photo) {
-            String photoBase64Str = Base64.encodeBase64String(photo);
-            dataMap.put("oldPersonPhoto", photoBase64Str);
-        } else {
-            dataMap.put("oldPersonPhoto", "");
-        }
 
         dataMap.put("oldPersonName", oldPerson.getName());
         DictionaryEntity dictionarySex = dictionaryService
@@ -759,7 +1019,7 @@ public class HealthReportController {
         DictionaryEntity dictionaryEntity = dictionaryService
             .getDictionaryByParentIdAndCode("lnrlb", "" + oldPerson.getType());
         dataMap.put("oldPersonType", dictionaryEntity.getDicName());
-        dataMap.put("oldPersonAge", oldPerson.getAge());
+        dataMap.put("oldPersonAge", String.valueOf(oldPerson.getAge()));
         dataMap.put("oldPersonArea", oldPerson.getArea().getName());
 
         dataMap.put("operatorName", operatorName);
@@ -769,30 +1029,15 @@ public class HealthReportController {
         } else {
             dataMap.put("healthBeginTime", "");
         }
-        dataMap.put("healthEndTime", health.getEndDateTime());
+        dataMap.put("healthEndTime", health.getEndDateTime().toString());
 
         HealthResultEntity healthResultEntity = health.getHealthResult();
 
         byte[] ecg = healthResultEntity.getEcgData();
         if (null == ecg) {
             System.out.println("心电图二进制数据是空的.oldPersonId:" + oldPerson.getId() + ".healthId:" + healthId);
-//        	dataMap.put("ecgPhoto", "");
-        } else {
-            BufferedImage b = Rotate(ImageIO.read(new ByteArrayInputStream(ecg)), 0);
-            if (null != b) {
-                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                ImageIO.write(b, "png", byteArrayOutputStream);
-                ecg = byteArrayOutputStream.toByteArray();
-                if (null != ecg) {
-                    String ecgBase64Str = Base64.encodeBase64String(ecg);
-                    dataMap.put("ecgPhoto", ecgBase64Str);
-                } else {
-//                	dataMap.put("ecgPhoto", "");
-                }
-            } else {
-//        		dataMap.put("ecgPhoto", "");
-            }
         }
+
         if (null == healthResultEntity) {
             dataMap.put("healthResult", "未检测");
             //心率结果 xljg
@@ -886,22 +1131,81 @@ public class HealthReportController {
         dataMap.put("photoVerifyStatus", verifyStatus.getDicName());
 
         String filePath = FileService.class.getClassLoader().getResource("template").getPath();
-        configuration.setDirectoryForTemplateLoading(new File(filePath));  //FTL文件所存在的位置
-        Template t = null;
+        String pdfTempPath = "/opt/health_management/template/temp-release.pdf";
+        LOG.info("pdfTempPath:[{}]", pdfTempPath);
+        PdfReader reader = new PdfReader(pdfTempPath);
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+
+        ServletOutputStream out = null;
+        PdfStamper ps = null;
         try {
-            t = configuration.getTemplate("OldPersonReportTemplate.ftl"); //文件名
-            //t = configuration.getTemplate("test.xml"); //文件名
+            out = response.getOutputStream();
+            ps = new PdfStamper(reader, bos);
+            PdfContentByte under = ps.getUnderContent(1);
+
+            /* 使用中文字体 */
+            BaseFont bf = BaseFont.createFont("STSong-Light", "UniGB-UCS2-H", BaseFont.NOT_EMBEDDED);
+            ArrayList<BaseFont> fontList = new ArrayList<BaseFont>();
+            fontList.add(bf);
+
+            /* 取出报表模板中的所有字段 */
+            AcroFields fields = ps.getAcroFields();
+            fields.setSubstitutionFonts(fontList);
+            fillData(fields, dataMap);
+            fillImage(photo, ps, fields, "oldPersonPhoto");
+            fillImage(ecg, ps, fields, "ecgPhoto");
+
+            /* 必须要调用这个，否则文档不会生成的 */
+            ps.setFormFlattening(true);
+            ps.close();
+
+            out.write(bos.toByteArray());
+            out.flush();
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (DocumentException e) {
+            e.printStackTrace();
+        } finally {
+            if (null != ps) {
+                try {
+                    ps.close();
+                } catch (DocumentException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (null != out) {
+                out.close();
+            }
         }
-        PrintWriter out = null;
-        try {
-            out = response.getWriter();
-            t.process(dataMap, out);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (TemplateException e) {
-            e.printStackTrace();
+
+
+    }
+
+    private void fillImage(byte[] photo, PdfStamper ps, AcroFields fields, String fieldName) throws IOException, DocumentException {
+        PdfContentByte under;
+        if (null != photo) {
+            int pageNo = fields.getFieldPositions(fieldName).get(0).page;
+            under = ps.getOverContent(pageNo);
+
+            List<FieldPosition> oldPersonPhoto = fields.getFieldPositions(fieldName);
+            FieldPosition fieldPosition = oldPersonPhoto.get(0);
+
+            com.itextpdf.text.Rectangle position = fieldPosition.position;
+            com.itextpdf.text.Image image = com.itextpdf.text.Image.getInstance(photo);
+            image.scaleToFit(position.getWidth(), position.getHeight());
+
+            float x = position.getLeft();
+            float y = position.getBottom();
+            image.setAbsolutePosition(x, y);
+            under.addImage(image);
+        }
+    }
+
+    public static void fillData(AcroFields fields, Map<String, String> data)
+        throws IOException, DocumentException {
+        for (String key : data.keySet()) {
+            String value = data.get(key);
+            fields.setField(key, value); // 为字段赋值,注意字段名称是区分大小写的
         }
     }
 
