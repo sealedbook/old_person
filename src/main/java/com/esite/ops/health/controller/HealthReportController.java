@@ -9,13 +9,17 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -38,6 +42,7 @@ import jxl.write.WriteException;
 import jxl.write.biff.RowsExceededException;
 
 import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,13 +73,16 @@ import com.esite.ops.mission.entity.CycleEntity;
 import com.esite.ops.mission.service.impl.CycleService;
 import com.esite.ops.oldperson.entity.OldPersonEntity;
 import com.esite.ops.operator.entity.OperatorEntity;
+import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.AcroFields;
 import com.itextpdf.text.pdf.AcroFields.FieldPosition;
 import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfContentByte;
+import com.itextpdf.text.pdf.PdfImportedPage;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfStamper;
+import com.itextpdf.text.pdf.PdfWriter;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -349,6 +357,282 @@ public class HealthReportController {
         return "redirect:/health/report/manager.do";
     }
 
+//    @RequestMapping("/export/word")
+//    public String exportWord(String cycleId, HttpServletRequest request, HttpServletResponse response, Model model)
+//        throws IOException {
+//        CycleEntity cycleEntity = this.cycleService.getCycle(cycleId);
+//        List<HealthInfoEntity> healthInfoEntityCollection = this.healthInfoService.getAllHealthInfoByCycleId(cycleId);
+//        if (null == healthInfoEntityCollection || healthInfoEntityCollection.size() <= 0) {
+//            return "redirect:/health/report/manager.do";
+//        }
+//        String cycleBegin = new SimpleDateFormat("yyyy-MM-dd").format(cycleEntity.getCycleBegin());
+//        String cycleEnd = new SimpleDateFormat("yyyy-MM-dd").format(cycleEntity.getCycleEnd());
+//        String title = cycleBegin + "至" + cycleEnd + "人员身份认证汇总.doc";
+//
+//        response.setCharacterEncoding("UTF-8");
+//        String fileName = title;
+//        response
+//            .addHeader("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes(), "ISO-8859-1"));
+//
+//        Configuration configuration = new Configuration();
+//        configuration.setDefaultEncoding("UTF-8");
+//        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+//        int idx = 0;
+//        for (HealthInfoEntity health : healthInfoEntityCollection) {
+//            idx++;
+//            OperatorEntity operator = health.getOperator();
+//            String operatorName = "";
+//            if (null != operator) {
+//                operatorName = operator.getName();
+//            }
+//            OldPersonEntity oldPerson = health.getOldPerson();
+//            if (null == oldPerson) {
+//                continue;
+//            }
+//            int healthNumber = healthInfoService.getHealthNumberByOldPerson(health.getId(), oldPerson.getId());
+//
+//            Map<String, String> otherInfo = fetchPersonOtherInfo(health.getRandomRequestCode());
+//
+//
+//            Map<String, Object> dataMap = new HashMap<String, Object>();
+//            dataMap.put("healthNumber", healthNumber);
+//            if (null != otherInfo && null != otherInfo.get("height")) {
+//                dataMap.put("height", otherInfo.get("height") + "cm");
+//            } else {
+//                dataMap.put("height", "-");
+//            }
+//
+//            if (null != otherInfo && null != otherInfo.get("weight")) {
+//                dataMap.put("weight", otherInfo.get("weight") + "kg");
+//            } else {
+//                dataMap.put("weight", "-");
+//            }
+//
+//            if (null != otherInfo && null != otherInfo.get("blood")) {
+//                dataMap.put("blood", otherInfo.get("blood") + "mmol/L");
+//            } else {
+//                dataMap.put("blood", "-");
+//            }
+//
+//            SysFileInfo sysFileInfo = fileService.findByFileKey(oldPerson.getPhotoKey());
+//            byte[] photo = sysFileInfo.getContent();
+//            if (null != photo) {
+//                String photoBase64Str = Base64.encodeBase64String(photo);
+//                dataMap.put("oldPersonPhoto", photoBase64Str);
+//            } else {
+//                dataMap.put("oldPersonPhoto", "");
+//            }
+//            dataMap.put("idx", idx);
+//
+//            dataMap.put("oldPersonName", oldPerson.getName());
+//            DictionaryEntity dictionarySex = dictionaryService
+//                .getDictionaryByParentIdAndCode("xb", oldPerson.getSex() + "");
+//            if (null != dictionarySex) {
+//                dataMap.put("oldPersonSex", dictionarySex.getDicName());
+//            } else {
+//                dataMap.put("oldPersonSex", "未知");
+//            }
+//            dataMap.put("oldPersonSocialNumber", oldPerson.getSocialNumber());
+//            dataMap.put("oldPersonIdCard", oldPerson.getIdCard());
+//
+//            DictionaryEntity dictionarySendStatus = dictionaryService
+//                .getDictionaryByParentIdAndCode("sendStatus", oldPerson.getSocialStatus());
+//            if (null != dictionarySendStatus) {
+//                dataMap.put("oldPersonSocialStatus", dictionarySendStatus.getDicName());
+//            } else {
+//                dataMap.put("oldPersonSocialStatus", "未知");
+//            }
+//
+//            DictionaryEntity dictionarySflx = dictionaryService
+//                .getDictionaryByParentIdAndCode("sflx", oldPerson.getSflx());
+//            if (null != dictionarySflx) {
+//                dataMap.put("oldPersonSflx", dictionarySflx.getDicName());
+//            } else {
+//                dataMap.put("oldPersonSflx", "未知");
+//            }
+//            String workUnit = oldPerson.getWorkUnit();
+//            if (StringHelper.isEmpty(workUnit)) {
+//                workUnit = "";
+//            }
+//            dataMap.put("oldPersonWorkUnit", workUnit);
+//            if (null == oldPerson.getJnsbrq()) {
+//                dataMap.put("oldPersonJnsbrq", "");
+//            } else {
+//                dataMap.put("oldPersonJnsbrq", new SimpleDateFormat("yyyy-MM-dd").format(oldPerson.getJnsbrq()));
+//            }
+//            if (null == oldPerson.getTxrq()) {
+//                dataMap.put("oldPersonTxrq", "");
+//            } else {
+//                dataMap.put("oldPersonTxrq", new SimpleDateFormat("yyyy-MM-dd").format(oldPerson.getTxrq()));
+//            }
+//            if (null == oldPerson.getLqsbrq()) {
+//                dataMap.put("oldPersonLqsbrq", "");
+//            } else {
+//                dataMap.put("oldPersonLqsbrq", new SimpleDateFormat("yyyy-MM-dd").format(oldPerson.getLqsbrq()));
+//            }
+//            String homeAddres = oldPerson.getHomeAddress();
+//            if (StringHelper.isEmpty(homeAddres)) {
+//                homeAddres = "";
+//            }
+//            dataMap.put("oldPersonHomeAddress", homeAddres);
+//            String phoneNumber = oldPerson.getPhoneNumber();
+//            if (StringHelper.isEmpty(phoneNumber)) {
+//                phoneNumber = "";
+//            }
+//            dataMap.put("oldPersonPhoneNumber", phoneNumber);
+//
+//            DictionaryEntity dictionaryEntity = dictionaryService
+//                .getDictionaryByParentIdAndCode("lnrlb", "" + oldPerson.getType());
+//            dataMap.put("oldPersonType", dictionaryEntity.getDicName());
+//            dataMap.put("oldPersonAge", oldPerson.getAge());
+//            dataMap.put("oldPersonArea", oldPerson.getArea().getName());
+//
+//            dataMap.put("operatorName", operatorName);
+//
+//            if (null != health.getBeginDateTime()) {
+//                dataMap.put("healthBeginTime", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(health.getBeginDateTime()));
+//            } else {
+//                dataMap.put("healthBeginTime", "");
+//            }
+//            dataMap.put("healthEndTime", health.getEndDateTime());
+//
+//            HealthResultEntity healthResultEntity = health.getHealthResult();
+//            byte[] ecg = healthResultEntity.getEcgData();
+//            if (null == ecg) {
+//                System.out.println("心电图二进制数据是空的.oldPersonId:" + oldPerson.getId() + ".healthId:" + healthResultEntity.getId());
+//            } else {
+//                BufferedImage b = Rotate(ImageIO.read(new ByteArrayInputStream(ecg)), 0);
+//                if (null != b) {
+//                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+//                    ImageIO.write(b, "png", byteArrayOutputStream);
+//                    ecg = byteArrayOutputStream.toByteArray();
+//                    if (null != ecg) {
+//                        String ecgBase64Str = Base64.encodeBase64String(ecg);
+//                        dataMap.put("ecgPhoto", ecgBase64Str);
+//                    }
+//                }
+//            }
+//            if (null == healthResultEntity) {
+//                dataMap.put("healthResult", "未检测");
+//                //心率结果 xljg
+//                dataMap.put("xljg", HealthResultHelper.formaterHealthValue(0));
+//                dataMap.put("xljg_jg", HealthResult.UNKNOW.getName());
+//                //呼吸率结果 hxljg
+//                dataMap.put("hxljg", HealthResultHelper.formaterHealthValue(0));
+//                dataMap.put("hxljg_jg", HealthResult.UNKNOW.getName());
+//                //血氧结果 xyjg
+//                dataMap.put("xyjg", HealthResultHelper.formaterHealthValue(0));
+//                dataMap.put("xyjg_jg", HealthResult.UNKNOW.getName());
+//                //脉率结果 mljg
+//                dataMap.put("mljg", HealthResultHelper.formaterHealthValue(0));
+//                dataMap.put("mljg_jg", HealthResult.UNKNOW.getName());
+//                //收缩压结果ssyjg
+//                dataMap.put("ssyjg", HealthResultHelper.formaterHealthValue(0));
+//                dataMap.put("ssyjg_jg", HealthResult.UNKNOW.getName());
+//                //舒张压结果szyjg
+//                dataMap.put("szyjg", HealthResultHelper.formaterHealthValue(0));
+//                dataMap.put("szyjg_jg", HealthResult.UNKNOW.getName());
+//
+//                dataMap.put("xljgfx", "");
+//                dataMap.put("hxljgfx", "");
+//                dataMap.put("xyjgfx", "");
+//                dataMap.put("mljgfx", "");
+//                dataMap.put("ssyjgfx", "");
+//                dataMap.put("szyjgfx", "");
+//
+//                dataMap.put("xljgtips", "");
+//                dataMap.put("hxljgtips", "");
+//                dataMap.put("xyjgtips", "");
+//                dataMap.put("ssyjgtips", "");
+//                dataMap.put("szyjgtips", "");
+//            } else {
+//                dataMap.put("healthResult", "");
+//                //心率结果 xljg
+//                dataMap.put("xljg", healthResultEntity.getHeartRateToString());
+//                dataMap.put("xljg_jg", HealthResultHelper.getHeartRateResult(healthResultEntity.getHeartRate()));
+//                //呼吸率结果 hxljg
+//                dataMap.put("hxljg", healthResultEntity.getRespiratoryRateToString());
+//                dataMap.put("hxljg_jg",
+//                    HealthResultHelper.getRespiratoryRateResult(healthResultEntity.getRespiratoryRate()));
+//                //血氧结果 xyjg
+//                dataMap.put("xyjg", healthResultEntity.getBloodOxygenToString());
+//                dataMap.put("xyjg_jg", HealthResultHelper.getBloodOxygenResult(healthResultEntity.getBloodOxygen()));
+//                //脉率结果 mljg
+//                dataMap.put("mljg", healthResultEntity.getPulseRateToString());
+//                dataMap.put("mljg_jg", HealthResultHelper.getPulseRateResult(healthResultEntity.getPulseRate()));
+//                //收缩压结果ssyjg
+//                dataMap.put("ssyjg", healthResultEntity.getSystolicPressureToString());
+//                dataMap.put("ssyjg_jg",
+//                    HealthResultHelper.getSystolicPressureResult(healthResultEntity.getSystolicPressure()));
+//                //舒张压结果szyjg
+//                dataMap.put("szyjg", healthResultEntity.getDiastolicPressureToString());
+//                dataMap.put("szyjg_jg",
+//                    HealthResultHelper.getDiastolicPressureResult(healthResultEntity.getDiastolicPressure()));
+//
+//                //心率结果分析 xljg
+//                dataMap.put("xljgfx", HealthResultHelper.getHeartRateResultAnalyze(healthResultEntity.getHeartRate()));
+//                //呼吸率结果分析  hxljg
+//                dataMap.put("hxljgfx",
+//                    HealthResultHelper.getRespiratoryRateResultAnalyze(healthResultEntity.getRespiratoryRate()));
+//                //血氧结果分析 xyjg
+//                dataMap
+//                    .put("xyjgfx", HealthResultHelper.getBloodOxygenResultAnalyze(healthResultEntity.getBloodOxygen()));
+//                //脉率结果分析 mljg
+//                dataMap.put("mljgfx", HealthResultHelper.getPulseRateResultAnalyze(healthResultEntity.getPulseRate()));
+//                //收缩压结果分析ssyjg
+//                dataMap.put("ssyjgfx",
+//                    HealthResultHelper.getSystolicPressureResultAnalyze(healthResultEntity.getSystolicPressure()));
+//                //舒张压结果分析szyjg
+//                dataMap.put("szyjgfx",
+//                    HealthResultHelper.getDiastolicPressureResultAnalyze(healthResultEntity.getDiastolicPressure()));
+//
+//                //心率结果小贴士
+//                dataMap.put("xljgtips", HealthResultHelper.getHeartRateResultTips(healthResultEntity.getHeartRate()));
+//                //呼吸率结果小贴士
+//                dataMap.put("hxljgtips",
+//                    HealthResultHelper.getRespiratoryRateResultTips(healthResultEntity.getRespiratoryRate()));
+//                //血氧结果小贴士
+//                dataMap
+//                    .put("xyjgtips", HealthResultHelper.getBloodOxygenResultTips(healthResultEntity.getBloodOxygen()));
+//                //血压结果小贴士
+//                dataMap.put("ssyjgtips",
+//                    HealthResultHelper.getSystolicPressureResultTips(healthResultEntity.getSystolicPressure()));
+//                dataMap.put("szyjgtips",
+//                    HealthResultHelper.getDiastolicPressureResultTips(healthResultEntity.getDiastolicPressure()));
+//            }
+//
+//            DictionaryEntity verifyStatus = dictionaryService
+//                .getDictionaryByParentIdAndCode("fingerVerifyState", health.getFingerVerifyState());
+//            dataMap.put("fingerprintVerifyStatus", verifyStatus.getDicName());
+//            dataMap.put("photoVerifyStatus", verifyStatus.getDicName());
+//
+//            list.add(dataMap);
+//        }
+//        String filePath = FileService.class.getClassLoader().getResource("template").getPath();
+//        configuration.setDirectoryForTemplateLoading(new File(filePath));  //FTL文件所存在的位置
+//        Template t = null;
+//        try {
+//            t = configuration.getTemplate("OldPersonCollectionReportTemplate.ftl"); //文件名
+//        } catch (IOException e) {
+//            LOG.error("export word error", e);
+//        }
+//        PrintWriter out = null;
+//        try {
+//            out = response.getWriter();
+//            Map<String, List> m = new HashMap<String, List>();
+//            m.put("list", list);
+//            t.process(m, out);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            LOG.error("export word error", e);
+//        } catch (TemplateException e) {
+//            LOG.error("export word error", e);
+//        }
+//        return "redirect:/health/report/manager.do";
+//    }
+
+    private static final String DOWNLOAD_PDF_PATH = "/opt/health_management/mpdf/";
+
     @RequestMapping("/export/word")
     public String exportWord(String cycleId, HttpServletRequest request, HttpServletResponse response, Model model)
         throws IOException {
@@ -359,16 +643,15 @@ public class HealthReportController {
         }
         String cycleBegin = new SimpleDateFormat("yyyy-MM-dd").format(cycleEntity.getCycleBegin());
         String cycleEnd = new SimpleDateFormat("yyyy-MM-dd").format(cycleEntity.getCycleEnd());
-        String title = cycleBegin + "至" + cycleEnd + "人员身份认证汇总.doc";
+        String title = cycleBegin + "至" + cycleEnd + "人员身份认证汇总.pdf";
 
         response.setCharacterEncoding("UTF-8");
         String fileName = title;
         response
             .addHeader("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes(), "ISO-8859-1"));
 
-        Configuration configuration = new Configuration();
-        configuration.setDefaultEncoding("UTF-8");
-        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+        String batchId = String.valueOf(System.currentTimeMillis());
+        List<String> list = new ArrayList<String>();
         int idx = 0;
         for (HealthInfoEntity health : healthInfoEntityCollection) {
             idx++;
@@ -386,8 +669,8 @@ public class HealthReportController {
             Map<String, String> otherInfo = fetchPersonOtherInfo(health.getRandomRequestCode());
 
 
-            Map<String, Object> dataMap = new HashMap<String, Object>();
-            dataMap.put("healthNumber", healthNumber);
+            Map<String, String> dataMap = new HashMap<String, String>();
+            dataMap.put("healthNumber", String.valueOf(healthNumber));
             if (null != otherInfo && null != otherInfo.get("height")) {
                 dataMap.put("height", otherInfo.get("height") + "cm");
             } else {
@@ -408,13 +691,8 @@ public class HealthReportController {
 
             SysFileInfo sysFileInfo = fileService.findByFileKey(oldPerson.getPhotoKey());
             byte[] photo = sysFileInfo.getContent();
-            if (null != photo) {
-                String photoBase64Str = Base64.encodeBase64String(photo);
-                dataMap.put("oldPersonPhoto", photoBase64Str);
-            } else {
-                dataMap.put("oldPersonPhoto", "");
-            }
-            dataMap.put("idx", idx);
+
+            dataMap.put("idx", String.valueOf(idx));
 
             dataMap.put("oldPersonName", oldPerson.getName());
             DictionaryEntity dictionarySex = dictionaryService
@@ -476,7 +754,7 @@ public class HealthReportController {
             DictionaryEntity dictionaryEntity = dictionaryService
                 .getDictionaryByParentIdAndCode("lnrlb", "" + oldPerson.getType());
             dataMap.put("oldPersonType", dictionaryEntity.getDicName());
-            dataMap.put("oldPersonAge", oldPerson.getAge());
+            dataMap.put("oldPersonAge", String.valueOf(oldPerson.getAge()));
             dataMap.put("oldPersonArea", oldPerson.getArea().getName());
 
             dataMap.put("operatorName", operatorName);
@@ -486,23 +764,12 @@ public class HealthReportController {
             } else {
                 dataMap.put("healthBeginTime", "");
             }
-            dataMap.put("healthEndTime", health.getEndDateTime());
+            dataMap.put("healthEndTime", health.getEndDateTime().toString());
 
             HealthResultEntity healthResultEntity = health.getHealthResult();
             byte[] ecg = healthResultEntity.getEcgData();
             if (null == ecg) {
                 System.out.println("心电图二进制数据是空的.oldPersonId:" + oldPerson.getId() + ".healthId:" + healthResultEntity.getId());
-            } else {
-                BufferedImage b = Rotate(ImageIO.read(new ByteArrayInputStream(ecg)), 0);
-                if (null != b) {
-                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                    ImageIO.write(b, "png", byteArrayOutputStream);
-                    ecg = byteArrayOutputStream.toByteArray();
-                    if (null != ecg) {
-                        String ecgBase64Str = Base64.encodeBase64String(ecg);
-                        dataMap.put("ecgPhoto", ecgBase64Str);
-                    }
-                }
             }
             if (null == healthResultEntity) {
                 dataMap.put("healthResult", "未检测");
@@ -598,34 +865,138 @@ public class HealthReportController {
             dataMap.put("fingerprintVerifyStatus", verifyStatus.getDicName());
             dataMap.put("photoVerifyStatus", verifyStatus.getDicName());
 
-            list.add(dataMap);
+            String pdfTempPath = "/opt/health_management/template/temp-release.pdf";
+            LOG.info("pdfTempPath:[{}]", pdfTempPath);
+            PdfReader reader = new PdfReader(pdfTempPath);
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+
+            String filePath = DOWNLOAD_PDF_PATH + batchId + "/" + cycleId + "/";
+            File creteDir = new File(filePath);
+            FileUtils.forceMkdir(creteDir);
+            filePath += oldPerson.getIdCard() + ".pdf";
+            OutputStream out = new FileOutputStream(filePath);
+            PdfStamper ps = null;
+            try {
+                ps = new PdfStamper(reader, bos);
+                /* 使用中文字体 */
+                BaseFont bf = BaseFont.createFont("STSong-Light", "UniGB-UCS2-H", BaseFont.NOT_EMBEDDED);
+                ArrayList<BaseFont> fontList = new ArrayList<BaseFont>();
+                fontList.add(bf);
+
+                /* 取出报表模板中的所有字段 */
+                AcroFields fields = ps.getAcroFields();
+                fields.setSubstitutionFonts(fontList);
+                fillData(fields, dataMap);
+                fillImage(photo, ps, fields, "oldPersonPhoto");
+                fillImage(ecg, ps, fields, "ecgPhoto");
+
+                /* 必须要调用这个，否则文档不会生成的 */
+                ps.setFormFlattening(true);
+                ps.close();
+
+                out.write(bos.toByteArray());
+                out.flush();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (DocumentException e) {
+                e.printStackTrace();
+            } finally {
+                if (null != ps) {
+                    try {
+                        ps.close();
+                    } catch (DocumentException e) {
+                        e.printStackTrace();
+                    }
+                }
+                if (null != out) {
+                    out.close();
+                }
+            }
+            list.add(filePath);
         }
-        String filePath = FileService.class.getClassLoader().getResource("template").getPath();
-        configuration.setDirectoryForTemplateLoading(new File(filePath));  //FTL文件所存在的位置
-        Template t = null;
-        try {
-            t = configuration.getTemplate("OldPersonCollectionReportTemplate.ftl"); //文件名
-        } catch (IOException e) {
-            LOG.error("export word error", e);
+        ServletOutputStream out = response.getOutputStream();
+        List<InputStream> inputStreamList = new ArrayList<>(list.size());
+        for (String filePath : list) {
+            inputStreamList.add(new FileInputStream(filePath));
         }
-        PrintWriter out = null;
-        try {
-            out = response.getWriter();
-            Map<String, List> m = new HashMap<String, List>();
-            m.put("list", list);
-            t.process(m, out);
-        } catch (IOException e) {
-            e.printStackTrace();
-            LOG.error("export word error", e);
-        } catch (TemplateException e) {
-            LOG.error("export word error", e);
-        }
+        concatPDFs(inputStreamList, out, false);
+
+        File delete = new File(DOWNLOAD_PDF_PATH);
+        FileUtils.deleteDirectory(delete);
+
         return "redirect:/health/report/manager.do";
     }
 
+    private static void concatPDFs(List<InputStream> streamOfPDFFiles, OutputStream outputStream, boolean paginate) {
 
-    private void fetchOtherPersonInfo(String randomRequestCode) {
+        Document document = new Document();
+        try {
+            List<InputStream> pdfs = streamOfPDFFiles;
+            List<PdfReader> readers = new ArrayList<PdfReader>();
+            int totalPages = 0;
+            Iterator<InputStream> iteratorPDFs = pdfs.iterator();
 
+            // Create Readers for the pdfs.
+            while (iteratorPDFs.hasNext()) {
+                InputStream pdf = iteratorPDFs.next();
+                PdfReader pdfReader = new PdfReader(pdf);
+                readers.add(pdfReader);
+                totalPages += pdfReader.getNumberOfPages();
+            }
+            // Create a writer for the outputstream
+            PdfWriter writer = PdfWriter.getInstance(document, outputStream);
+
+            document.open();
+            BaseFont bf = BaseFont.createFont(BaseFont.HELVETICA,
+                BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
+            PdfContentByte cb = writer.getDirectContent(); // Holds the PDF
+            // data
+
+            PdfImportedPage page;
+            int currentPageNumber = 0;
+            int pageOfCurrentReaderPDF = 0;
+            Iterator<PdfReader> iteratorPDFReader = readers.iterator();
+
+            // Loop through the PDF files and add to the output.
+            while (iteratorPDFReader.hasNext()) {
+                PdfReader pdfReader = iteratorPDFReader.next();
+
+                // Create a new page in the target for each source page.
+                while (pageOfCurrentReaderPDF < pdfReader.getNumberOfPages()) {
+                    document.newPage();
+                    pageOfCurrentReaderPDF++;
+                    currentPageNumber++;
+                    page = writer.getImportedPage(pdfReader,
+                        pageOfCurrentReaderPDF);
+                    cb.addTemplate(page, 0, 0);
+
+                    // Code for pagination.
+                    if (paginate) {
+                        cb.beginText();
+                        cb.setFontAndSize(bf, 9);
+                        cb.showTextAligned(PdfContentByte.ALIGN_CENTER, ""
+                                + currentPageNumber + " of " + totalPages, 520,
+                            5, 0);
+                        cb.endText();
+                    }
+                }
+                pageOfCurrentReaderPDF = 0;
+            }
+            outputStream.flush();
+            document.close();
+            outputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (document.isOpen())
+                document.close();
+            try {
+                if (outputStream != null)
+                    outputStream.close();
+            } catch (IOException ioe) {
+                ioe.printStackTrace();
+            }
+        }
     }
 
     private Map<String, String> fetchPersonOtherInfo(String requestCode) {
@@ -641,7 +1012,8 @@ public class HealthReportController {
 
         StringBuilder sql = new StringBuilder();
         sql.append("select ").append(heightColumn).append(" as height, ").append(weightColumn).append(" as weight, ").append(bloodColumn)
-            .append(" as blood from ").append(QA_RESULT_TABLE_NAME).append(" where ").append(requestColumn).append("='").append(requestCode).append("'");
+            .append(" as blood from ").append(QA_RESULT_TABLE_NAME).append(" where ").append(requestColumn).append("='").append(requestCode).append("'")
+        .append(" and lastpage = 5 and submitdate is not null order by submitdate desc");
 
         LOG.info("query sql:[{}]", sql.toString());
 
